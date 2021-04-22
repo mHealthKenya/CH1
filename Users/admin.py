@@ -1,0 +1,21 @@
+from django.contrib import admin
+from .models import *
+
+admin.site.register(customuser)
+admin.site.register(ChiefExecutiveOfficer)
+admin.site.register(FinanceStaff)
+admin.site.register(Supervisors)
+admin.site.register(Departments)
+admin.site.register(FinanceAccountCodes)
+admin.site.register(PurchaseRequisition)
+admin.site.register(SupervisorApprovedPurchaseRequisitions)
+admin.site.register(FinanceApprovedPurchaseRequisitions)
+admin.site.register(CEOApprovedPurchaseRequisitions)
+admin.site.register(Projects)
+admin.site.register(TaxiLogistics)
+admin.site.register(TaxiLogisticsSupervisor)
+admin.site.register(BusinessAdvanceRequest)
+admin.site.register(BARSupervisor)
+admin.site.register(BARFinance)
+admin.site.register(BusinessExpenseReport)
+admin.site.register(BusinessExpenseReportFinance)
