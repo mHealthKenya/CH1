@@ -81,7 +81,7 @@ export class Register extends Component {
 			loading: true,
 		});
 
-		const url = '/auth/api/register/';
+		const url = 'auth/api/register/';
 		axios
 			.post(url, fd)
 			.then(() => {
