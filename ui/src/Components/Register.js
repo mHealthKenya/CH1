@@ -5,7 +5,7 @@ import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { requestDepartments } from '../Redux/Departments/actions';
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/';
 
 export class Register extends Component {
 	state = {
@@ -83,7 +83,7 @@ export class Register extends Component {
 		});
 		console.log(this.state);
 
-		const url = 'api/register/';
+		const url = '/auth/api/register/';
 		axios
 			.post(url, fd)
 			.then(() => {
