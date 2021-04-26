@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { userLogin } from '../Redux/Auth/actions';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export class Login extends Component {
 	state = {
@@ -33,7 +34,7 @@ export class Login extends Component {
 	};
 	render() {
 		const { auth } = this.props;
-		const { isAuthenticated } = auth;
+		const { isAuthenticated, loading } = auth;
 		if (!isAuthenticated) {
 			return (
 				<div className='testbox container mt-3 mb-3'>
@@ -62,7 +63,7 @@ export class Login extends Component {
 									Password<span>*</span>
 								</label>
 								<input
-									id='pasword'
+									id='password'
 									type='password'
 									name='password'
 									required
@@ -70,9 +71,13 @@ export class Login extends Component {
 								/>
 							</div>
 						</div>
-						<div className='btn-block'>
-							<button onClick={this.handleLogin}>Login</button>
-						</div>
+						{loading ? (
+							<CircularProgress />
+						) : (
+							<div className='btn-block'>
+								<button onClick={this.handleLogin}>Login</button>
+							</div>
+						)}
 					</form>
 				</div>
 			);
