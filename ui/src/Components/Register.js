@@ -43,7 +43,6 @@ export class Register extends Component {
 			...this.state,
 			[name]: value,
 		});
-		console.log(this.state);
 	};
 	handleSignature = (e) => {
 		let name = e.target.name;
@@ -81,7 +80,6 @@ export class Register extends Component {
 			...this.state,
 			loading: true,
 		});
-		console.log(this.state);
 
 		const url = '/auth/api/register/';
 		axios
