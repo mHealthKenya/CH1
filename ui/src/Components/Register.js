@@ -132,7 +132,7 @@ export class Register extends Component {
 							<div className='item'>
 								<label htmlFor='lname'>
 									{' '}
-									Last Name<span>*</span>
+									Last Name<span>* </span>
 								</label>
 								<input
 									id='lname'
