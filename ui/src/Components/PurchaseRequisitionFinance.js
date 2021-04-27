@@ -31,6 +31,26 @@ export class PurchaseRequisitionFinance extends Component {
 		}
 	};
 
+	printDiv = (divName) => {
+		var printContents = document.getElementById(divName).innerHTML;
+		var originalContents = document.body.innerHTML;
+
+		document.body.innerHTML = printContents;
+
+		window.print();
+		window.location.reload();
+
+		document.body.innerHTML = originalContents;
+	};
+
+	handleDownload = () => {
+		this.printDiv('report');
+		this.setState({
+			...this.state,
+			show: false,
+		});
+	};
+
 	handleView = (id) => {
 		this.props.getSpecificPurchaseData(id);
 		this.setState({
@@ -234,76 +254,83 @@ export class PurchaseRequisitionFinance extends Component {
 					size='lg'
 					aria-labelledby='contained-modal-title-vcenter'
 					centered>
-					<br />
-					<div style={{ textAlign: 'center' }}>
-						<img src={logo} width={500} height={100} alt='logo' />
+					<div id='report'>
 						<br />
-						<h2>Purchase Requisition Form</h2>
-					</div>
+						<div style={{ textAlign: 'center' }}>
+							<img src={logo} width={500} height={100} alt='logo' />
+							<br />
+							<h2>Purchase Requisition Form</h2>
+						</div>
 
-					<Modal.Body>
-						<div className='table-responsive'>
-							<table className='table table-striped'>
-								<thead>
-									<tr>
-										<th>Date Requested</th>
-										<th>Activity</th>
-										<th>Description</th>
-										<th>Account Code</th>
-										<th>Amount</th>
-										<th>Supervisor</th>
-										{purchaseRequest.ceo_approved ? (
-											<th>CEO signature</th>
-										) : (
-											<th>CEO comments</th>
-										)}
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											{moment(purchaseRequest.date_requested).format(
-												'YYYY - MM - DD'
+						<Modal.Body>
+							<div className='table-responsive'>
+								<table className='table table-striped'>
+									<thead>
+										<tr>
+											<th>Date Requested</th>
+											<th>Activity</th>
+											<th>Description</th>
+											<th>Account Code</th>
+											<th>Amount</th>
+											<th>Supervisor</th>
+											{purchaseRequest.ceo_approved ? (
+												<th>CEO signature</th>
+											) : (
+												<th>CEO comments</th>
 											)}
-										</td>
-										<td>{purchaseRequest.activity}</td>
-										<td>{purchaseRequest.description}</td>
-										<td>{purchaseRequest.account_code_value}</td>
-										<td>{purchaseRequest.amount}</td>
-										<td>
-											<img
-												src={purchaseRequest.supervisor_signature}
-												alt='signature'
-												width={50}
-												height={50}
-											/>
-										</td>
-										{purchaseRequest.ceo_comments ? (
-											<td style={{ color: 'red' }}>
-												{purchaseRequest.ceo_comments}
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												{moment(purchaseRequest.date_requested).format(
+													'YYYY - MM - DD'
+												)}
 											</td>
-										) : purchaseRequest.ceo_approved ? (
+											<td>{purchaseRequest.activity}</td>
+											<td>{purchaseRequest.description}</td>
+											<td>{purchaseRequest.account_code_value}</td>
+											<td>{purchaseRequest.amount}</td>
 											<td>
 												<img
-													src={purchaseRequest.CEO_signature}
+													src={purchaseRequest.supervisor_signature}
 													alt='signature'
 													width={50}
 													height={50}
 												/>
 											</td>
-										) : (
-											<td>N/A</td>
-										)}
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</Modal.Body>
+											{purchaseRequest.ceo_comments ? (
+												<td style={{ color: 'red' }}>
+													{purchaseRequest.ceo_comments}
+												</td>
+											) : purchaseRequest.ceo_approved ? (
+												<td>
+													<img
+														src={purchaseRequest.CEO_signature}
+														alt='signature'
+														width={50}
+														height={50}
+													/>
+												</td>
+											) : (
+												<td>N/A</td>
+											)}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</Modal.Body>
+					</div>
 					<Modal.Footer>
 						<div
 							className='btn btn-outline btn-secondary'
 							onClick={this.handleClose}>
 							Close
+						</div>
+						<div
+							className='btn btn-outline btn-success'
+							onClick={this.handleDownload}>
+							Download
 						</div>
 					</Modal.Footer>
 				</Modal>
