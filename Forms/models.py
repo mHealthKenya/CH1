@@ -3,6 +3,7 @@ from django.db import models
 from Users.models import *
 
 User = get_user_model()
+api_url = "http://api-finance-docs.mhealthkenya.co.ke/"
 
 class LodgingMIE(models.Model):
     lodging = models.PositiveIntegerField()
@@ -36,7 +37,7 @@ class TravelAuthorization(models.Model):
 
     @property
     def staff_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.staff.signature}'
+        return f'{api_url}media/{self.staff.signature}'
 
     @property
     def staff_phone(self):
@@ -48,7 +49,7 @@ class TravelAuthorization(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.supervisor.name.signature}'
+        return f'{api_url}media/{self.supervisor.name.signature}'
 
     @property
     def supervisor_name(self):
@@ -160,7 +161,7 @@ class TravelExpenseReport(models.Model):
 
     @property
     def staff_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.request.request.staff.signature}'
+        return f'{api_url}media/{self.request.request.staff.signature}'
 
     @property
     def purpose(self):
@@ -176,7 +177,7 @@ class TravelExpenseReport(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.request.request.supervisor.name.signature}'
+        return f'{api_url}media/{self.request.request.supervisor.name.signature}'
 
     @property
     def date_approved(self):

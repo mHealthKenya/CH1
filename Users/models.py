@@ -7,6 +7,8 @@ from django.core.validators import RegexValidator
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import *
 
+api_url = "http://api-finance-docs.mhealthkenya.co.ke/"
+
 class Departments(models.Model):
     department = models.CharField(max_length=200)
 
@@ -173,7 +175,7 @@ class PurchaseRequisition(models.Model):
 
     @property
     def requester_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requested_by.signature}'
+        return f'{api_url}media/{self.requested_by.signature}'
 
     @property
     def account_code_value(self):
@@ -185,12 +187,12 @@ class PurchaseRequisition(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.reviewing_supervisor.name.signature}'
+        return f'{api_url}media/{self.reviewing_supervisor.name.signature}'
 
     @property
     def finance_officer_signature(self):
         try: 
-            return f'http://127.0.0.1:8000/media/{self.reviewing_finance_officer.staff.signature}'
+            return f'{api_url}media/{self.reviewing_finance_officer.staff.signature}'
         except AttributeError:
             return f'To be approved by finance'
 
@@ -204,7 +206,7 @@ class PurchaseRequisition(models.Model):
     @property
     def CEO_signature(self):
         try: 
-            return f'http://127.0.0.1:8000/media/{self.ceo_approval.ceo.signature}'
+            return f'{api_url}media/{self.ceo_approval.ceo.signature}'
         except AttributeError:
             return f'To be approved by CEO'
 
@@ -237,7 +239,7 @@ class SupervisorApprovedPurchaseRequisitions(models.Model):
 
     @property
     def requester_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requested_by.signature}'
+        return f'{api_url}media/{self.requisition.requested_by.signature}'
 
     @property
     def supervisor_name(self):
@@ -245,7 +247,7 @@ class SupervisorApprovedPurchaseRequisitions(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.supervisor.name.signature}'
+        return f'{api_url}media/{self.supervisor.name.signature}'
 
     def __str__(self):
         return f'{self.requisition.activity}'
@@ -268,7 +270,7 @@ class FinanceApprovedPurchaseRequisitions(models.Model):
 
     @property
     def requester_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requisition.requested_by.signature}'
+        return f'{api_url}media/{self.requisition.requisition.requested_by.signature}'
 
     @property
     def supervisor_name(self):
@@ -276,11 +278,11 @@ class FinanceApprovedPurchaseRequisitions(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requisition.reviewing_supervisor.name.signature}'
+        return f'{api_url}media/{self.requisition.requisition.reviewing_supervisor.name.signature}'
 
     @property
     def finance_officer_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requisition.reviewing_finance_officer.staff.signature}'
+        return f'{api_url}media/{self.requisition.requisition.reviewing_finance_officer.staff.signature}'
         
     @property
     def finance_officer_name(self):
@@ -308,7 +310,7 @@ class CEOApprovedPurchaseRequisitions(models.Model):
 
     @property
     def requester_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requisition.requisition.requested_by.signature}'
+        return f'{api_url}media/{self.requisition.requisition.requisition.requested_by.signature}'
 
     @property
     def supervisor_name(self):
@@ -316,11 +318,11 @@ class CEOApprovedPurchaseRequisitions(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.requisition.requisition.reviewing_supervisor.name.signature}'
+        return f'{api_url}media/{self.requisition.requisition.requisition.reviewing_supervisor.name.signature}'
 
     @property
     def finance_officer_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.requisition.finance_staff.staff.signature}'
+        return f'{api_url}media/{self.requisition.finance_staff.staff.signature}'
        
 
     @property
@@ -329,7 +331,7 @@ class CEOApprovedPurchaseRequisitions(models.Model):
 
     @property
     def CEO_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.ceo.ceo.signature}'
+        return f'{api_url}media/{self.ceo.ceo.signature}'
 
     @property
     def CEO_name(self):
@@ -372,7 +374,7 @@ class TaxiLogistics(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.supervisor.name.signature}'
+        return f'{api_url}media/{self.supervisor.name.signature}'
 
 
 class TaxiLogisticsSupervisor(models.Model):
@@ -418,12 +420,12 @@ class BusinessAdvanceRequest(models.Model):
 
     @property
     def supervisor_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.supervisor.name.signature}'
+        return f'{api_url}media/{self.supervisor.name.signature}'
 
     @property
     def finance_signature(self):
         if self.finance_staff:
-            return f'http://127.0.0.1:8000/media/{self.finance_staff.staff.signature}'
+            return f'{api_url}media/{self.finance_staff.staff.signature}'
         else:
             return None
 
@@ -440,7 +442,7 @@ class BusinessAdvanceRequest(models.Model):
 
     @property
     def staff_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.staff.signature}'
+        return f'{api_url}media/{self.staff.signature}'
 
     @property
     def account_code_value(self):
@@ -489,7 +491,7 @@ class BARFinance(models.Model):
 
     @property
     def requester_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.request.request.staff.signature}'
+        return f'{api_url}media/{self.request.request.staff.signature}'
 
     @property
     def requested_date(self):
@@ -542,7 +544,7 @@ class BusinessExpenseReport(models.Model):
 
     @property
     def staff_signature(self):
-        return f'http://127.0.0.1:8000/media/{self.request.request.request.staff.signature}'
+        return f'{api_url}media/{self.request.request.request.staff.signature}'
 
     @property
     def finance_date(self):
@@ -558,7 +560,7 @@ class BusinessExpenseReport(models.Model):
     @property
     def finance_signature(self):
         if self.Finance_staff:
-            return f'http://127.0.0.1:8000/media/{self.Finance_staff.staff.signature}'
+            return f'{api_url}media/{self.Finance_staff.staff.signature}'
         else:
             return None
 
