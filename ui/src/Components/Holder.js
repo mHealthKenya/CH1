@@ -214,7 +214,10 @@ export class Holder extends Component {
 							<div className='row'>
 								<div className='col-md-12 col-lg-4'>
 									<div className='footer-logo'>
-										<a className='navbar-brand' href='/'>
+										<a
+											className='navbar-brand'
+											href='/'
+											style={{ color: 'blue' }}>
 											mHealthKenya
 										</a>
 										<p>
@@ -313,9 +316,9 @@ export class Holder extends Component {
 
 						<div className='copyrights'>
 							<div className='container'>
-								<p>&copy; Copyrights eStartup. All rights reserved.</p>
+								<p>&copy; Copyrights mHealthKenya. All rights reserved.</p>
 								<div className='credits'>
-									Designed by <a href='/'>BootstrapMade</a>
+									Brain Child of <a href='/'>Joel, Bruno, and Dennis</a>
 								</div>
 							</div>
 						</div>
@@ -332,13 +335,8 @@ export class Holder extends Component {
 					<header id='header' className='header'>
 						<div className='container'>
 							<div id='logo' className='pull-left'>
-								<h1>
-									<a href='/'>
-										<span>m</span>Health
-									</a>
-								</h1>
 								<a href='/'>
-									<img src='assets/img/logo.png' alt='' title='' />
+									<img src={image} alt='' title='' width={200} height={100} />
 								</a>
 							</div>
 
@@ -470,7 +468,7 @@ export class Holder extends Component {
 									Copyrights mHealthKenya. All rights reserved.
 								</p>
 								<div>
-									Designed by <a href='/'>Joel, Bruno and Dennis</a>
+									Brain Child of <a href='/'>Joel, Bruno and Dennis</a>
 								</div>
 							</div>
 						</div>
