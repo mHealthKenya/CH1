@@ -378,6 +378,28 @@ export class PurchaseRequisitionFinance extends Component {
 														View
 													</div>
 
+													{request.finance_approved && !request.ceo_approved ? (
+														<div style={{ flex: 1, color: '#ffbb00' }}>
+															Pending CEO approval
+														</div>
+													) : request.finance_approved &&
+													  request.ceo_approved ? (
+														<div
+															className='btn btn-success btn-sm disabled'
+															style={{ flex: 1 }}
+															onClick={() => self.handleApprove(request.id)}>
+															Approved
+														</div>
+													) : !request.finance_approved &&
+													  !request.ceo_approved ? (
+														<div
+															className='btn btn-success btn-sm'
+															style={{ flex: 1 }}
+															onClick={() => self.handleApprove(request.id)}>
+															Approve
+														</div>
+													) : null}
+
 													<div
 														className='btn btn-success btn-sm'
 														style={{ flex: 1 }}
