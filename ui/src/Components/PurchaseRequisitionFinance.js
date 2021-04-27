@@ -400,12 +400,12 @@ export class PurchaseRequisitionFinance extends Component {
 														</div>
 													) : null}
 
-													<div
+													{/* <div
 														className='btn btn-success btn-sm'
 														style={{ flex: 1 }}
 														onClick={() => self.handleApprove(request.id)}>
 														Approve
-													</div>
+													</div> */}
 													{request.finance_comments ? (
 														<div
 															className='btn btn-danger btn-sm disabled'
