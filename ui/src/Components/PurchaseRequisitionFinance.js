@@ -252,7 +252,11 @@ export class PurchaseRequisitionFinance extends Component {
 										<th>Account Code</th>
 										<th>Amount</th>
 										<th>Supervisor</th>
-										<th>CEO comments</th>
+										{purchaseRequest.ceo_approved ? (
+											<th>CEO signature</th>
+										) : (
+											<th>CEO comments</th>
+										)}
 									</tr>
 								</thead>
 								<tbody>
