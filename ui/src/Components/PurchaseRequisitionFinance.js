@@ -278,6 +278,15 @@ export class PurchaseRequisitionFinance extends Component {
 											<td style={{ color: 'red' }}>
 												{purchaseRequest.ceo_comments}
 											</td>
+										) : purchaseRequest.ceo_approved ? (
+											<td>
+												<img
+													src={purchaseRequest.CEO_signature}
+													alt='signature'
+													width={50}
+													height={50}
+												/>
+											</td>
 										) : (
 											<td>N/A</td>
 										)}
@@ -412,7 +421,7 @@ export class PurchaseRequisitionFinance extends Component {
 															style={{ flex: 1 }}>
 															Disapproved
 														</div>
-													) : (
+													) : request.ceo_approved ? null : (
 														<div
 															className='btn btn-danger btn-sm'
 															onClick={() =>
