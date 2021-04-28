@@ -312,6 +312,8 @@ export class Register extends Component {
 						  last_name &&
 						  staff_id &&
 						  department &&
+						  password &&
+						  password2 &&
 						  password === password2 &&
 						  phone_number ? (
 							<div className='btn-block'>
