@@ -27,7 +27,7 @@ class TravelAuthorization(models.Model):
     taxi = models.BooleanField(default=False)
     supervisor = models.ForeignKey(Supervisors, on_delete = models.CASCADE)
     approved = models.BooleanField(default = False)
-    supervisor_comment = models.TextField(blank=True, null=True)
+    supervisor_comment = models.TextField(null=True)
     date_approved = models.DateTimeField(blank=True, null=True)
     mieandlodging = models.ForeignKey(LodgingMIE, default = 1, on_delete = models.SET_NULL, null=True)
 

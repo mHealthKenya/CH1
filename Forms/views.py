@@ -15,7 +15,7 @@ from rest_framework import filters
 class TravelAuthorizationViewSet(viewsets.ModelViewSet):
     queryset = TravelAuthorization.objects.all()
     serializer_class = TravelAuthorizationSerializer
-    filterset_fields = ['supervisor', 'staff', 'approved' ]
+    filterset_fields = ['supervisor', 'staff', 'approved', 'supervisor_comment' ]
     
 
 

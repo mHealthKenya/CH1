@@ -209,7 +209,7 @@ export class Holder extends Component {
 						</div>
 					</header>
 					{this.props.children}
-					<footer className='footer'>
+					{/* <footer className='footer'>
 						<div className='container'>
 							<div className='row'>
 								<div className='col-md-12 col-lg-4'>
@@ -322,7 +322,7 @@ export class Holder extends Component {
 								</div>
 							</div>
 						</div>
-					</footer>
+					</footer> */}
 
 					<a href='/' className='back-to-top'>
 						<i className='fa fa-chevron-up'></i>
@@ -357,7 +357,7 @@ export class Holder extends Component {
 						</div>
 					</header>
 					{this.props.children}
-					<footer className='footer'>
+					{/* <footer className='footer'>
 						<div className='container'>
 							<div className='row'>
 								<div className='col-md-12 col-lg-4'>
@@ -472,7 +472,7 @@ export class Holder extends Component {
 								</div>
 							</div>
 						</div>
-					</footer>
+					</footer> */}
 
 					<a href='/' className='back-to-top'>
 						<i className='fa fa-chevron-up'></i>
