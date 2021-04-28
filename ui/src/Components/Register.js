@@ -95,9 +95,19 @@ export class Register extends Component {
 			.catch((err) => {
 				this.setState({
 					...this.state,
+					redirect: false,
+					first_name: '',
+					last_name: '',
+					email: '',
+					staff_id: '',
+					password: '',
+					password2: '',
+					signature: '',
+					department: '',
+					phone_number: '',
+					loading: false,
 					error: err.message,
 					show: true,
-					loading: false,
 				});
 
 				setTimeout(() => {
@@ -112,8 +122,23 @@ export class Register extends Component {
 	render() {
 		const { departments, auth } = this.props;
 		const { MHKdepartments } = departments;
+
 		const { isAuthenticated } = auth;
-		const { password, password2, redirect, loading, error, show } = this.state;
+		const {
+			password,
+			password2,
+			redirect,
+			loading,
+			error,
+			show,
+			email,
+			signature,
+			first_name,
+			last_name,
+			staff_id,
+			department,
+			phone_number,
+		} = this.state;
 		return (
 			<div className='testbox container'>
 				{redirect && !loading && !error ? (
@@ -171,9 +196,15 @@ export class Register extends Component {
 									id='email'
 									type='email'
 									name='email'
+									value={email}
 									required
 									onChange={this.handleChange}
 								/>
+								{email.endsWith('@mhealthkenya.org') ? null : (
+									<small style={{ color: 'red' }}>
+										Your email must be a valid mHealth Kenya email.
+									</small>
+								)}
 							</div>
 							<div className='item'>
 								<label htmlFor='phone'>
@@ -192,13 +223,16 @@ export class Register extends Component {
 									Department<span>*</span>
 								</label>
 								<select name='department' onChange={this.handleChange}>
-									{MHKdepartments.map((department) => {
-										return (
-											<option key={department.id} value={department.id}>
-												{department.department}
-											</option>
-										);
-									})}
+									<option>Select department</option>
+									{MHKdepartments.length > 0
+										? MHKdepartments.map((department) => {
+												return (
+													<option key={department.id} value={department.id}>
+														{department.department}
+													</option>
+												);
+										  })
+										: null}
 								</select>
 							</div>
 
@@ -226,6 +260,21 @@ export class Register extends Component {
 									required
 									onChange={this.handleChange}
 								/>
+								<small>
+									<p>Your password must be between 8 and 30 characters.</p>
+									<p>
+										Your password must contain at least one uppercase, and one
+										lowercase letter (ex: A, a, etc.).
+									</p>
+									<p>
+										Your password must contain at least one number digit (ex: 0,
+										1, 2, 3, etc.)
+									</p>
+									<p>
+										Your password must contain at least one special character
+										-for example: $, #, @, !,%,^,&,*,(,)
+									</p>
+								</small>
 							</div>
 							<div className='item'>
 								<label htmlFor='password2'>
@@ -239,6 +288,11 @@ export class Register extends Component {
 									required
 									onChange={this.handleChange}
 								/>
+								{password2 && password !== password2 ? (
+									<small style={{ color: 'red' }}>
+										Your passwords do not match
+									</small>
+								) : null}
 							</div>
 						</div>
 						{error && show ? (
@@ -250,11 +304,24 @@ export class Register extends Component {
 						) : null}
 						{!error && loading ? (
 							<CircularProgress />
-						) : !show && !loading ? (
+						) : !show &&
+						  !loading &&
+						  email.endsWith('mhealthkenya.org') &&
+						  signature &&
+						  first_name &&
+						  last_name &&
+						  staff_id &&
+						  department &&
+						  password === password2 &&
+						  phone_number ? (
 							<div className='btn-block'>
 								<button onClick={this.handleRegister}>Register</button>
 							</div>
-						) : null}
+						) : (
+							<p className='lead' style={{ color: 'red' }}>
+								* All fields must be correctly filled before registration
+							</p>
+						)}
 					</form>
 				) : (
 					<Redirect to='/' />
