@@ -195,7 +195,7 @@ export class Holder extends Component {
 										</li>
 									) : null}
 									<li>
-										<a href='/auth/login' onClick={this.handleLogout}>
+										<a href='#' onClick={this.handleLogout}>
 											Logout
 										</a>
 										{/* <button

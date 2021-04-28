@@ -9,6 +9,7 @@ export class Login extends Component {
 		redirect: false,
 		email: '',
 		password: '',
+		show: false,
 	};
 
 	handleChange = (e) => {
@@ -30,11 +31,24 @@ export class Login extends Component {
 				...this.state,
 				redirect: true,
 			});
+		} else {
+			this.setState({
+				...this.state,
+				show: true,
+			});
+
+			setTimeout(() => {
+				this.setState({
+					...this.state,
+					show: false,
+				});
+			}, 5000);
 		}
 	};
 	render() {
 		const { auth } = this.props;
 		const { isAuthenticated, loading } = auth;
+		const { show } = this.state;
 		if (!isAuthenticated) {
 			return (
 				<div className='testbox container mt-3 mb-3'>
@@ -71,13 +85,19 @@ export class Login extends Component {
 								/>
 							</div>
 						</div>
+						{show && !loading ? (
+							<div className='alert alert-danger'>
+								Incorrect credentials. If you entered your correct credentials,
+								please contact support.
+							</div>
+						) : null}
 						{loading ? (
 							<CircularProgress />
-						) : (
+						) : !show && !loading ? (
 							<div className='btn-block'>
 								<button onClick={this.handleLogin}>Login</button>
 							</div>
-						)}
+						) : null}
 					</form>
 				</div>
 			);

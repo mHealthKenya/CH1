@@ -22,6 +22,7 @@ export class Register extends Component {
 		loading: false,
 		error: null,
 		departments: [],
+		show: false,
 	};
 
 	componentDidMount = () => {
@@ -95,8 +96,16 @@ export class Register extends Component {
 				this.setState({
 					...this.state,
 					error: err.message,
+					show: true,
 					loading: false,
 				});
+
+				setTimeout(() => {
+					this.setState({
+						...this.state,
+						show: false,
+					});
+				}, 5000);
 			});
 	};
 
@@ -104,7 +113,7 @@ export class Register extends Component {
 		const { departments, auth } = this.props;
 		const { MHKdepartments } = departments;
 		const { isAuthenticated } = auth;
-		const { password, password2, redirect, loading, error } = this.state;
+		const { password, password2, redirect, loading, error, show } = this.state;
 		return (
 			<div className='testbox container'>
 				{redirect && !loading && !error ? (
@@ -232,9 +241,16 @@ export class Register extends Component {
 								/>
 							</div>
 						</div>
+						{error && show ? (
+							<div className='alert alert-danger'>
+								{' '}
+								Sorry, your account could not be created. Please contact support
+								for assistance.
+							</div>
+						) : null}
 						{!error && loading ? (
 							<CircularProgress />
-						) : !error && !loading ? (
+						) : !show && !loading ? (
 							<div className='btn-block'>
 								<button onClick={this.handleRegister}>Register</button>
 							</div>
