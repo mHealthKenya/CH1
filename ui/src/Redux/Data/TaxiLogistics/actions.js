@@ -24,7 +24,7 @@ export const getRejectedTaxiLogistics = (data) => {
 
 export const getTaxiLogisticsData = (id) => {
 	return (dispatch) => {
-		const url = `http://127.0.0.1:8000/api/taxilogistics/?staff_booking_taxi=${id}`;
+		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/?staff_booking_taxi=${id}`;
 		const rejected = [];
 		const approved = [];
 		const pending = [];
