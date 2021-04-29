@@ -33,160 +33,133 @@ export class Home extends Component {
 			const { first_name, last_name } = auth.user.user;
 			return (
 				<div className='testbox container mt-3 mb-3'>
-					<form>
-						<div className='banner mb-2'>
-							<h1>
-								{first_name} {last_name}'s stats
-							</h1>
-						</div>
-						{/* <br /> */}
-						<section id='hero'>
-							<div className='row'>
-								<div className='columns'>
-									<h2 className='ml-2'>Travel Authorization</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div style={{ textAlign: 'center' }}>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedTA],
-											['Pending', pendingTA],
-											['Rejected', rejectedTA],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-											backgroundColor: '#f5f9f9',
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
-								</div>
-								{/* <div className='columns'>
-									<h2 className='ml-2' >
-										Travel Expense
-									</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedTA],
-											['Pending', pendingTA],
-											['Rejected', rejectedTA],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
-								</div> */}
-								<div className='columns'>
-									<h2 className='ml-2'>Business Advance</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div style={{ textAlign: 'center' }}>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedBA],
-											['Pending', pendingBA],
-											['Rejected', rejectedBA],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-											backgroundColor: '#f5f9f9',
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
-								</div>
+					{approvedTA > 0 ||
+					approvedBA > 0 ||
+					approvedTL > 0 ||
+					approvedPR > 0 ||
+					pendingTA > 0 ||
+					pendingBA > 0 ||
+					pendingTL > 0 ||
+					pendingPR > 0 ||
+					rejectedTA > 0 ||
+					rejectedBA > 0 ||
+					rejectedTL > 0 ||
+					rejectedPR > 0 ? (
+						<form>
+							<div className='banner mb-2'>
+								<h1>
+									{first_name} {last_name}'s stats
+								</h1>
 							</div>
+							{/* <br /> */}
+							<section id='hero'>
+								<div className='row'>
+									{approvedTA > 0 || pendingTA > 0 || rejectedTA > 0 ? (
+										<div className='columns'>
+											<h2 className='ml-2'>Travel Authorization</h2>
+											<Chart
+												height={'400px'}
+												chartType='PieChart'
+												loader={
+													<div style={{ textAlign: 'center' }}>
+														<CircularProgress /> Loading chart
+													</div>
+												}
+												data={[
+													['Task', 'Hours per Day'],
+													['Approved', approvedTA],
+													['Pending', pendingTA],
+													['Rejected', rejectedTA],
+												]}
+												options={{
+													colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+													backgroundColor: '#f5f9f9',
+												}}
+												rootProps={{ 'data-testid': '1' }}
+											/>
+										</div>
+									) : null}
 
-							<div className='row'>
-								{/* <div className='columns'>
-									<h2 className='ml-2' >
-										Business Expense
-									</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedTA],
-											['Pending', pendingTA],
-											['Rejected', rejectedTA],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
-								</div> */}
-								<div className='columns'>
-									<h2 className='ml-2'>Taxi Logistics</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div style={{ textAlign: 'center' }}>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedTL],
-											['Pending', pendingTL],
-											['Rejected', rejectedTL],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-											backgroundColor: '#f5f9f9',
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
+									{approvedBA > 0 || pendingBA > 0 || rejectedBA > 0 ? (
+										<div className='columns'>
+											<h2 className='ml-2'>Business Advance</h2>
+											<Chart
+												height={'400px'}
+												chartType='PieChart'
+												loader={
+													<div style={{ textAlign: 'center' }}>
+														<CircularProgress /> Loading chart
+													</div>
+												}
+												data={[
+													['Task', 'Hours per Day'],
+													['Approved', approvedBA],
+													['Pending', pendingBA],
+													['Rejected', rejectedBA],
+												]}
+												options={{
+													colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+													backgroundColor: '#f5f9f9',
+												}}
+												rootProps={{ 'data-testid': '1' }}
+											/>
+										</div>
+									) : null}
 								</div>
-								<div className='columns'>
-									<h2 className='ml-2'>Purchase Requisition</h2>
-									<Chart
-										height={'400px'}
-										chartType='PieChart'
-										loader={
-											<div style={{ textAlign: 'center' }}>
-												<CircularProgress /> Loading chart
-											</div>
-										}
-										data={[
-											['Task', 'Hours per Day'],
-											['Approved', approvedPR],
-											['Pending', pendingPR],
-											['Rejected', rejectedPR],
-										]}
-										options={{
-											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
-											backgroundColor: '#f5f9f9',
-										}}
-										rootProps={{ 'data-testid': '1' }}
-									/>
+
+								<div className='row'>
+									{approvedTL > 0 || pendingTL > 0 || rejectedTL > 0 ? (
+										<div className='columns'>
+											<h2 className='ml-2'>Taxi Logistics</h2>
+											<Chart
+												height={'400px'}
+												chartType='PieChart'
+												loader={
+													<div style={{ textAlign: 'center' }}>
+														<CircularProgress /> Loading chart
+													</div>
+												}
+												data={[
+													['Task', 'Hours per Day'],
+													['Approved', approvedTL],
+													['Pending', pendingTL],
+													['Rejected', rejectedTL],
+												]}
+												options={{
+													colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+													backgroundColor: '#f5f9f9',
+												}}
+												rootProps={{ 'data-testid': '1' }}
+											/>
+										</div>
+									) : null}
+									{approvedPR > 0 || pendingPR > 0 || rejectedPR > 0 ? (
+										<div className='columns'>
+											<h2 className='ml-2'>Purchase Requisition</h2>
+											<Chart
+												height={'400px'}
+												chartType='PieChart'
+												loader={
+													<div style={{ textAlign: 'center' }}>
+														<CircularProgress /> Loading chart
+													</div>
+												}
+												data={[
+													['Task', 'Hours per Day'],
+													['Approved', approvedPR],
+													['Pending', pendingPR],
+													['Rejected', rejectedPR],
+												]}
+												options={{
+													colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+													backgroundColor: '#f5f9f9',
+												}}
+												rootProps={{ 'data-testid': '1' }}
+											/>
+										</div>
+									) : null}
 								</div>
-							</div>
-							{/* <div className='mt-5'>
+								{/* <div className='mt-5'>
 							<Chart
 								height={'800px'}
 								chartType='PieChart'
@@ -207,8 +180,8 @@ export class Home extends Component {
 								rootProps={{ 'data-testid': '1' }}
 							/>
 						</div> */}
-						</section>
-						{/* <section id='hero'>
+							</section>
+							{/* <section id='hero'>
 						<div className='hero-container' data-aos='fade-in'>
 							<h1>Welcome to mHealthKenya Forms</h1>
 							<h2>
@@ -218,7 +191,7 @@ export class Home extends Component {
 						</div>
 					</section> */}
 
-						{/* <main id='main'>
+							{/* <main id='main'>
 						<section id='features' className='padd-section'>
 							<div className='container' data-aos='fade-up'>
 								<div className='section-title text-center'>
@@ -309,7 +282,18 @@ export class Home extends Component {
 							</div>
 						</section>
 					</main> */}
-					</form>
+						</form>
+					) : (
+						<section id='hero'>
+							<div className='hero-container' data-aos='fade-in'>
+								<h1>Welcome to mHealthKenya Forms</h1>
+								<h2>
+									Hello {first_name} {last_name}. You can now submit your
+									documents online.
+								</h2>
+							</div>
+						</section>
+					)}
 				</div>
 			);
 		} else {
