@@ -45,7 +45,7 @@ export const getRejectedTravelAuthorizationFail = (error) => {
 
 export const requestTravelAuthorizationData = (id) => {
 	return (dispatch) => {
-		const url = `http://127.0.0.1:8000/api/travelauthorization/?staff=3`;
+		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/?staff=${id}`;
 		const rejected = [];
 		const approved = [];
 		const pending = [];
@@ -69,9 +69,9 @@ export const requestTravelAuthorizationData = (id) => {
 					}
 				});
 
-				console.log('Approved', approved.length);
-				console.log('Pending', pending.length);
-				console.log('Rejected', rejected.length);
+				// console.log('Approved', approved.length);
+				// console.log('Pending', pending.length);
+				// console.log('Rejected', rejected.length);
 			})
 			.catch((err) => {
 				const { message } = err;
