@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { requestSupervisor } from '../Redux/General/actions';
 import { requestTravelAuthorizationData } from '../Redux/Data/TravelAuthorization/actions';
+import { requestBusinessAdvanceData } from '../Redux/Data/BusinessAdvance/actions';
+import { getTaxiLogisticsData } from '../Redux/Data/TaxiLogistics/actions';
+import { getPurchaseRequisitionData } from '../Redux/Data/PurchaseRequisition/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Chart from 'react-google-charts';
 
@@ -14,18 +17,176 @@ export class Home extends Component {
 			const { id } = auth.user.user;
 			this.props.requestSupervisor(id);
 			this.props.requestTravelAuthorizationData(id);
+			this.props.requestBusinessAdvanceData(id);
+			this.props.getTaxiLogisticsData(id);
+			this.props.getPurchaseRequisitionData(id);
 		}
 	};
 	render() {
-		const { auth, statsTA } = this.props;
+		const { auth, statsTA, statsBA, statsTL, statsPR } = this.props;
 		const { approvedTA, pendingTA, rejectedTA } = statsTA;
+		const { approvedBA, pendingBA, rejectedBA } = statsBA;
+		const { approvedTL, pendingTL, rejectedTL } = statsTL;
+		const { approvedPR, pendingPR, rejectedPR } = statsPR;
 		const { isAuthenticated } = auth;
 		if (isAuthenticated) {
 			const { first_name, last_name } = auth.user.user;
 			return (
-				<div>
-					<section id='hero'>
-						<div className='mt-5'>
+				<div className='testbox container mt-3 mb-3'>
+					<form>
+						<div className='banner mb-2'>
+							<h1>
+								{first_name} {last_name}'s stats
+							</h1>
+						</div>
+						{/* <br /> */}
+						<section id='hero'>
+							<div className='row'>
+								<div className='columns'>
+									<h2 className='ml-2'>Travel Authorization</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div style={{ textAlign: 'center' }}>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedTA],
+											['Pending', pendingTA],
+											['Rejected', rejectedTA],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+											backgroundColor: '#f5f9f9',
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div>
+								{/* <div className='columns'>
+									<h2 className='ml-2' >
+										Travel Expense
+									</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedTA],
+											['Pending', pendingTA],
+											['Rejected', rejectedTA],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div> */}
+								<div className='columns'>
+									<h2 className='ml-2'>Business Advance</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div style={{ textAlign: 'center' }}>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedBA],
+											['Pending', pendingBA],
+											['Rejected', rejectedBA],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+											backgroundColor: '#f5f9f9',
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div>
+							</div>
+
+							<div className='row'>
+								{/* <div className='columns'>
+									<h2 className='ml-2' >
+										Business Expense
+									</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedTA],
+											['Pending', pendingTA],
+											['Rejected', rejectedTA],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div> */}
+								<div className='columns'>
+									<h2 className='ml-2'>Taxi Logistics</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div style={{ textAlign: 'center' }}>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedTL],
+											['Pending', pendingTL],
+											['Rejected', rejectedTL],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+											backgroundColor: '#f5f9f9',
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div>
+								<div className='columns'>
+									<h2 className='ml-2'>Purchase Requisition</h2>
+									<Chart
+										height={'400px'}
+										chartType='PieChart'
+										loader={
+											<div style={{ textAlign: 'center' }}>
+												<CircularProgress /> Loading chart
+											</div>
+										}
+										data={[
+											['Task', 'Hours per Day'],
+											['Approved', approvedPR],
+											['Pending', pendingPR],
+											['Rejected', rejectedPR],
+										]}
+										options={{
+											colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
+											backgroundColor: '#f5f9f9',
+										}}
+										rootProps={{ 'data-testid': '1' }}
+									/>
+								</div>
+							</div>
+							{/* <div className='mt-5'>
 							<Chart
 								height={'800px'}
 								chartType='PieChart'
@@ -40,15 +201,14 @@ export class Home extends Component {
 									['Pending', pendingTA],
 									['Rejected', rejectedTA],
 								]}
-								options={{
-									title: `${first_name} ${last_name}'s Requests`,
+								options={
 									colors: ['#0a6b0c', '#f2c60e', '#d21e1e'],
 								}}
 								rootProps={{ 'data-testid': '1' }}
 							/>
-						</div>
-					</section>
-					{/* <section id='hero'>
+						</div> */}
+						</section>
+						{/* <section id='hero'>
 						<div className='hero-container' data-aos='fade-in'>
 							<h1>Welcome to mHealthKenya Forms</h1>
 							<h2>
@@ -58,7 +218,7 @@ export class Home extends Component {
 						</div>
 					</section> */}
 
-					{/* <main id='main'>
+						{/* <main id='main'>
 						<section id='features' className='padd-section'>
 							<div className='container' data-aos='fade-up'>
 								<div className='section-title text-center'>
@@ -149,6 +309,7 @@ export class Home extends Component {
 							</div>
 						</section>
 					</main> */}
+					</form>
 				</div>
 			);
 		} else {
@@ -161,6 +322,9 @@ const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
 		statsTA: state.statsTA,
+		statsBA: state.statsBA,
+		statsTL: state.statsTL,
+		statsPR: state.statsPR,
 	};
 };
 
@@ -169,6 +333,12 @@ const mapDispatchToProps = (dispatch) => {
 		requestSupervisor: (id) => dispatch(requestSupervisor(id)),
 		requestTravelAuthorizationData: (id) =>
 			dispatch(requestTravelAuthorizationData(id)),
+		requestBusinessAdvanceData: (id) =>
+			dispatch(requestBusinessAdvanceData(id)),
+
+		getTaxiLogisticsData: (id) => dispatch(getTaxiLogisticsData(id)),
+		getPurchaseRequisitionData: (id) =>
+			dispatch(getPurchaseRequisitionData(id)),
 	};
 };
 

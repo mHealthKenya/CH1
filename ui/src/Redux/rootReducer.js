@@ -34,6 +34,9 @@ import {
 
 import { logoReducer } from './mHealthImages/reducer';
 import { statsTA } from './Data/TravelAuthorization/reducer';
+import { statsBA } from './Data/BusinessAdvance/reducer';
+import { statsTL } from './Data/TaxiLogistics/reducer';
+import { statsPR } from './Data/PurchaseRequisition/reducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -59,6 +62,9 @@ const rootReducer = combineReducers({
 	TES: specificTravelExpenseReducer,
 	logo: logoReducer,
 	statsTA: statsTA,
+	statsBA: statsBA,
+	statsTL: statsTL,
+	statsPR: statsPR,
 });
 
 export default rootReducer;

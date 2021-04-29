@@ -4,6 +4,7 @@ import BaseRouter from './BaseRouter';
 import Holder from './Components/Holder';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/style.css';
+import './assets/css/display.css';
 import './assets/css/forms.css';
 import './assets/css/buttons.css';
 import './assets/vendor/font-awesome/css/font-awesome.css';

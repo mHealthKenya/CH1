@@ -41,6 +41,7 @@ class TravelAuthorizationFinanceViewSet(viewsets.ModelViewSet):
 class TravelExpenseReportViewSet(viewsets.ModelViewSet):
     queryset = TravelExpenseReport.objects.all()
     serializer_class = TravelExpenseReportSerializer
+    filter_fields = ['request']
 
 class TravelExpenseReportFinanceViewSet(viewsets.ModelViewSet):
     queryset = TravelExpenseReportFinance.objects.all()
