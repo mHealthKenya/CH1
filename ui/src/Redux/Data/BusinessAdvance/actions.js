@@ -32,16 +32,32 @@ export const requestBusinessAdvanceData = (id) => {
 			.get(url)
 			.then((res) => {
 				const { data } = res;
+				console.log('Test');
 				data.forEach((info) => {
 					if (info.finance_reviewed && !info.finance_comment) {
-						approved.push(info.id);
-						dispatch(getApprovedBusinessAdvance(approved.length));
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/businessadvancerequest/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							approved.push(id);
+							dispatch(getApprovedBusinessAdvance(approved.length));
+						});
 					} else if (info.finance_comment && !info.finance_reviewed) {
-						rejected.push(info.id);
-						dispatch(getRejectedBusinessAdvance(rejected.length));
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/businessadvancerequest/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							rejected.push(id);
+							dispatch(getRejectedBusinessAdvance(rejected.length));
+						});
 					} else if (!info.finance_comment && !info.finance_reviewed) {
-						pending.push(info.id);
-						dispatch(getPendingBusinessAdvance(pending.length));
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/businessadvancerequest/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							pending.push(id);
+							dispatch(getPendingBusinessAdvance(pending.length));
+						});
 					}
 				});
 			})

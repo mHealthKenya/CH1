@@ -32,14 +32,32 @@ export const getPurchaseRequisitionData = (id) => {
 			const { data } = res;
 			data.forEach((info) => {
 				if (info.ceo_approved && !info.ceo_comments) {
-					approved.push(info.id);
-					dispatch(getApprovedPurchaseRequests(approved.length));
+					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
+					axios.get(url).then((res) => {
+						const { data } = res;
+						const { id } = data;
+						approved.push(id);
+						console.log('Approved PR', approved.length);
+						dispatch(getApprovedPurchaseRequests(approved.length));
+					});
 				} else if (info.ceo_comments && !info.ceo_approved) {
-					rejected.push(info.id);
-					dispatch(getRejectedPurchaseRequests(rejected.length));
+					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
+					axios.get(url).then((res) => {
+						const { data } = res;
+						const { id } = data;
+						rejected.push(id);
+						console.log('Rejected PR', rejected.length);
+						dispatch(getRejectedPurchaseRequests(rejected.length));
+					});
 				} else if (!info.ceo_comments && !info.ceo_approved) {
-					pending.push(info.id);
-					dispatch(getPendingPurchaseRequests(pending.length));
+					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
+					axios.get(url).then((res) => {
+						const { data } = res;
+						const { id } = data;
+						pending.push(id);
+						console.log('Pending PR', pending.length);
+						dispatch(getPendingPurchaseRequests(pending.length));
+					});
 				}
 			});
 		});

@@ -55,23 +55,34 @@ export const requestTravelAuthorizationData = (id) => {
 				const { data } = res;
 				data.forEach((info) => {
 					if (info.supervisor_comment) {
-						rejected.push(info.id);
-						dispatch(getRejectedTravelAuthorization(rejected.length));
-						// console.log('Rejected', rejected.length);
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							rejected.push(id);
+							dispatch(getRejectedTravelAuthorization(rejected.length));
+							console.log('RejectedTA', rejected.length);
+						});
 					} else if (!info.supervisor_comment && info.approved) {
-						approved.push(info.id);
-						dispatch(getApprovedTravelAuthorization(approved.length));
-						// console.log('Approved', approved.length);
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							approved.push(id);
+							dispatch(getApprovedTravelAuthorization(approved.length));
+							console.log('ApprovedTA', approved.length);
+						});
 					} else if (!info.approved && !info.supervisor_comment) {
-						pending.push(info.id);
-						dispatch(getPendingTravelAuthorization(pending.length));
-						// console.log('Pending', pending.length);
+						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						axios.get(url).then((res) => {
+							const { data } = res;
+							const { id } = data;
+							pending.push(id);
+							dispatch(getPendingTravelAuthorization(pending.length));
+							console.log('PendingTA', pending.length);
+						});
 					}
 				});
-
-				// console.log('Approved', approved.length);
-				// console.log('Pending', pending.length);
-				// console.log('Rejected', rejected.length);
 			})
 			.catch((err) => {
 				const { message } = err;
