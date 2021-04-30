@@ -94,8 +94,13 @@ export class Login extends Component {
 						{loading ? (
 							<CircularProgress />
 						) : !show && !loading ? (
-							<div className='btn-block'>
-								<button onClick={this.handleLogin}>Login</button>
+							<div>
+								<div className='btn-block' style={{ flex: 1 }}>
+									<button onClick={this.handleLogin}>Login</button>{' '}
+									<small>
+										Or register <a href='/auth/register'>here</a>
+									</small>
+								</div>
 							</div>
 						) : null}
 					</form>

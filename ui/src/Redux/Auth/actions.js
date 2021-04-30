@@ -46,8 +46,7 @@ export const logoutFail = (error) => {
 export const userLogin = (email, password) => {
 	return (dispatch) => {
 		dispatch(authStart());
-		const loginUrl =
-			'http://api-finance-docs.mhealthkenya.co.ke/auth/api/login/';
+		const loginUrl = 'http://forms.mhealthkenya.co.ke/auth/api/login/';
 		const body = { email, password };
 		axios
 			.post(loginUrl, body)
@@ -65,8 +64,7 @@ export const userLogin = (email, password) => {
 export const userLogout = () => {
 	return (dispatch, getState) => {
 		dispatch(logoutStart());
-		const logoutUrl =
-			'http://api-finance-docs.mhealthkenya.co.ke/auth/api/logout/';
+		const logoutUrl = 'http://forms.mhealthkenya.co.ke/auth/api/logout/';
 		axios
 			.post(logoutUrl, null, configHelper(getState))
 			.then(() => {

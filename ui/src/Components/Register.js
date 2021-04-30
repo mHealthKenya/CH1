@@ -320,9 +320,14 @@ export class Register extends Component {
 								<button onClick={this.handleRegister}>Register</button>
 							</div>
 						) : (
-							<p className='lead' style={{ color: 'red' }}>
-								* All fields must be correctly filled before registration
-							</p>
+							<div>
+								<p className='lead' style={{ color: 'red' }}>
+									* All fields must be correctly filled before registration
+								</p>
+								<small>
+									Already have an account? Login <a href='/auth/login'>here</a>
+								</small>
+							</div>
 						)}
 					</form>
 				) : (
