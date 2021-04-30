@@ -25,6 +25,7 @@ export const getRejectedTaxiLogistics = (data) => {
 export const getTaxiLogisticsData = (id) => {
 	return (dispatch) => {
 		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/?staff_booking_taxi=${id}`;
+		console.log(url);
 		const rejected = [];
 		const approved = [];
 		const pending = [];
@@ -33,18 +34,20 @@ export const getTaxiLogisticsData = (id) => {
 			.then((res) => {
 				const { data } = res;
 				console.log(data);
-				data.forEach((info) => {
-					if (info.supervisor_approved && !info.supervisor_comment) {
-						approved.push(info.id);
-						dispatch(getApprovedTaxiLogistics(approved.length));
-					} else if (!info.supervisor_approved && !info.supervisor_comment) {
-						pending.push(info.id);
-						dispatch(getPendingTaxiLogistics(pending.length));
-					} else if (!info.supervisor_approved && info.supervisor_comment) {
-						rejected.push(info.id);
-						dispatch(getRejectedTaxiLogistics(rejected.length));
-					}
-				});
+				if (data.length > 0) {
+					data.forEach((info) => {
+						if (info.supervisor_approved && !info.supervisor_comment) {
+							approved.push(info.id);
+							dispatch(getApprovedTaxiLogistics(approved.length));
+						} else if (!info.supervisor_approved && !info.supervisor_comment) {
+							pending.push(info.id);
+							dispatch(getPendingTaxiLogistics(pending.length));
+						} else if (!info.supervisor_approved && info.supervisor_comment) {
+							rejected.push(info.id);
+							dispatch(getRejectedTaxiLogistics(rejected.length));
+						}
+					});
+				}
 			})
 			.catch((err) => {
 				console.log(err.message);
