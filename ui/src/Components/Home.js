@@ -26,6 +26,7 @@ export class Home extends Component {
 			this.props.getPurchaseRequisitionData(id);
 		}
 	};
+
 	render() {
 		const { auth, statsTA, statsBA, statsTL, statsPR } = this.props;
 		const { approvedTA, pendingTA, rejectedTA } = statsTA;

@@ -37,14 +37,41 @@ export const getTaxiLogisticsData = (id) => {
 				if (data.length > 0) {
 					data.forEach((info) => {
 						if (info.supervisor_approved && !info.supervisor_comment) {
-							approved.push(info.id);
-							dispatch(getApprovedTaxiLogistics(approved.length));
+							axios
+								.get(
+									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
+								)
+								.then((res) => {
+									const { data } = res;
+									const { id } = data;
+									approved.push(id);
+									dispatch(getApprovedTaxiLogistics(approved.length));
+									console.log(approved.length);
+								});
 						} else if (!info.supervisor_approved && !info.supervisor_comment) {
-							pending.push(info.id);
-							dispatch(getPendingTaxiLogistics(pending.length));
+							axios
+								.get(
+									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
+								)
+								.then((res) => {
+									const { data } = res;
+									const { id } = data;
+									pending.push(id);
+									dispatch(getPendingTaxiLogistics(pending.length));
+									console.log(pending.length);
+								});
 						} else if (!info.supervisor_approved && info.supervisor_comment) {
-							rejected.push(info.id);
-							dispatch(getRejectedTaxiLogistics(rejected.length));
+							axios
+								.get(
+									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
+								)
+								.then((res) => {
+									const { data } = res;
+									const { id } = data;
+									rejected.push(id);
+									dispatch(getPendingTaxiLogistics(rejected.length));
+									console.log(rejected.length);
+								});
 						}
 					});
 				}
