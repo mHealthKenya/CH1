@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { requestSupervisor } from '../Redux/General/actions';
+import {
+	requestSupervisor,
+	requestSupervisors,
+} from '../Redux/General/actions';
 import { requestTravelAuthorizationData } from '../Redux/Data/TravelAuthorization/actions';
 import { requestBusinessAdvanceData } from '../Redux/Data/BusinessAdvance/actions';
 import { getTaxiLogisticsData } from '../Redux/Data/TaxiLogistics/actions';
@@ -16,6 +19,7 @@ export class Home extends Component {
 		if (isAuthenticated) {
 			const { id } = auth.user.user;
 			this.props.requestSupervisor(id);
+			this.props.requestSupervisors();
 			this.props.requestTravelAuthorizationData(id);
 			this.props.requestBusinessAdvanceData(id);
 			this.props.getTaxiLogisticsData(id);
@@ -323,6 +327,7 @@ const mapDispatchToProps = (dispatch) => {
 		getTaxiLogisticsData: (id) => dispatch(getTaxiLogisticsData(id)),
 		getPurchaseRequisitionData: (id) =>
 			dispatch(getPurchaseRequisitionData(id)),
+		requestSupervisors: () => dispatch(requestSupervisors()),
 	};
 };
 
