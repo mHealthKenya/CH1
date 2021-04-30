@@ -69,8 +69,8 @@ export const getTaxiLogisticsData = (id) => {
 									const { data } = res;
 									const { id } = data;
 									rejected.push(id);
-									dispatch(getPendingTaxiLogistics(rejected.length));
-									console.log(rejected.length);
+									dispatch(getRejectedTaxiLogistics(rejected.length));
+									console.log('Rejected', rejected.length);
 								});
 						}
 					});
