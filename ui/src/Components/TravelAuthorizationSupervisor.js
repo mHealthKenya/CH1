@@ -188,7 +188,11 @@ export class TravelAuthorizationSupervisor extends Component {
 		const { showDisapprove, show } = this.state;
 		const { auth, sTAS, specificTA } = this.props;
 		const { travelAuthorization, other } = specificTA;
-		const { amount } = other[0];
+		let otherAmount = 0;
+		if (other.length > 0) {
+			const { amount } = other[0];
+			otherAmount += amount;
+		}
 		const { supervisorTravelAuthorization } = sTAS;
 		const { isAuthenticated } = auth;
 		return (
@@ -226,7 +230,8 @@ export class TravelAuthorizationSupervisor extends Component {
 								<b>Purpose of travel: </b> {travelAuthorization.purpose}
 							</p>
 							<p className='lead'>
-								<b>Amount Requested: </b> {travelAuthorization.total + amount}
+								<b>Amount Requested: </b>{' '}
+								{travelAuthorization.total + otherAmount}
 							</p>
 						</Modal.Body>
 						<Modal.Footer>
