@@ -44,7 +44,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 	};
 
 	handleDisApproveView = (id) => {
-		this.props.getSpecificPurchaseData(id);
+		this.props.getSpecificBARData(id);
 		this.setState({
 			...this.state,
 			showDisapprove: true,
