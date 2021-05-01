@@ -198,11 +198,6 @@ export class Holder extends Component {
 										<a href='#' onClick={this.handleLogout}>
 											Logout
 										</a>
-										{/* <button
-											className='enjoy-css-info'
-											onClick={this.handleLogout}>
-											Logout
-										</button> */}
 									</li>
 								</ul>
 							</nav>

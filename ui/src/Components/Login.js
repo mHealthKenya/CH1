@@ -22,32 +22,23 @@ export class Login extends Component {
 
 	handleLogin = (e) => {
 		e.preventDefault();
-		const { auth } = this.props;
-		const { error } = auth;
 		const { email, password } = this.state;
 		this.props.userLogin(email, password);
-		if (!error) {
-			this.setState({
-				...this.state,
-				redirect: true,
-			});
-		} else {
-			this.setState({
-				...this.state,
-				show: true,
-			});
+		this.setState({
+			...this.state,
+			show: true,
+		});
 
-			setTimeout(() => {
-				this.setState({
-					...this.state,
-					show: false,
-				});
-			}, 5000);
-		}
+		setTimeout(() => {
+			this.setState({
+				...this.state,
+				show: false,
+			});
+		}, 5000);
 	};
 	render() {
 		const { auth } = this.props;
-		const { isAuthenticated, loading } = auth;
+		const { isAuthenticated, loading, error } = auth;
 		const { show } = this.state;
 		if (!isAuthenticated) {
 			return (
@@ -85,7 +76,7 @@ export class Login extends Component {
 								/>
 							</div>
 						</div>
-						{show && !loading ? (
+						{show && !loading && error ? (
 							<div className='alert alert-danger'>
 								Incorrect credentials. If you entered your correct credentials,
 								please contact support.

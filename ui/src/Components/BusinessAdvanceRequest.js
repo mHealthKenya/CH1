@@ -16,6 +16,7 @@ export class BusinessAdvanceRequest extends Component {
 		project: null,
 		supervisor: null,
 		show: false,
+		redirect: false,
 	};
 	componentDidMount = () => {
 		this.props.requestAccountCodes();
@@ -38,6 +39,7 @@ export class BusinessAdvanceRequest extends Component {
 			project: null,
 			supervisor: null,
 			show: false,
+			redirect: true,
 		});
 	};
 
@@ -64,122 +66,128 @@ export class BusinessAdvanceRequest extends Component {
 	render() {
 		const { auth, projects, supervisors, BAR } = this.props;
 		const { BARError } = BAR;
-		const { show, description, amount } = this.state;
+		const { show, description, amount, redirect } = this.state;
 		const { MHKprojects } = projects;
 		const { isAuthenticated } = auth;
 		return (
 			<div className='testbox container mt-3 mb-3'>
 				{isAuthenticated ? (
-					<form>
-						<div>
-							{BARError ? (
-								<Modal
-									title={<h2 style={{ color: 'red' }}>Oops!</h2>}
-									visible={show}
-									// onOk={handleOk}
-									// onCancel={handleCancel}
-									footer={[
-										<div
-											className='btn btn-success btn-sm'
-											onClick={this.handleClose}>
-											Close
-										</div>,
-									]}>
-									<p className='lead' style={{ color: 'red' }}>
-										We encountered a problem. Please try again.
-										<br />
-										If the problem persists please contact support.
-									</p>
-								</Modal>
-							) : show && !BARError ? (
-								<Modal
-									title={<h2 style={{ color: 'blue' }}>Success</h2>}
-									visible={show}
-									// onOk={handleOk}
-									// onCancel={handleCancel}
-									footer={[
-										<div
-											className='btn btn-success btn-sm'
-											onClick={this.handleClose}>
-											Close
-										</div>,
-									]}>
-									<p className='lead'>
-										Business Advance successfully submitted
-									</p>
-								</Modal>
-							) : null}
-							<div className='banner'>
-								<h1>Business Advance Request</h1>
-							</div>
-							<div>
-								{/* You can set className='colums' to put the forms in rows... */}
-								<div className='item'>
-									<label htmlFor='description'>
-										{' '}
-										Description<span>*</span>
-									</label>
-									<textarea
-										id='description'
-										type='text'
-										name='description'
-										value={description}
-										onChange={this.handleChange}
-										required
-									/>
+					<>
+						{!redirect ? (
+							<form>
+								<div>
+									{BARError ? (
+										<Modal
+											title={<h2 style={{ color: 'red' }}>Oops!</h2>}
+											visible={show}
+											// onOk={handleOk}
+											// onCancel={handleCancel}
+											footer={[
+												<div
+													className='btn btn-success btn-sm'
+													onClick={this.handleClose}>
+													Close
+												</div>,
+											]}>
+											<p className='lead' style={{ color: 'red' }}>
+												We encountered a problem. Please try again.
+												<br />
+												If the problem persists please contact support.
+											</p>
+										</Modal>
+									) : show && !BARError ? (
+										<Modal
+											title={<h2 style={{ color: 'blue' }}>Success</h2>}
+											visible={show}
+											// onOk={handleOk}
+											// onCancel={handleCancel}
+											footer={[
+												<div
+													className='btn btn-success btn-sm'
+													onClick={this.handleClose}>
+													Close
+												</div>,
+											]}>
+											<p className='lead'>
+												Business Advance successfully submitted
+											</p>
+										</Modal>
+									) : null}
+									<div className='banner'>
+										<h1>Business Advance Request</h1>
+									</div>
+									<div>
+										{/* You can set className='colums' to put the forms in rows... */}
+										<div className='item'>
+											<label htmlFor='description'>
+												{' '}
+												Description<span>*</span>
+											</label>
+											<textarea
+												id='description'
+												type='text'
+												name='description'
+												value={description}
+												onChange={this.handleChange}
+												required
+											/>
+										</div>
+										<div className='item'>
+											<label htmlFor='amount'>
+												{' '}
+												Amount in Ksh<span>*</span>
+											</label>
+											<input
+												id='amount'
+												type='number'
+												name='amount'
+												value={amount}
+												onChange={this.handleChange}
+												required
+											/>
+										</div>
+									</div>
+									<div className='item'>
+										<label htmlFor='project'>
+											{' '}
+											Project<span>*</span>
+										</label>
+										<select name='project' onChange={this.handleChange}>
+											<option>Select project</option>
+											{MHKprojects.map((project) => {
+												return (
+													<option key={project.id} value={project.id}>
+														{project.project}
+													</option>
+												);
+											})}
+										</select>
+									</div>
+									<div className='item'>
+										<label htmlFor='supervisor'>
+											{' '}
+											Supervisor<span>*</span>
+										</label>
+										<select name='supervisor' onChange={this.handleChange}>
+											<option>Select supervisor</option>
+											{supervisors.map((supervisor) => {
+												return (
+													<option key={supervisor.id} value={supervisor.id}>
+														{supervisor.supervisor_name}
+													</option>
+												);
+											})}
+										</select>
+									</div>
+									<div className='btn-block'>
+										<button onClick={this.handleSubmit}>Submit</button>
+									</div>
 								</div>
-								<div className='item'>
-									<label htmlFor='amount'>
-										{' '}
-										Amount in Ksh<span>*</span>
-									</label>
-									<input
-										id='amount'
-										type='number'
-										name='amount'
-										value={amount}
-										onChange={this.handleChange}
-										required
-									/>
-								</div>
-							</div>
-							<div className='item'>
-								<label htmlFor='project'>
-									{' '}
-									Project<span>*</span>
-								</label>
-								<select name='project' onChange={this.handleChange}>
-									<option>Select project</option>
-									{MHKprojects.map((project) => {
-										return (
-											<option key={project.id} value={project.id}>
-												{project.project}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className='item'>
-								<label htmlFor='supervisor'>
-									{' '}
-									Supervisor<span>*</span>
-								</label>
-								<select name='supervisor' onChange={this.handleChange}>
-									<option>Select supervisor</option>
-									{supervisors.map((supervisor) => {
-										return (
-											<option key={supervisor.id} value={supervisor.id}>
-												{supervisor.supervisor_name}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-							<div className='btn-block'>
-								<button onClick={this.handleSubmit}>Submit</button>
-							</div>
-						</div>
-					</form>
+							</form>
+						) : (
+							<Redirect to='/' />
+						)}
+					</>
 				) : (
 					<Redirect to='/auth/login' />
 				)}
