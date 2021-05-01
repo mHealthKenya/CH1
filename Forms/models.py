@@ -73,7 +73,7 @@ class TravelAuthorization(models.Model):
 
     class Meta:
         verbose_name_plural = 'TravelAuthorization'
-        ordering = ['-id']
+        ordering = ['approved', '-id']
 
 class Other(models.Model):
     request = models.ForeignKey(TravelAuthorization, on_delete = models.CASCADE)
