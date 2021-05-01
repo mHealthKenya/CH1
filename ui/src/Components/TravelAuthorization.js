@@ -12,7 +12,7 @@ export class TravelAuthorization extends Component {
 	state = {
 		datefrom: '',
 		dateto: '',
-		other: 0,
+		other: '0',
 		destination: '',
 		accommodation: '',
 		project_to_charge: null,
@@ -25,17 +25,32 @@ export class TravelAuthorization extends Component {
 		show: false,
 		error: null,
 		redirect: false,
+		lodging: null,
+		mie: null,
 	};
 
 	componentDidMount = () => {
+		const url = 'lodgingmie/1/';
+		axios.get(url).then((res) => {
+			const { data } = res;
+			const { lodging, mie } = data;
+			this.setState({
+				...this.state,
+				lodging: lodging,
+				mie: mie,
+			});
+		});
 		this.props.requestProjects();
 		this.props.requestSupervisors();
 		const { auth } = this.props;
-		const { id } = auth.user.user;
-		this.setState({
-			...this.state,
-			staff: id,
-		});
+		const { isAuthenticated } = auth;
+		if (isAuthenticated) {
+			const { id } = auth.user.user;
+			this.setState({
+				...this.state,
+				staff: id,
+			});
+		}
 	};
 
 	handleClose = () => {
@@ -65,7 +80,6 @@ export class TravelAuthorization extends Component {
 			...this.state,
 			[name]: value,
 		});
-		console.log(this.state);
 	};
 
 	handleAccomodation = () => {
@@ -201,12 +215,18 @@ export class TravelAuthorization extends Component {
 			show,
 			destination,
 			redirect,
+			lodging,
+			mie,
 		} = this.state;
 		const { supervisors } = this.props.supervisors;
 		const { auth } = this.props;
 		const { projects } = this.props;
 		const { MHKprojects } = projects;
 		const { isAuthenticated } = auth;
+		const travelPeriod =
+			(new Date(dateto) - new Date(datefrom)) / (1000 * 3600 * 24);
+
+		const base = mie + lodging;
 
 		return (
 			<div className='testbox container mt-3 mb-3'>
@@ -322,15 +342,14 @@ export class TravelAuthorization extends Component {
 												onChange={this.handleChange}
 												required
 											/>
-											{/* {travelPeriod < 0 ? (
-                  <small
-                    id="dateschecker"
-                    className="form-text"
-                    style={{ color: "red" }}
-                  >
-                    Date from cannot be later than date to.
-                  </small>
-                ) : null} */}
+											{travelPeriod < 0 ? (
+												<small
+													id='dateschecker'
+													className='form-text'
+													style={{ color: 'red' }}>
+													Date from cannot be later than date to.
+												</small>
+											) : null}
 										</div>
 										<div className='item'>
 											<label htmlFor='project'>
@@ -469,6 +488,25 @@ export class TravelAuthorization extends Component {
 											</div>
 										</div>
 									</div>
+									{new Date(dateto) > new Date(datefrom) ? (
+										<div className='item'>
+											<label htmlFor='other'>Total Amount to Request</label>
+											<input
+												id='total'
+												type='number'
+												name='total'
+												value={`${
+													base *
+														((new Date(dateto) - new Date(datefrom)) /
+															(3600 * 24 * 1000) +
+															1) -
+													(0.5 * mie + 4900) +
+													parseInt(other)
+												}`}
+												readOnly
+											/>
+										</div>
+									) : null}
 									<hr />
 									<br />
 									<div>
@@ -549,6 +587,7 @@ export class TravelAuthorization extends Component {
 									destination &&
 									datefrom &&
 									dateto &&
+									new Date(dateto) > new Date(datefrom) &&
 									supervisor &&
 									project_to_charge ? (
 										<div className='btn-block'>
