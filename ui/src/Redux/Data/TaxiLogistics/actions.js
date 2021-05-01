@@ -25,10 +25,9 @@ export const getRejectedTaxiLogistics = (data) => {
 export const getTaxiLogisticsData = (id) => {
 	return (dispatch) => {
 		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/?staff_booking_taxi=${id}`;
-		console.log(url);
-		const rejected = [];
-		const approved = [];
-		const pending = [];
+		let rejected = 0;
+		let approved = 0;
+		let pending = 0;
 		axios
 			.get(url)
 			.then((res) => {
@@ -42,23 +41,26 @@ export const getTaxiLogisticsData = (id) => {
 									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
 								)
 								.then((res) => {
-									const { data } = res;
-									const { id } = data;
-									approved.push(id);
-									dispatch(getApprovedTaxiLogistics(approved.length));
-									console.log(approved.length);
+									approved += 1;
+									// const { data } = res;
+									// const { id } = data;
+									// approved.push(id);
+									dispatch(getApprovedTaxiLogistics(approved));
+									dispatch(getPendingTaxiLogistics(pending));
+									dispatch(getRejectedTaxiLogistics(rejected));
+									console.log('Approved TL', approved);
 								});
 						} else if (!info.supervisor_approved && !info.supervisor_comment) {
 							axios
 								.get(
 									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
 								)
-								.then((res) => {
-									const { data } = res;
-									const { id } = data;
-									pending.push(id);
-									dispatch(getPendingTaxiLogistics(pending.length));
-									console.log(pending.length);
+								.then(() => {
+									pending += 1;
+									dispatch(getPendingTaxiLogistics(pending));
+									dispatch(getApprovedTaxiLogistics(approved));
+									dispatch(getRejectedTaxiLogistics(rejected));
+									console.log('PendingTL', pending);
 								});
 						} else if (!info.supervisor_approved && info.supervisor_comment) {
 							axios
@@ -66,11 +68,11 @@ export const getTaxiLogisticsData = (id) => {
 									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
 								)
 								.then((res) => {
-									const { data } = res;
-									const { id } = data;
-									rejected.push(id);
-									dispatch(getRejectedTaxiLogistics(rejected.length));
-									console.log('Rejected', rejected.length);
+									rejected += 1;
+									dispatch(getPendingTaxiLogistics(pending));
+									dispatch(getApprovedTaxiLogistics(approved));
+									dispatch(getRejectedTaxiLogistics(rejected));
+									console.log('Rejected', rejected);
 								});
 						}
 					});

@@ -46,9 +46,9 @@ export const getRejectedTravelAuthorizationFail = (error) => {
 export const requestTravelAuthorizationData = (id) => {
 	return (dispatch) => {
 		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/?staff=${id}`;
-		const rejected = [];
-		const approved = [];
-		const pending = [];
+		let rejected = 0;
+		let approved = 0;
+		let pending = 0;
 		axios
 			.get(url)
 			.then((res) => {
@@ -56,30 +56,30 @@ export const requestTravelAuthorizationData = (id) => {
 				data.forEach((info) => {
 					if (info.supervisor_comment) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
-						axios.get(url).then((res) => {
-							const { data } = res;
-							const { id } = data;
-							rejected.push(id);
-							dispatch(getRejectedTravelAuthorization(rejected.length));
-							console.log('RejectedTA', rejected.length);
+						axios.get(url).then(() => {
+							rejected += 1;
+							dispatch(getApprovedTravelAuthorization(approved));
+							dispatch(getPendingTravelAuthorization(pending));
+							dispatch(getRejectedTravelAuthorization(rejected));
+							console.log('RejectedTA', rejected);
 						});
 					} else if (!info.supervisor_comment && info.approved) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
-						axios.get(url).then((res) => {
-							const { data } = res;
-							const { id } = data;
-							approved.push(id);
-							dispatch(getApprovedTravelAuthorization(approved.length));
-							console.log('ApprovedTA', approved.length);
+						axios.get(url).then(() => {
+							approved += 1;
+							dispatch(getApprovedTravelAuthorization(approved));
+							dispatch(getPendingTravelAuthorization(pending));
+							dispatch(getRejectedTravelAuthorization(rejected));
+							console.log('ApprovedTA', approved);
 						});
 					} else if (!info.approved && !info.supervisor_comment) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
-						axios.get(url).then((res) => {
-							const { data } = res;
-							const { id } = data;
-							pending.push(id);
-							dispatch(getPendingTravelAuthorization(pending.length));
-							console.log('PendingTA', pending.length);
+						axios.get(url).then(() => {
+							pending += 1;
+							dispatch(getApprovedTravelAuthorization(approved));
+							dispatch(getPendingTravelAuthorization(pending));
+							dispatch(getRejectedTravelAuthorization(rejected));
+							console.log('PendingTA', pending);
 						});
 					}
 				});

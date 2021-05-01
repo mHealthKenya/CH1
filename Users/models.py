@@ -167,7 +167,7 @@ class PurchaseRequisition(models.Model):
 
     class Meta:
         verbose_name_plural = 'Purchase Requisition'
-        ordering = ['supervisor_approved', '-id']
+        ordering = ['ceo_approved', 'finance_approved', 'supervisor_approved', '-id']
 
     @property
     def requester_name(self):
@@ -362,7 +362,7 @@ class TaxiLogistics(models.Model):
 
     class Meta:
         verbose_name_plural = 'TaxiLogistics'
-        ordering = ['-id']
+        ordering = ['supervisor_approved', '-id']
 
     @property
     def project_name(self):
@@ -404,7 +404,7 @@ class BusinessAdvanceRequest(models.Model):
     reported = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['finance_reviewed', 'approved', '-id']
 
     @property
     def project_name(self):

@@ -13,6 +13,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Chart from 'react-google-charts';
 
 export class Home extends Component {
+	state = {
+		taxi: [],
+	};
 	componentDidMount = () => {
 		const { auth } = this.props;
 		const { isAuthenticated } = auth;
