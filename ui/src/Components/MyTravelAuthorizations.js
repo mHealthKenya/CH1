@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import Modal from "react-bootstrap/Modal";
+import axios from "axios";
 
 // import moment from "moment";
 import {
 	requestEmployeeTravelAuthorization,
 	requestSpecificTravelAuthorization,
-} from '../Redux/TravelAuthorization/actions';
+} from "../Redux/TravelAuthorization/actions";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
 
 export class MyTravelAuthorizations extends Component {
 	state = {
@@ -63,47 +63,47 @@ export class MyTravelAuthorizations extends Component {
 		const { supervisorTravelAuthorization } = sTAS;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				{ID ? (
 					<Redirect to={`/docs/travelexpensereport/${ID}`} />
 				) : (
 					<div>
 						<Modal
 							show={show}
-							size='lg'
-							aria-labelledby='contained-modal-title-vcenter'
+							size="lg"
+							aria-labelledby="contained-modal-title-vcenter"
 							centered>
 							<Modal.Header closeButton>
-								<Modal.Title id='contained-modal-title-vcenter'>
+								<Modal.Title id="contained-modal-title-vcenter">
 									{travelAuthorization.staff_name}'s Request
 								</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
-								<p className='lead'>
+								<p className="lead">
 									<b>Project: </b>
 									{travelAuthorization.project_name}
 								</p>
 
-								<p className='lead'>
+								<p className="lead">
 									<b>Period In Days: </b>
 									{travelAuthorization.period}
 								</p>
 
-								<p className='lead'>
+								<p className="lead">
 									<b>Destination: </b>
 									{travelAuthorization.destination}
 								</p>
 							</Modal.Body>
 							<Modal.Footer>
 								<div
-									className='btn btn-outline btn-secondary'
+									className="btn btn-outline btn-secondary"
 									onClick={this.handleClose}>
 									Close
 								</div>
 
 								{travelAuthorization.approved ? (
 									<div
-										className='btn btn-outline btn-success'
+										className="btn btn-outline btn-success"
 										onClick={() => this.handleReport(travelAuthorization.id)}>
 										Report
 									</div>
@@ -113,13 +113,13 @@ export class MyTravelAuthorizations extends Component {
 
 						{isAuthenticated ? (
 							<form>
-								<div className='banner'>
-									<h1 className='ml-2 mr-2'>
+								<div className="banner">
+									<h1 className="ml-2 mr-2">
 										Approved / Under review Travel Authorizations
 									</h1>
 								</div>
-								<div className='table-responsive'>
-									<table className='table table-striped'>
+								<div className="table-responsive">
+									<table className="table table-striped">
 										<thead>
 											<tr>
 												<th>Purpose of Travel</th>
@@ -140,23 +140,23 @@ export class MyTravelAuthorizations extends Component {
                           <td>{request.period}</td>
                           <td>{request.project_name}</td> */}
 														{request.supervisor_comment ? (
-															<td style={{ color: 'red' }}>Rejected</td>
+															<td style={{ color: "red" }}>Rejected</td>
 														) : request.supervisor_approved ? (
-															<td style={{ color: 'green' }}>Approved</td>
+															<td style={{ color: "green" }}>Approved</td>
 														) : (
-															<td style={{ color: 'yellow' }}>Under Review</td>
+															<td style={{ color: "yellow" }}>Under Review</td>
 														)}
 														<td>
 															<img
 																src={request.staff_signature}
 																width={50}
 																height={50}
-																alt='signature'
+																alt="signature"
 															/>
 														</td>
 														<td>
 															<div
-																className='btn btn-info btn-sm'
+																className="btn btn-info btn-sm"
 																onClick={() => this.handleView(request.id)}>
 																View
 															</div>
@@ -169,7 +169,7 @@ export class MyTravelAuthorizations extends Component {
 								</div>
 							</form>
 						) : (
-							<Redirect to='/auth/login' />
+							<Redirect to="/auth/login" />
 						)}
 					</div>
 				)}
