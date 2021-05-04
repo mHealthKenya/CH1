@@ -10,6 +10,10 @@ from knox.models import AuthToken
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import filters
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from django.shortcuts import redirect
+from rest_framework import status
 
 
 class UsersSerializer(serializers.ModelSerializer):
@@ -128,5 +132,60 @@ class BusinessExpenseReportFinanceViewSet(viewsets.ModelViewSet):
     queryset = BusinessExpenseReportFinance.objects.all()
     serializer_class = BusinessExpenseFinanceSerializer
     filterset_fields = ['request']
+
+class RequestPasswordResetView(generics.GenericAPIView):
+    serializer_class = RequestPasswordResetSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        email = request.data['email']
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+            current_site = get_current_site(request=request).domain
+            relativeLink = reverse(
+                'password-reset-confirm', kwargs={'uidb64': uidb64, 'token': token})
+            absurl = 'http://'+current_site+relativeLink
+            email_body = f'Hi {user.first_name} {user.last_name} Please click on the link below to reset your password. \n' + 'Please report to support if you did not make this request. \n' +\
+                absurl + f'\n Your reset code is: \n {uidb64}/{token}'
+            data = {
+                'email_subject': 'Password Reset',
+                'email_body': email_body,
+                'to_email': user.email,
+            }
+            Util.send_email(data)
+        return Response({'success': 'Check your email for password reset instructions.'}, status=status.HTTP_200_OK)
+        # return redirect('/auth/password-reset-confirm')
+
+
+class TokenCheckAPI(generics.GenericAPIView):
+
+    def get(self, request, uidb64, token):
+
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return redirect('/auth/reset/password/fail')
+
+            return redirect('/auth/reset/password/')
+
+        except DjangoUnicodeDecodeError as identifier:
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return redirect('/auth/reset/password/fail')
+
+
+class PasswordResetConfirmView(generics.GenericAPIView):
+    serializer_class = PasswordResetConfirmSerializer
+
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({
+            'success', 'Invalid password reset link.'
+        }, status=status.HTTP_200_OK)
+
 
 
