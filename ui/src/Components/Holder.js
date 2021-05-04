@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { userLogout } from '../Redux/Auth/actions';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { userLogout } from "../Redux/Auth/actions";
+import axios from "axios";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
 
 export class Holder extends Component {
 	state = {
-		image: '',
+		image: "",
 	};
 	componentDidMount = () => {
-		const url = 'mhealthimages/?imagename=mhealthhomelogo';
+		const url = "mhealthimages/?imagename=mhealthhomelogo";
 		axios.get(url).then((res) => {
 			try {
 				const { image } = res.data[0];
@@ -35,50 +35,50 @@ export class Holder extends Component {
 			const { groups } = auth.user.user;
 			return (
 				<>
-					<header id='header' className='header'>
-						<div className='container'>
-							<div id='logo' className='pull-left'>
+					<header id="header" className="header">
+						<div className="container">
+							<div id="logo" className="pull-left">
 								{/* <h1>
                   <a href="/">
                     <span>m</span>Health
                   </a>
                 </h1> */}
-								<a href='/'>
-									<img src={image} alt='' title='' width={200} height={100} />
+								<a href="/">
+									<img src={image} alt="" title="" width={200} height={100} />
 								</a>
 							</div>
 
-							<nav id='nav-menu-container'>
-								<ul className='nav-menu'>
+							<nav id="nav-menu-container">
+								<ul className="nav-menu">
 									<li>
-										<a href='/'>Home</a>
+										<a href="/">Home</a>
 									</li>
-									<li className='menu-has-children'>
-										<a href='/'>My Documents</a>
+									<li className="menu-has-children">
+										<a href="/">My Documents</a>
 										<ul>
 											<li>
-												<a href='/docs/mypurchaserequisitions'>
+												<a href="/docs/mypurchaserequisitions">
 													Purchase Requisitions
 												</a>
 											</li>
 											<li>
-												<a href='/docs/mytaxilogistics'>Taxi Logistics</a>
+												<a href="/docs/mytaxilogistics">Taxi Logistics</a>
 											</li>
 											<li>
-												<a href='/docs/mybusinessadvance'>Business Advance</a>
+												<a href="/docs/mybusinessadvance">Business Advance</a>
 											</li>
 											<li>
-												<a href='/docs/mytravelauthorizations'>
+												<a href="/docs/mytravelauthorizations">
 													Travel Authorization
 												</a>
 											</li>
 										</ul>
 									</li>
-									<li className='menu-has-children'>
-										<a href='/'>Finance Documents</a>
+									<li className="menu-has-children">
+										<a href="/">Finance Documents</a>
 										<ul>
 											<li>
-												<a href='/docs/businessadvancerequest'>
+												<a href="/docs/businessadvancerequest">
 													Business Advance Request
 												</a>
 											</li>
@@ -88,7 +88,7 @@ export class Holder extends Component {
                         </a>
                       </li> */}
 											<li>
-												<a href='/docs/travelauthorization'>
+												<a href="/docs/travelauthorization">
 													Travel Authorization Form
 												</a>
 											</li>
@@ -98,47 +98,47 @@ export class Holder extends Component {
                         </a>
                       </li> */}
 											<li>
-												<a href='/docs/taxilogistics'>Taxi Logistics</a>
+												<a href="/docs/taxilogistics">Taxi Logistics</a>
 											</li>
 											<li>
-												<a href='/docs/purchaserequisition'>
+												<a href="/docs/purchaserequisition">
 													Purchase Requisition Form
 												</a>
 											</li>
 										</ul>
 									</li>
-									<li className='menu-has-children'>
-										<a href='/'>HR Documents</a>
+									<li className="menu-has-children">
+										<a href="/">HR Documents</a>
 										<ul>
 											<li>
-												<a href='/'>Monthly time sheet</a>
+												<a href="/">Monthly time sheet</a>
 											</li>
 											<li>
-												<a href='/'>Leave application</a>
+												<a href="/">Leave application</a>
 											</li>
 										</ul>
 									</li>
 									{groups.includes(2) ? (
-										<li className='menu-has-children'>
-											<a href='/'>Approve</a>
+										<li className="menu-has-children">
+											<a href="/">Approve</a>
 											<ul>
 												<li>
-													<a href='/docs/purchaserequisitionsupervisor'>
+													<a href="/docs/purchaserequisitionsupervisor">
 														Purchase Requisitions
 													</a>
 												</li>
 												<li>
-													<a href='/docs/taxilogisticssupervisor'>
+													<a href="/docs/taxilogisticssupervisor">
 														Taxi Logistic
 													</a>
 												</li>
 												<li>
-													<a href='/docs/businessadvancerequestsupervisor'>
+													<a href="/docs/businessadvancerequestsupervisor">
 														Business Advance
 													</a>
 												</li>
 												<li>
-													<a href='/docs/travelauthorizationsupervisor'>
+													<a href="/docs/travelauthorizationsupervisor">
 														Travel Authorization
 													</a>
 												</li>
@@ -146,36 +146,36 @@ export class Holder extends Component {
 										</li>
 									) : null}
 									{groups.includes(1) ? (
-										<li className='menu-has-children'>
-											<a href='/'>Finance Aprrovals</a>
+										<li className="menu-has-children">
+											<a href="/">Finance Aprrovals</a>
 											<ul>
 												<li>
-													<a href='/docs/purchaserequisitionfinance'>
+													<a href="/docs/purchaserequisitionfinance">
 														Purchase Requisitions
 													</a>
 												</li>
 												<li>
-													<a href='/docs/businessadvancerequestfinance'>
+													<a href="/docs/businessadvancerequestfinance">
 														Business Advance
 													</a>
 												</li>
 												<li>
-													<a href='/docs/businessexpensereportfinance'>
+													<a href="/docs/businessexpensereportfinance">
 														Business Expense
 													</a>
 												</li>
 												<li>
-													<a href='/docs/taxilogisticsfinance'>
+													<a href="/docs/taxilogisticsfinance">
 														Taxi Logistics
 													</a>
 												</li>
 												<li>
-													<a href='/docs/travelauthorizationfinance'>
+													<a href="/docs/travelauthorizationfinance">
 														Travel Authorization
 													</a>
 												</li>
 												<li>
-													<a href='/docs/travelexpensereportfinance'>
+													<a href="/docs/travelexpensereportfinance">
 														Travel Expense
 													</a>
 												</li>
@@ -183,11 +183,11 @@ export class Holder extends Component {
 										</li>
 									) : null}
 									{groups.includes(3) ? (
-										<li className='menu-has-children'>
-											<a href='/'>CEO</a>
+										<li className="menu-has-children">
+											<a href="/">CEO</a>
 											<ul>
 												<li>
-													<a href='/docs/purchaserequisitionceo'>
+													<a href="/docs/purchaserequisitionceo">
 														Purchase Requisitions
 													</a>
 												</li>
@@ -195,7 +195,7 @@ export class Holder extends Component {
 										</li>
 									) : null}
 									<li>
-										<a href='#' onClick={this.handleLogout}>
+										<a href="#" onClick={() => this.handleLogout()}>
 											Logout
 										</a>
 									</li>
@@ -319,33 +319,33 @@ export class Holder extends Component {
 						</div>
 					</footer> */}
 
-					<a href='/' className='back-to-top'>
-						<i className='fa fa-chevron-up'></i>
+					<a href="/" className="back-to-top">
+						<i className="fa fa-chevron-up"></i>
 					</a>
 				</>
 			);
 		} else {
 			return (
 				<>
-					<header id='header' className='header'>
-						<div className='container'>
-							<div id='logo' className='pull-left'>
-								<a href='/'>
-									<img src={image} alt='' title='' width={200} height={100} />
+					<header id="header" className="header">
+						<div className="container">
+							<div id="logo" className="pull-left">
+								<a href="/">
+									<img src={image} alt="" title="" width={200} height={100} />
 								</a>
 							</div>
 
-							<nav id='nav-menu-container'>
-								<ul className='nav-menu'>
-									<li className='menu-active'>
-										<a href='/'>Home</a>
+							<nav id="nav-menu-container">
+								<ul className="nav-menu">
+									<li className="menu-active">
+										<a href="/">Home</a>
 									</li>
 
 									<li>
-										<a href='/auth/register'>Register</a>
+										<a href="/auth/register">Register</a>
 									</li>
 									<li>
-										<a href='/auth/login'>Login</a>
+										<a href="/auth/login">Login</a>
 									</li>
 								</ul>
 							</nav>
@@ -469,8 +469,8 @@ export class Holder extends Component {
 						</div>
 					</footer> */}
 
-					<a href='/' className='back-to-top'>
-						<i className='fa fa-chevron-up'></i>
+					<a href="/" className="back-to-top">
+						<i className="fa fa-chevron-up"></i>
 					</a>
 				</>
 			);
