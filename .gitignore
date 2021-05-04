@@ -2,3 +2,4 @@ logs/
 venv/
 .env
 .vscode
+/tests
