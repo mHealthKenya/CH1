@@ -15,10 +15,10 @@ export class CheckMail extends Component {
 							<h1>Success!</h1>
 						</div>
 						<p className="lead" style={{ color: "green" }}>
-							Your account was successfully registered.
+							Your password reset request was successful.
 							<br />
-							Please check your email and click the activation link to activate
-							your account.
+							Please check your email and click the reset link to reset your
+							password
 							<br />
 							If you did not receive an email from us, please check your spam
 							folder.

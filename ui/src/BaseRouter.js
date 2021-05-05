@@ -26,6 +26,7 @@ import BusinessExpenseReportFinance from "./Components/BusinessExpenseReportFina
 import TravelAuthorizationFinance from "./Components/TravelAuthorizationFinance";
 import RequestPasswordReset from "./Components/RequestPasswordReset";
 import CheckMail from "./Components/CheckMail";
+import ResetPassword from "./Components/ResetPassword";
 
 export class BaseRouter extends Component {
 	render() {
@@ -144,6 +145,7 @@ export class BaseRouter extends Component {
 				/>
 
 				<Route exact path="/auth/checkmail" component={CheckMail} />
+				<Route exact path="/auth/reset/password" component={ResetPassword} />
 			</div>
 		);
 	}
