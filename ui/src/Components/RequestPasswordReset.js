@@ -22,7 +22,8 @@ export class RequestPasswordReset extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		const { email } = this.state;
-		const url = "http://127.0.0.1:8000/auth/api/request/password/reset/";
+		const url =
+			"http://forms.mhealthkenya.co.ke/auth/api/request/password/reset/";
 		const body = {
 			email: email,
 		};
