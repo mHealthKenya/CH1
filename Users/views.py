@@ -146,8 +146,8 @@ class RequestPasswordResetView(generics.GenericAPIView):
             current_site = get_current_site(request=request).domain
             relativeLink = reverse(
                 'password-reset-confirm', kwargs={'uidb64': uidb64, 'token': token})
-            absurl = 'http://'+current_site+relativeLink
-            email_body = f'Hi {user.first_name} {user.last_name} Please click on the link below to reset your password. \n' + 'Please report to support if you did not make this request. \n' +\
+            absurl = 'http://forms.mhealthkenya.co.ke'+relativeLink
+            email_body = f'Hi {user.first_name} {user.last_name} Please click on the link below to reset your password. \n' + 'Ignore this email if you did not make this request. \n' +\
                 absurl + f'\n Your reset code is: \n {uidb64}/{token}'
             data = {
                 'email_subject': 'Password Reset',
