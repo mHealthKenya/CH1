@@ -93,6 +93,12 @@ export class MyTravelAuthorizations extends Component {
 									<b>Destination: </b>
 									{travelAuthorization.destination}
 								</p>
+								{travelAuthorization.supervisor_comment ? (
+									<p className="lead" style={{ color: "red" }}>
+										<b>Rejection reason: </b>
+										{travelAuthorization.supervisor_comment}
+									</p>
+								) : null}
 							</Modal.Body>
 							<Modal.Footer>
 								<div
@@ -141,7 +147,7 @@ export class MyTravelAuthorizations extends Component {
                           <td>{request.project_name}</td> */}
 														{request.supervisor_comment ? (
 															<td style={{ color: "red" }}>Rejected</td>
-														) : request.supervisor_approved ? (
+														) : request.approved ? (
 															<td style={{ color: "green" }}>Approved</td>
 														) : (
 															<td style={{ color: "yellow" }}>Under Review</td>

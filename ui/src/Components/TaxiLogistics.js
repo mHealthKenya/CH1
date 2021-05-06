@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { requestProjects } from '../Redux/Projects/actions';
-import { taxiLogistics } from '../Redux/TaxiLogistics/actions';
-import { Modal } from 'antd';
-import { Redirect } from 'react-router';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { requestProjects } from "../Redux/Projects/actions";
+import { taxiLogistics } from "../Redux/TaxiLogistics/actions";
+import { Modal } from "antd";
+import { Redirect } from "react-router";
 
 export class TaxiLogistics extends Component {
 	state = {
-		location_from: '',
-		location_to: '',
+		location_from: "",
+		location_to: "",
 		project: null,
 		supervisor: null,
 		staff_booking_taxi: null,
@@ -37,8 +37,8 @@ export class TaxiLogistics extends Component {
 	handleClose = () => {
 		this.setState({
 			...this.state,
-			location_from: '',
-			location_to: '',
+			location_from: "",
+			location_to: "",
 			project: null,
 			supervisor: null,
 			staff_booking_taxi: null,
@@ -70,13 +70,28 @@ export class TaxiLogistics extends Component {
 		});
 	};
 	render() {
-		const { projects, supervisors, taxilogistics, auth } = this.props;
+		const {
+			projects,
+			supervisors,
+			taxilogistics,
+			auth,
+			supervisor,
+		} = this.props;
 		const { isAuthenticated } = auth;
 		const { logisticsError } = taxilogistics;
 		const { MHKprojects } = projects;
 		const { location_from, location_to, show, redirect } = this.state;
+		let eligibleSupervisors = [];
+		if (supervisor.length > 0) {
+			const currentSupervisor = supervisor[0].id;
+			eligibleSupervisors = supervisors.filter(
+				(element) => element.id !== currentSupervisor
+			);
+		} else {
+			eligibleSupervisors = supervisors;
+		}
 		return (
-			<div className='testbox container mt-3 mb-3'>
+			<div className="testbox container mt-3 mb-3">
 				{isAuthenticated ? (
 					<>
 						{!redirect ? (
@@ -84,18 +99,18 @@ export class TaxiLogistics extends Component {
 								<div>
 									{logisticsError ? (
 										<Modal
-											title={<h2 style={{ color: 'red' }}>Oops!</h2>}
+											title={<h2 style={{ color: "red" }}>Oops!</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead' style={{ color: 'red' }}>
+											<p className="lead" style={{ color: "red" }}>
 												We encountered a problem. Please try again.
 												<br />
 												If the problem persists please contact support.
@@ -103,60 +118,60 @@ export class TaxiLogistics extends Component {
 										</Modal>
 									) : show && !logisticsError ? (
 										<Modal
-											title={<h2 style={{ color: 'blue' }}>Success</h2>}
+											title={<h2 style={{ color: "blue" }}>Success</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead'>
+											<p className="lead">
 												Travel Authorization successfully submitted
 											</p>
 										</Modal>
 									) : null}
-									<div className='banner'>
+									<div className="banner">
 										<h1>Taxi logistics</h1>
 									</div>
 									<div>
 										{/* You can set className='colums' to put the forms in rows... */}
-										<div className='item'>
-											<label htmlFor='location_from'>
-												{' '}
+										<div className="item">
+											<label htmlFor="location_from">
+												{" "}
 												Location To<span>*</span>
 											</label>
 											<input
-												type='text'
-												placeholder='Destination'
-												name='location_to'
+												type="text"
+												placeholder="Destination"
+												name="location_to"
 												value={location_to}
 												onChange={this.handleChange}
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='location_from'>
-												{' '}
+										<div className="item">
+											<label htmlFor="location_from">
+												{" "}
 												Location From<span>*</span>
 											</label>
 											<input
-												type='text'
-												placeholder='Start location'
-												name='location_from'
+												type="text"
+												placeholder="Start location"
+												name="location_from"
 												value={location_from}
 												onChange={this.handleChange}
 												required
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='description'>
-												{' '}
+										<div className="item">
+											<label htmlFor="description">
+												{" "}
 												Project<span>*</span>
 											</label>
-											<select name='project' onChange={this.handleChange}>
+											<select name="project" onChange={this.handleChange}>
 												<option>Select project</option>
 												{MHKprojects.map((project) => {
 													return (
@@ -167,14 +182,14 @@ export class TaxiLogistics extends Component {
 												})}
 											</select>
 										</div>
-										<div className='item'>
-											<label htmlFor='amount'>
-												{' '}
+										<div className="item">
+											<label htmlFor="amount">
+												{" "}
 												Supervisor<span>*</span>
 											</label>
-											<select name='supervisor' onChange={this.handleChange}>
+											<select name="supervisor" onChange={this.handleChange}>
 												<option>Select your supervisor</option>
-												{supervisors.map((supervisor) => {
+												{eligibleSupervisors.map((supervisor) => {
 													return (
 														<option key={supervisor.id} value={supervisor.id}>
 															{supervisor.supervisor_name}
@@ -184,17 +199,17 @@ export class TaxiLogistics extends Component {
 											</select>
 										</div>
 									</div>
-									<div className='btn-block'>
+									<div className="btn-block">
 										<button onClick={this.handleSubmit}>Submit</button>
 									</div>
 								</div>
 							</form>
 						) : (
-							<Redirect to='/' />
+							<Redirect to="/" />
 						)}
 					</>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);
@@ -207,6 +222,7 @@ const mapStateToProps = (state) => {
 		supervisors: state.supervisors.supervisors,
 		auth: state.auth,
 		taxilogistics: state.taxilogistics,
+		supervisor: state.supervisor.supervisor,
 	};
 };
 

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as Types from './types';
+import axios from "axios";
+import * as Types from "./types";
 
 export const getApprovedBusinessAdvance = (data) => {
 	return {
@@ -32,7 +32,7 @@ export const requestBusinessAdvanceData = (id) => {
 			.get(url)
 			.then((res) => {
 				const { data } = res;
-				console.log('Test');
+				console.log("Test");
 				data.forEach((info) => {
 					if (info.finance_reviewed && !info.finance_comment) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/businessadvancerequest/${info.id}/`;
@@ -42,7 +42,10 @@ export const requestBusinessAdvanceData = (id) => {
 							dispatch(getPendingBusinessAdvance(pending));
 							dispatch(getRejectedBusinessAdvance(rejected));
 						});
-					} else if (info.finance_comment && !info.finance_reviewed) {
+					} else if (
+						(info.finance_comment && !info.finance_reviewed) ||
+						info.supervisor_comment
+					) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/businessadvancerequest/${info.id}/`;
 						axios.get(url).then(() => {
 							rejected += 1;

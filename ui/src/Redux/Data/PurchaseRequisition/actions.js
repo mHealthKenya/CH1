@@ -1,5 +1,5 @@
-import * as Types from './types';
-import axios from 'axios';
+import * as Types from "./types";
+import axios from "axios";
 
 export const getApprovedPurchaseRequests = (data) => {
 	return {
@@ -38,16 +38,20 @@ export const getPurchaseRequisitionData = (id) => {
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log('Approved PR', approved);
+						console.log("Approved PR", approved);
 					});
-				} else if (info.ceo_comments && !info.ceo_approved) {
+				} else if (
+					(info.ceo_comments && !info.ceo_approved) ||
+					info.supervisor_comments ||
+					info.finance_comments
+				) {
 					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
 					axios.get(url).then(() => {
 						rejected += 1;
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log('Rejected PR', rejected.length);
+						console.log("Rejected PR", rejected.length);
 					});
 				} else if (!info.ceo_comments && !info.ceo_approved) {
 					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
@@ -56,7 +60,7 @@ export const getPurchaseRequisitionData = (id) => {
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log('Pending PR', pending.length);
+						console.log("Pending PR", pending.length);
 					});
 				}
 			});

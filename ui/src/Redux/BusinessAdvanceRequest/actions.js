@@ -1,7 +1,7 @@
-import axios from 'axios';
-import * as Types from './types';
+import axios from "axios";
+import * as Types from "./types";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
 
 const startBusinessAdvanceRequest = () => {
 	return {
@@ -41,7 +41,7 @@ export const makeBusinessAdvanceRequest = (
 			project,
 			supervisor,
 		};
-		const url = 'businessadvancerequest/';
+		const url = "businessadvancerequest/";
 		axios
 			.post(url, body)
 			.then((res) => {
@@ -134,7 +134,7 @@ export const BARFinanceApprove = () => {
 
 export const requestEmployeeBusinessAdvanceRequest = (id) => {
 	return (dispatch) => {
-		const url = `businessadvancerequest/?staff=${id}&finance_reviewed=true`;
+		const url = `businessadvancerequest/?staff=${id}`;
 		axios
 			.get(url)
 			.then((res) => {
@@ -151,7 +151,7 @@ export const requestEmployeeBusinessAdvanceRequest = (id) => {
 //This functions fetches all business expense reports.
 export const requestBusinessExpenseReports = () => {
 	return (dispatch) => {
-		const url = 'businessexpensereport/';
+		const url = "businessexpensereport/";
 		axios
 			.get(url)
 			.then((res) => {
