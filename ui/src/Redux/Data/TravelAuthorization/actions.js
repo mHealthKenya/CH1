@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as Types from './types';
+import axios from "axios";
+import * as Types from "./types";
 
 export const getApprovedTravelAuthorization = (data) => {
 	return {
@@ -61,7 +61,6 @@ export const requestTravelAuthorizationData = (id) => {
 							dispatch(getApprovedTravelAuthorization(approved));
 							dispatch(getPendingTravelAuthorization(pending));
 							dispatch(getRejectedTravelAuthorization(rejected));
-							console.log('RejectedTA', rejected);
 						});
 					} else if (!info.supervisor_comment && info.approved) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
@@ -70,7 +69,6 @@ export const requestTravelAuthorizationData = (id) => {
 							dispatch(getApprovedTravelAuthorization(approved));
 							dispatch(getPendingTravelAuthorization(pending));
 							dispatch(getRejectedTravelAuthorization(rejected));
-							console.log('ApprovedTA', approved);
 						});
 					} else if (!info.approved && !info.supervisor_comment) {
 						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
@@ -79,7 +77,6 @@ export const requestTravelAuthorizationData = (id) => {
 							dispatch(getApprovedTravelAuthorization(approved));
 							dispatch(getPendingTravelAuthorization(pending));
 							dispatch(getRejectedTravelAuthorization(rejected));
-							console.log('PendingTA', pending);
 						});
 					}
 				});

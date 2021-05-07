@@ -1,4 +1,4 @@
-import * as Types from './types';
+import * as Types from "./types";
 
 const initialState = {
 	user: {},
@@ -7,6 +7,7 @@ const initialState = {
 	loading: false,
 	loadingLogout: false,
 	errorLogout: null,
+	activeTime: 0,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -58,6 +59,12 @@ export const authReducer = (state = initialState, action) => {
 				loading: false,
 				loadingLogout: false,
 				errorLogout: action.payload,
+			};
+
+		case Types.ACTIVETIME:
+			return {
+				...state,
+				activeTime: new Date().getTime() + 8 * 60 * 60 * 1000,
 			};
 
 		default:

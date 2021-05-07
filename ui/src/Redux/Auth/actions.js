@@ -43,6 +43,20 @@ export const logoutFail = (error) => {
 	};
 };
 
+export const activeTime = () => {
+	return {
+		type: Types.ACTIVETIME,
+	};
+};
+
+export const checkAuthTimeOut = (expirationTime) => {
+	return (dispatch) => {
+		setTimeout(() => {
+			dispatch(userLogout());
+		}, expirationTime * 60 * 60 * 8); // !This means that the user will be automatically logged out after the said time
+	};
+};
+
 export const userLogin = (email, password) => {
 	return (dispatch) => {
 		dispatch(authStart());
@@ -51,8 +65,10 @@ export const userLogin = (email, password) => {
 		axios
 			.post(loginUrl, body)
 			.then((res) => {
+				dispatch(checkAuthTimeOut(1000)); // !This is time in ms
 				const { data } = res;
 				dispatch(authSuccess(data));
+				dispatch(activeTime());
 			})
 			.catch((err) => {
 				const { message } = err;

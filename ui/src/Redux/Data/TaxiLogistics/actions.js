@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as Types from './types';
+import axios from "axios";
+import * as Types from "./types";
 
 export const getApprovedTaxiLogistics = (data) => {
 	return {
@@ -48,7 +48,6 @@ export const getTaxiLogisticsData = (id) => {
 									dispatch(getApprovedTaxiLogistics(approved));
 									dispatch(getPendingTaxiLogistics(pending));
 									dispatch(getRejectedTaxiLogistics(rejected));
-									console.log('Approved TL', approved);
 								});
 						} else if (!info.supervisor_approved && !info.supervisor_comment) {
 							axios
@@ -60,7 +59,6 @@ export const getTaxiLogisticsData = (id) => {
 									dispatch(getPendingTaxiLogistics(pending));
 									dispatch(getApprovedTaxiLogistics(approved));
 									dispatch(getRejectedTaxiLogistics(rejected));
-									console.log('PendingTL', pending);
 								});
 						} else if (!info.supervisor_approved && info.supervisor_comment) {
 							axios
@@ -72,7 +70,6 @@ export const getTaxiLogisticsData = (id) => {
 									dispatch(getPendingTaxiLogistics(pending));
 									dispatch(getApprovedTaxiLogistics(approved));
 									dispatch(getRejectedTaxiLogistics(rejected));
-									console.log('Rejected', rejected);
 								});
 						}
 					});

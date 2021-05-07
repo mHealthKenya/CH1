@@ -10,6 +10,8 @@ export class Holder extends Component {
 		image: "",
 	};
 	componentDidMount = () => {
+		const { auth } = this.props;
+		const { activeTime } = auth;
 		const url = "mhealthimages/?imagename=mhealthhomelogo";
 		axios.get(url).then((res) => {
 			try {
@@ -22,6 +24,10 @@ export class Holder extends Component {
 				console.log(err.message);
 			}
 		});
+
+		if (new Date().getTime() >= activeTime) {
+			this.props.userLogout();
+		}
 	};
 	handleLogout = () => {
 		this.props.userLogout();

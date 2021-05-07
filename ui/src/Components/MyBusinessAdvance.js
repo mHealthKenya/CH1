@@ -109,7 +109,8 @@ export class MyBusinessAdvance extends Component {
 	};
 
 	render() {
-		const { sBAR, specificBAR } = this.props;
+		const { sBAR, specificBAR, auth } = this.props;
+		const { isAuthenticated } = auth;
 		const { ID } = this.state;
 		const { supervisors } = this.props.supervisors;
 		const {
@@ -123,204 +124,215 @@ export class MyBusinessAdvance extends Component {
 
 		return (
 			<div className="testbox container mt-3 mb-3">
-				{ID ? (
-					<Redirect to={`/docs/businessexpensereport/${ID}`} />
-				) : (
-					<div>
-						<Modal
-							show={show}
-							size="lg"
-							aria-labelledby="contained-modal-title-vcenter"
-							centered>
-							<Modal.Header closeButton onClick={this.handleClose}>
-								<Modal.Title id="contained-modal-title-vcenter">
-									{specificBAR.requester_name}'s Request
-								</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<p className="lead">
-									<b>Date: </b>
-									{moment(specificBAR.date).format("YYYY - MM - DD")}
-								</p>
-								<p className="lead">
-									<b>Accoount Code: </b>
-									{specificBAR.account_code_value}
-								</p>
-								<p className="lead">
-									<b>Description: </b>
-									{specificBAR.description}
-								</p>
-								{specificBAR.supervisor_comment ? (
-									<p className="lead" style={{ color: "red" }}>
-										<b>Rejection reason: </b>
-										{specificBAR.supervisor_comment}
-									</p>
-								) : null}
-								{specificBAR.finance_comment ? (
-									<p className="lead" style={{ color: "red" }}>
-										<b>Rejection reason: </b>
-										{specificBAR.finance_comment}
-									</p>
-								) : null}
-							</Modal.Body>
-							<Modal.Footer>
-								<div
-									className="btn btn-outline btn-secondary"
-									onClick={this.handleClose}>
-									Close
-								</div>
-								{specificBAR.approved && specificBAR.finance_reviewed ? (
-									<div
-										className="btn btn-success btn-sm"
-										onClick={() => this.handleReport(specificBAR.id)}>
-										Report
-									</div>
-								) : null}
-							</Modal.Footer>
-						</Modal>
-						<Modal
-							show={editShow}
-							size="lg"
-							aria-labelledby="contained-modal-title-vcenter"
-							centered>
-							<Modal.Header closeButton onClick={this.handleClose}>
-								<Modal.Title id="contained-modal-title-vcenter">
-									{specificBAR.requester_name}'s Request
-								</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
+				{isAuthenticated ? (
+					<>
+						{ID ? (
+							<Redirect to={`/docs/businessexpensereport/${ID}`} />
+						) : (
+							<div>
+								<Modal
+									show={show}
+									size="lg"
+									aria-labelledby="contained-modal-title-vcenter"
+									centered>
+									<Modal.Header closeButton onClick={this.handleClose}>
+										<Modal.Title id="contained-modal-title-vcenter">
+											{specificBAR.requester_name}'s Request
+										</Modal.Title>
+									</Modal.Header>
+									<Modal.Body>
+										<p className="lead">
+											<b>Date: </b>
+											{moment(specificBAR.date).format("YYYY - MM - DD")}
+										</p>
+										<p className="lead">
+											<b>Accoount Code: </b>
+											{specificBAR.account_code_value}
+										</p>
+										<p className="lead">
+											<b>Description: </b>
+											{specificBAR.description}
+										</p>
+										{specificBAR.supervisor_comment ? (
+											<p className="lead" style={{ color: "red" }}>
+												<b>Rejection reason: </b>
+												{specificBAR.supervisor_comment}
+											</p>
+										) : null}
+										{specificBAR.finance_comment ? (
+											<p className="lead" style={{ color: "red" }}>
+												<b>Rejection reason: </b>
+												{specificBAR.finance_comment}
+											</p>
+										) : null}
+									</Modal.Body>
+									<Modal.Footer>
+										<div
+											className="btn btn-outline btn-secondary"
+											onClick={this.handleClose}>
+											Close
+										</div>
+										{specificBAR.approved && specificBAR.finance_reviewed ? (
+											<div
+												className="btn btn-success btn-sm"
+												onClick={() => this.handleReport(specificBAR.id)}>
+												Report
+											</div>
+										) : null}
+									</Modal.Footer>
+								</Modal>
+								<Modal
+									show={editShow}
+									size="lg"
+									aria-labelledby="contained-modal-title-vcenter"
+									centered>
+									<Modal.Header closeButton onClick={this.handleClose}>
+										<Modal.Title id="contained-modal-title-vcenter">
+											{specificBAR.requester_name}'s Request
+										</Modal.Title>
+									</Modal.Header>
+									<Modal.Body>
+										<form>
+											<div className="banner">
+												<h1>Edit my purchase requisition</h1>
+											</div>
+											<div>
+												{/* You can set className='colums' to put the forms in rows... */}
+												<div className="item">
+													<label htmlFor="activity">
+														{" "}
+														Activity<span>*</span>
+													</label>
+													<input
+														id="activity"
+														type="text"
+														name="activity"
+														value={activity}
+														required
+														onChange={this.handleChange}
+													/>
+												</div>
+												<div className="item">
+													<label htmlFor="description">
+														{" "}
+														Description<span>*</span>
+													</label>
+													<textarea
+														id="description"
+														type="date"
+														name="description"
+														value={description}
+														required
+														onChange={this.handleChange}
+													/>
+												</div>
+												<div className="item">
+													<label htmlFor="amount">
+														{" "}
+														Amount in Ksh<span>*</span>
+													</label>
+													<input
+														id="amount"
+														type="number"
+														name="amount"
+														value={amount}
+														required
+														onChange={this.handleChange}
+													/>
+												</div>
+												<div className="item">
+													<label htmlFor="amount">
+														{" "}
+														Supervisor<span>*</span>
+													</label>
+													<select
+														name="reviewing_supervisor"
+														value={reviewing_supervisor}
+														onChange={this.handleChange}>
+														<option>Select your supervisor</option>
+														{supervisors.map((supervisor) => {
+															return (
+																<option
+																	key={supervisor.id}
+																	value={supervisor.id}>
+																	{supervisor.supervisor_name}
+																</option>
+															);
+														})}
+													</select>
+												</div>
+											</div>
+											<div className="flex-wrapper">
+												<span style={{ flex: 2, color: "transparent" }}>
+													Button spacer
+												</span>
+												<button
+													className="btn-block btn-success"
+													onClick={() => this.handleEdit(specificBAR.id)}
+													style={{ flex: 1 }}>
+													Edit
+												</button>
+												<span style={{ color: "transparent" }}>S</span>
+												<button
+													className="btn-block btn-danger"
+													onClick={this.handleClose}
+													style={{ flex: 1 }}>
+													Cancel
+												</button>
+											</div>
+										</form>
+									</Modal.Body>
+								</Modal>
 								<form>
 									<div className="banner">
-										<h1>Edit my purchase requisition</h1>
+										<h1>My Approved / Pending Business Advance Requests</h1>
 									</div>
-									<div>
-										{/* You can set className='colums' to put the forms in rows... */}
-										<div className="item">
-											<label htmlFor="activity">
-												{" "}
-												Activity<span>*</span>
-											</label>
-											<input
-												id="activity"
-												type="text"
-												name="activity"
-												value={activity}
-												required
-												onChange={this.handleChange}
-											/>
-										</div>
-										<div className="item">
-											<label htmlFor="description">
-												{" "}
-												Description<span>*</span>
-											</label>
-											<textarea
-												id="description"
-												type="date"
-												name="description"
-												value={description}
-												required
-												onChange={this.handleChange}
-											/>
-										</div>
-										<div className="item">
-											<label htmlFor="amount">
-												{" "}
-												Amount in Ksh<span>*</span>
-											</label>
-											<input
-												id="amount"
-												type="number"
-												name="amount"
-												value={amount}
-												required
-												onChange={this.handleChange}
-											/>
-										</div>
-										<div className="item">
-											<label htmlFor="amount">
-												{" "}
-												Supervisor<span>*</span>
-											</label>
-											<select
-												name="reviewing_supervisor"
-												value={reviewing_supervisor}
-												onChange={this.handleChange}>
-												<option>Select your supervisor</option>
-												{supervisors.map((supervisor) => {
+									<div className="table-responsive">
+										<table className="table table-striped">
+											<thead>
+												<tr>
+													<th>Project</th>
+													<th>Amount</th>
+													<th>Status</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												{sBAR.map((request) => {
 													return (
-														<option key={supervisor.id} value={supervisor.id}>
-															{supervisor.supervisor_name}
-														</option>
+														<tr key={request.id}>
+															<td>{request.project_name}</td>
+															<td>{request.amount}</td>
+															{request.finance_comment ||
+															request.supervisor_comment ? (
+																<td style={{ color: "red" }}> Rejected</td>
+															) : request.approved &&
+															  request.finance_reviewed ? (
+																<td style={{ color: "green" }}>Approved</td>
+															) : (
+																<td style={{ color: "#ffbb00" }}>
+																	Under review
+																</td>
+															)}
+															<td>
+																<div
+																	className="btn btn-info btn-sm"
+																	onClick={() => this.handleView(request.id)}>
+																	View
+																</div>
+															</td>
+														</tr>
 													);
 												})}
-											</select>
-										</div>
+											</tbody>
+										</table>
 									</div>
-									<div className="flex-wrapper">
-										<span style={{ flex: 2, color: "transparent" }}>
-											Button spacer
-										</span>
-										<button
-											className="btn-block btn-success"
-											onClick={() => this.handleEdit(specificBAR.id)}
-											style={{ flex: 1 }}>
-											Edit
-										</button>
-										<span style={{ color: "transparent" }}>S</span>
-										<button
-											className="btn-block btn-danger"
-											onClick={this.handleClose}
-											style={{ flex: 1 }}>
-											Cancel
-										</button>
-									</div>
-								</form>
-							</Modal.Body>
-						</Modal>
-						<form>
-							<div className="banner">
-								<h1>My Approved / Pending Business Advance Requests</h1>
+								</form>{" "}
 							</div>
-							<div className="table-responsive">
-								<table className="table table-striped">
-									<thead>
-										<tr>
-											<th>Project</th>
-											<th>Amount</th>
-											<th>Status</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										{sBAR.map((request) => {
-											return (
-												<tr key={request.id}>
-													<td>{request.project_name}</td>
-													<td>{request.amount}</td>
-													{request.finance_comment ||
-													request.supervisor_comment ? (
-														<td style={{ color: "red" }}> Rejected</td>
-													) : request.approved && request.finance_reviewed ? (
-														<td style={{ color: "green" }}>Approved</td>
-													) : (
-														<td style={{ color: "#ffbb00" }}>Under review</td>
-													)}
-													<td>
-														<div
-															className="btn btn-info btn-sm"
-															onClick={() => this.handleView(request.id)}>
-															View
-														</div>
-													</td>
-												</tr>
-											);
-										})}
-									</tbody>
-								</table>
-							</div>
-						</form>{" "}
-					</div>
+						)}
+					</>
+				) : (
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

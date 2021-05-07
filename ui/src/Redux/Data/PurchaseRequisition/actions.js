@@ -38,7 +38,6 @@ export const getPurchaseRequisitionData = (id) => {
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log("Approved PR", approved);
 					});
 				} else if (
 					(info.ceo_comments && !info.ceo_approved) ||
@@ -51,7 +50,6 @@ export const getPurchaseRequisitionData = (id) => {
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log("Rejected PR", rejected.length);
 					});
 				} else if (!info.ceo_comments && !info.ceo_approved) {
 					const url = `http://api-finance-docs.mhealthkenya.co.ke/api/purchaserequisition/${info.id}`;
@@ -60,7 +58,6 @@ export const getPurchaseRequisitionData = (id) => {
 						dispatch(getApprovedPurchaseRequests(approved));
 						dispatch(getRejectedPurchaseRequests(rejected));
 						dispatch(getPendingPurchaseRequests(pending));
-						console.log("Pending PR", pending.length);
 					});
 				}
 			});
