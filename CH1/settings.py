@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #Local apps
     'Users',
     'Forms',
+    'Frontend',
     #Imported apps
     'rest_framework',
     'corsheaders',

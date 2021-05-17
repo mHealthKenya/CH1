@@ -1,0 +1,61 @@
+.enjoy-css {
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	cursor: pointer;
+	padding: 10px 20px 10px 15px;
+	border: none;
+	-webkit-border-radius: 19px;
+	border-radius: 19px;
+	font: normal 16px / normal 'Times New Roman', Times, serif;
+	color: rgba(207, 214, 171, 0.9);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(97, 135, 150, 0.9);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+	text-shadow: -1px -1px 0 rgba(73, 82, 96, 0.66);
+	-webkit-transition: color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+	-moz-transition: color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+	-o-transition: color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+	transition: color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+	-webkit-transform: rotateY(-0.5729577951308232deg)
+		rotateZ(0.5729577951308232deg);
+	transform: rotateY(-0.5729577951308232deg) rotateZ(0.5729577951308232deg);
+}
+
+.enjoy-css-info {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+	cursor: pointer;
+	padding: 10px 20px 10px 15px;
+	overflow: auto;
+	border: none;
+	font: normal 16px / normal 'Times New Roman', Times, serif;
+	color: rgba(255, 255, 255, 1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(36, 157, 201, 0.9);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+	text-shadow: -1px -1px 0 rgba(73, 82, 96, 0.66);
+	-webkit-transition: all 300ms cubic-bezier(0.42, 0, 1, 1);
+	-moz-transition: all 300ms cubic-bezier(0.42, 0, 1, 1);
+	-o-transition: all 300ms cubic-bezier(0.42, 0, 1, 1);
+	transition: all 300ms cubic-bezier(0.42, 0, 1, 1);
+	-webkit-transform: rotateY(-0.5729577951308232deg)
+		rotateZ(0.5729577951308232deg);
+	transform: rotateY(-0.5729577951308232deg) rotateZ(0.5729577951308232deg);
+}
+
+.flex-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.copyright {
+	display: none;
+}

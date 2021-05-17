@@ -1,0 +1,53 @@
+{
+	"name": "CH1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "webpack --mode development --watch --entry ./Frontend/src/index.js --output-path ./Frontend/static/frontend",
+		"build": "webpack --mode production --watch --entry ./Frontend/src/index.js --output-path ./Frontend/static/frontend"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JoelWekesa/CH1.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/JoelWekesa/CH1/issues"
+	},
+	"homepage": "https://github.com/JoelWekesa/CH1#readme",
+	"devDependencies": {
+		"@babel/core": "^7.14.2",
+		"@babel/preset-env": "^7.14.2",
+		"@babel/preset-react": "^7.13.13",
+		"babel-loader": "^8.2.2",
+		"css-loader": "^5.2.4",
+		"file-loader": "^6.2.0",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.37.0",
+		"webpack-cli": "^4.7.0"
+	},
+	"dependencies": {
+		"@material-ui/core": "^4.11.3",
+		"@testing-library/jest-dom": "^5.11.10",
+		"@testing-library/react": "^11.2.6",
+		"@testing-library/user-event": "^12.8.3",
+		"antd": "^4.15.2",
+		"axios": "^0.21.1",
+		"bootstrap": "^4.6.0",
+		"moment": "^2.29.1",
+		"react-bootstrap": "^1.5.2",
+		"react-google-charts": "^3.0.15",
+		"react-redux": "^7.2.3",
+		"react-router-dom": "^5.2.0",
+		"react-scripts": "4.0.3",
+		"redux": "^4.0.5",
+		"redux-devtools-extension": "^2.13.9",
+		"redux-thunk": "^2.3.0",
+		"web-vitals": "^1.1.1"
+	}
+}
