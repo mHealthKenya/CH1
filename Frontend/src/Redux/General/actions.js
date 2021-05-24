@@ -1,6 +1,7 @@
-import * as Types from './types';
-import axios from 'axios';
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+import * as Types from "./types";
+import axios from "axios";
+import basePath from "../../utils/basePath";
+axios.defaults.baseURL = `${basePath}api/`;
 
 export const getAccountCodes = (data) => {
 	return {
@@ -74,7 +75,7 @@ export const getCEOFail = (message) => {
 
 export const requestCEO = () => {
 	return (dispatch) => {
-		const url = 'ceo/';
+		const url = "ceo/";
 		axios
 			.get(url)
 			.then((res) => {
@@ -106,7 +107,7 @@ export const requestFinanceStaff = (id) => {
 
 export const requestAccountCodes = () => {
 	return (dispatch) => {
-		const url = 'accountcodes/';
+		const url = "accountcodes/";
 		axios
 			.get(url)
 			.then((res) => {
@@ -122,7 +123,7 @@ export const requestAccountCodes = () => {
 
 export const requestSupervisors = () => {
 	return (dispatch) => {
-		const url = 'supervisors/';
+		const url = "supervisors/";
 		axios
 			.get(url)
 			.then((res) => {

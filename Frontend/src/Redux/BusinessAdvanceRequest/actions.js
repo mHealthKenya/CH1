@@ -1,7 +1,8 @@
 import axios from "axios";
 import * as Types from "./types";
+import basePath from "../../utils/basePath";
 
-axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
+axios.defaults.baseURL = `${basePath}api/`;
 
 const startBusinessAdvanceRequest = () => {
 	return {
@@ -42,6 +43,7 @@ export const makeBusinessAdvanceRequest = (
 			supervisor,
 		};
 		const url = "businessadvancerequest/";
+		console.log(url);
 		axios
 			.post(url, body)
 			.then((res) => {

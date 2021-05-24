@@ -3,6 +3,9 @@ import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import basePath from "../utils/basePath";
+
+axios.defaults.baseURL = `${basePath}`;
 
 export class RequestPasswordReset extends Component {
 	state = {
@@ -28,8 +31,7 @@ export class RequestPasswordReset extends Component {
 			...this.state,
 			loading: true,
 		});
-		const url =
-			"http://forms.mhealthkenya.co.ke/auth/api/request/password/reset/";
+		const url = `${basePath}auth/api/request/password/reset/`;
 		const body = {
 			email: email,
 		};

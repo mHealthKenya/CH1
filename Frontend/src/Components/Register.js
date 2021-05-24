@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { requestDepartments } from '../Redux/Departments/actions';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { requestDepartments } from "../Redux/Departments/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/';
+axios.defaults.baseURL = `${basePath}`;
 
 export class Register extends Component {
 	state = {
 		redirect: false,
-		first_name: '',
-		last_name: '',
-		email: '',
-		staff_id: '',
-		password: '',
-		password2: '',
-		signature: '',
-		department: '',
-		phone_number: '',
+		first_name: "",
+		last_name: "",
+		email: "",
+		staff_id: "",
+		password: "",
+		password2: "",
+		signature: "",
+		department: "",
+		phone_number: "",
 		loading: false,
 		error: null,
 		departments: [],
@@ -26,7 +27,7 @@ export class Register extends Component {
 	};
 
 	componentDidMount = () => {
-		const url = 'departments/';
+		const url = "departments/";
 		axios.get(url).then((res) => {
 			const { data } = res;
 			this.setState({
@@ -68,21 +69,21 @@ export class Register extends Component {
 			signature,
 		} = this.state;
 		const fd = new FormData();
-		fd.append('staff_id', staff_id);
-		fd.append('password', password);
-		fd.append('password2', password2);
-		fd.append('email', email);
-		fd.append('first_name', first_name);
-		fd.append('last_name', last_name);
-		fd.append('signature', signature);
-		fd.append('phone_number', phone_number);
-		fd.append('department', department);
+		fd.append("staff_id", staff_id);
+		fd.append("password", password);
+		fd.append("password2", password2);
+		fd.append("email", email);
+		fd.append("first_name", first_name);
+		fd.append("last_name", last_name);
+		fd.append("signature", signature);
+		fd.append("phone_number", phone_number);
+		fd.append("department", department);
 		this.setState({
 			...this.state,
 			loading: true,
 		});
 
-		const url = 'http://api-finance-docs.mhealthkenya.co.ke/auth/api/register/';
+		const url = `${basePath}auth/api/register/`;
 		axios
 			.post(url, fd)
 			.then(() => {
@@ -96,15 +97,15 @@ export class Register extends Component {
 				this.setState({
 					...this.state,
 					redirect: false,
-					first_name: '',
-					last_name: '',
-					email: '',
-					staff_id: '',
-					password: '',
-					password2: '',
-					signature: '',
-					department: '',
-					phone_number: '',
+					first_name: "",
+					last_name: "",
+					email: "",
+					staff_id: "",
+					password: "",
+					password2: "",
+					signature: "",
+					department: "",
+					phone_number: "",
 					loading: false,
 					error: err.message,
 					show: true,
@@ -140,89 +141,89 @@ export class Register extends Component {
 			phone_number,
 		} = this.state;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				{redirect && !loading && !error ? (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				) : !isAuthenticated ? (
 					<form>
-						<div className='banner'>
+						<div className="banner">
 							<h1>New Member Registration</h1>
 						</div>
 						<div>
 							{/* You can set className='colums' to put the forms in rows... */}
-							<div className='item'>
-								<label htmlFor='fname'>
-									{' '}
+							<div className="item">
+								<label htmlFor="fname">
+									{" "}
 									First Name<span>*</span>
 								</label>
 								<input
-									id='fname'
-									type='text'
-									name='first_name'
+									id="fname"
+									type="text"
+									name="first_name"
 									required
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div className='item'>
-								<label htmlFor='lname'>
-									{' '}
+							<div className="item">
+								<label htmlFor="lname">
+									{" "}
 									Last Name<span>* </span>
 								</label>
 								<input
-									id='lname'
-									type='text'
-									name='last_name'
+									id="lname"
+									type="text"
+									name="last_name"
 									required
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div className='item'>
-								<label htmlFor='address1'>
+							<div className="item">
+								<label htmlFor="address1">
 									Staff ID<span>*</span>
 								</label>
 								<input
-									id='staff_id'
-									type='text'
-									name='staff_id'
+									id="staff_id"
+									type="text"
+									name="staff_id"
 									required
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div className='item'>
-								<label htmlFor='address2'>
+							<div className="item">
+								<label htmlFor="address2">
 									Email <span>*</span>
 								</label>
 								<input
-									id='email'
-									type='email'
-									name='email'
+									id="email"
+									type="email"
+									name="email"
 									value={email}
 									required
 									onChange={this.handleChange}
 								/>
-								{email.endsWith('@mhealthkenya.org') ? null : (
-									<small style={{ color: 'red' }}>
+								{email.endsWith("@mhealthkenya.org") ? null : (
+									<small style={{ color: "red" }}>
 										Your email must be a valid mHealth Kenya email.
 									</small>
 								)}
 							</div>
-							<div className='item'>
-								<label htmlFor='phone'>
+							<div className="item">
+								<label htmlFor="phone">
 									Phone Number<span>*</span>
 								</label>
 								<input
-									id='phone_number'
-									type='text'
-									name='phone_number'
+									id="phone_number"
+									type="text"
+									name="phone_number"
 									required
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div className='item'>
-								<label htmlFor='department'>
+							<div className="item">
+								<label htmlFor="department">
 									Department<span>*</span>
 								</label>
-								<select name='department' onChange={this.handleChange}>
+								<select name="department" onChange={this.handleChange}>
 									<option>Select department</option>
 									{MHKdepartments.length > 0
 										? MHKdepartments.map((department) => {
@@ -236,26 +237,26 @@ export class Register extends Component {
 								</select>
 							</div>
 
-							<div className='item'>
-								<label htmlFor='signature'>
+							<div className="item">
+								<label htmlFor="signature">
 									Signature<span>*</span>
 								</label>
 								<input
-									id='signature'
-									type='file'
-									name='signature'
+									id="signature"
+									type="file"
+									name="signature"
 									required
 									onChange={this.handleSignature}
 								/>
 							</div>
-							<div className='item'>
-								<label htmlFor='password'>
+							<div className="item">
+								<label htmlFor="password">
 									Password<span>*</span>
 								</label>
 								<input
-									id='password'
-									type='password'
-									name='password'
+									id="password"
+									type="password"
+									name="password"
 									value={password}
 									required
 									onChange={this.handleChange}
@@ -276,28 +277,28 @@ export class Register extends Component {
 									</p>
 								</small>
 							</div>
-							<div className='item'>
-								<label htmlFor='password2'>
+							<div className="item">
+								<label htmlFor="password2">
 									Confirm password<span>*</span>
 								</label>
 								<input
-									id='password2'
-									type='password'
-									name='password2'
+									id="password2"
+									type="password"
+									name="password2"
 									value={password2}
 									required
 									onChange={this.handleChange}
 								/>
 								{password2 && password !== password2 ? (
-									<small style={{ color: 'red' }}>
+									<small style={{ color: "red" }}>
 										Your passwords do not match
 									</small>
 								) : null}
 							</div>
 						</div>
 						{error && show ? (
-							<div className='alert alert-danger'>
-								{' '}
+							<div className="alert alert-danger">
+								{" "}
 								Sorry, your account could not be created. Please contact support
 								for assistance.
 							</div>
@@ -306,7 +307,7 @@ export class Register extends Component {
 							<CircularProgress />
 						) : !show &&
 						  !loading &&
-						  email.endsWith('mhealthkenya.org') &&
+						  email.endsWith("mhealthkenya.org") &&
 						  signature &&
 						  first_name &&
 						  last_name &&
@@ -316,22 +317,22 @@ export class Register extends Component {
 						  password2 &&
 						  password === password2 &&
 						  phone_number ? (
-							<div className='btn-block'>
+							<div className="btn-block">
 								<button onClick={this.handleRegister}>Register</button>
 							</div>
 						) : (
 							<div>
-								<p className='lead' style={{ color: 'red' }}>
+								<p className="lead" style={{ color: "red" }}>
 									* All fields must be correctly filled before registration
 								</p>
 								<small>
-									Already have an account? Login <a href='/auth/login'>here</a>
+									Already have an account? Login <a href="/auth/login">here</a>
 								</small>
 							</div>
 						)}
 					</form>
 				) : (
-					<Redirect to='/' />
+					<Redirect to="/" />
 				)}
 			</div>
 		);

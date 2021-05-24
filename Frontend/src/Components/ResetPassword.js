@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import basePath from "../utils/basePath";
+
+axios.defaults.baseURL = `${basePath}`;
 
 export class ResetPassword extends Component {
 	state = {
@@ -33,8 +36,7 @@ export class ResetPassword extends Component {
 			const uidb64 = code[0];
 			const token = code[1];
 			console.log(password, uidb64, token);
-			const url =
-				"http://forms.mhealthkenya.co.ke/auth/api/passwordreset/complete/";
+			const url = `${basePath}auth/api/passwordreset/complete/`;
 			const body = {
 				password,
 				uidb64,

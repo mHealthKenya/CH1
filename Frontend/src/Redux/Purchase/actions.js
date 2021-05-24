@@ -1,7 +1,7 @@
-import axios from 'axios';
-import * as Types from './types';
-
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+import axios from "axios";
+import * as Types from "./types";
+import basePath from "../../utils/basePath";
+axios.defaults.baseURL = `${basePath}api/`;
 
 export const requestPurchase = (data) => {
 	return {
@@ -62,7 +62,7 @@ export const makePurchaseRequest = (
 			reviewing_supervisor,
 			requested_by,
 		};
-		const url = 'purchaserequisition/';
+		const url = "purchaserequisition/";
 		axios
 			.post(url, body)
 			.then((res) => {

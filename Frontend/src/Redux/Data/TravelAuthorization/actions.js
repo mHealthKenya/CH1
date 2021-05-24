@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as Types from "./types";
+import basePath from "../../../utils/basePath";
 
 export const getApprovedTravelAuthorization = (data) => {
 	return {
@@ -45,7 +46,7 @@ export const getRejectedTravelAuthorizationFail = (error) => {
 
 export const requestTravelAuthorizationData = (id) => {
 	return (dispatch) => {
-		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/?staff=${id}`;
+		const url = `${basePath}api/travelauthorization/?staff=${id}`;
 		let rejected = 0;
 		let approved = 0;
 		let pending = 0;
@@ -55,7 +56,7 @@ export const requestTravelAuthorizationData = (id) => {
 				const { data } = res;
 				data.forEach((info) => {
 					if (info.supervisor_comment) {
-						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						const url = `${basePath}api/travelauthorization/${info.id}/`;
 						axios.get(url).then(() => {
 							rejected += 1;
 							dispatch(getApprovedTravelAuthorization(approved));
@@ -63,7 +64,7 @@ export const requestTravelAuthorizationData = (id) => {
 							dispatch(getRejectedTravelAuthorization(rejected));
 						});
 					} else if (!info.supervisor_comment && info.approved) {
-						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						const url = `${basePath}api/travelauthorization/${info.id}/`;
 						axios.get(url).then(() => {
 							approved += 1;
 							dispatch(getApprovedTravelAuthorization(approved));
@@ -71,7 +72,7 @@ export const requestTravelAuthorizationData = (id) => {
 							dispatch(getRejectedTravelAuthorization(rejected));
 						});
 					} else if (!info.approved && !info.supervisor_comment) {
-						const url = `http://api-finance-docs.mhealthkenya.co.ke/api/travelauthorization/${info.id}/`;
+						const url = `${basePath}api/travelauthorization/${info.id}/`;
 						axios.get(url).then(() => {
 							pending += 1;
 							dispatch(getApprovedTravelAuthorization(approved));

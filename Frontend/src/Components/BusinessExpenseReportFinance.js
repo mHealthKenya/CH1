@@ -1,30 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import moment from "moment";
+import axios from "axios";
 import {
 	financeApprove,
 	getSpecificPurchaseData,
-} from '../Redux/Purchase/actions';
-import { requestFinanceStaff } from '../Redux/General/actions';
+} from "../Redux/Purchase/actions";
+import { requestFinanceStaff } from "../Redux/General/actions";
 import {
 	BARFinanceApprove,
 	getSpecificBARData,
 	requestBusinessExpenseReports,
 	getSpecificBERData,
-} from '../Redux/BusinessAdvanceRequest/actions';
-import { requestLogo } from '../Redux/mHealthImages/actions';
+} from "../Redux/BusinessAdvanceRequest/actions";
+import { requestLogo } from "../Redux/mHealthImages/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class BusinessExpenseReportFinance extends Component {
 	state = {
 		show: false,
 		showDisapprove: false,
 		approved: true,
-		finance_comments: '',
+		finance_comments: "",
 	};
 	componentDidMount = () => {
 		const { auth } = this.props;
@@ -102,7 +103,7 @@ export class BusinessExpenseReportFinance extends Component {
 					};
 					axios.patch(url, body).then((res) => console.log(res.data));
 				} catch (err) {
-					const url = 'businessexpensereportfinance/';
+					const url = "businessexpensereportfinance/";
 
 					const body = {
 						finance_staff: finStaffID,
@@ -118,7 +119,7 @@ export class BusinessExpenseReportFinance extends Component {
 	};
 
 	handleDownload = (e) => {
-		this.printDiv('test');
+		this.printDiv("test");
 		this.setState({
 			...this.state,
 			show: false,
@@ -153,7 +154,7 @@ export class BusinessExpenseReportFinance extends Component {
 						});
 					});
 				} catch (err) {
-					const url = 'businessexpensereportfinance/';
+					const url = "businessexpensereportfinance/";
 
 					const body = {
 						finance_staff: finStaffID,
@@ -177,31 +178,31 @@ export class BusinessExpenseReportFinance extends Component {
 		const { auth, sBAR, specificBAR, logo } = this.props;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				<Modal
 					show={show}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
-					<div id='test'>
+					<div id="test">
 						<br />
-						<div style={{ textAlign: 'center' }}>
-							<img src={logo} width={500} height={100} alt='logo' />
+						<div style={{ textAlign: "center" }}>
+							<img src={logo} width={500} height={100} alt="logo" />
 							<br />
 							<h2>Business Expense Report</h2>
 						</div>
 						<Modal.Body>
-							<p className='lead'>
+							<p className="lead">
 								<b>Purpose: </b>
 								{specificBAR.purpose}
 							</p>
 
-							<p className='lead'>
+							<p className="lead">
 								<b>Department: </b>
 								{specificBAR.department_name}
 							</p>
 
-							<p className='lead'>
+							<p className="lead">
 								<b>Requester: </b>
 								{specificBAR.requester_name}
 								<br />
@@ -212,39 +213,39 @@ export class BusinessExpenseReportFinance extends Component {
 										src={specificBAR.staff_signature}
 										height={50}
 										width={40}
-										alt='staff signature'
+										alt="staff signature"
 									/>
 								) : null}
 								<br />
 
 								<b>Date: </b>
-								{moment(specificBAR.date).format('YYYY - MM - DD')}
+								{moment(specificBAR.date).format("YYYY - MM - DD")}
 							</p>
 
-							<p className='lead'>
+							<p className="lead">
 								<b>Checked by: </b>
 								{specificBAR.finance_name}
 							</p>
 
-							<p className='lead'>
+							<p className="lead">
 								<b>Signature: </b>
 								{specificBAR.finance_signature ? (
 									<img
 										src={specificBAR.finance_signature}
 										height={50}
 										width={40}
-										alt='finance signature'
+										alt="finance signature"
 									/>
 								) : null}
 							</p>
 
-							<p className='lead'>
+							<p className="lead">
 								<b>Date Approved: </b>
 								{specificBAR.date_approved
-									? moment(specificBAR.date_approved).format('YYYY - MM - DD')
+									? moment(specificBAR.date_approved).format("YYYY - MM - DD")
 									: null}
 							</p>
-							<table className=' table '>
+							<table className=" table ">
 								<thead>
 									<tr>
 										<th>Receipt No.</th>
@@ -257,7 +258,7 @@ export class BusinessExpenseReportFinance extends Component {
 								<tbody>
 									<tr>
 										<td>{specificBAR.receipt_no}</td>
-										<td>{moment(specificBAR.date).format('YYYY - MM - DD')}</td>
+										<td>{moment(specificBAR.date).format("YYYY - MM - DD")}</td>
 										<td>{specificBAR.description}</td>
 										<td>{specificBAR.total}</td>
 									</tr>
@@ -291,26 +292,26 @@ export class BusinessExpenseReportFinance extends Component {
                   </tr>
                 </tbody> */}
 							</table>
-							<p className='lead'>
+							<p className="lead">
 								<b>Receipt: </b>
 								<br />
 								<img
 									src={specificBAR.receipt}
 									height={500}
 									width={400}
-									alt='receipt missing'
+									alt="receipt missing"
 								/>
 							</p>
 						</Modal.Body>
 					</div>
 					<Modal.Footer>
 						<div
-							className='btn btn-outline btn-secondary'
+							className="btn btn-outline btn-secondary"
 							onClick={this.handleClose}>
 							Close
 						</div>
 						<div
-							className='btn btn-outline btn-primary'
+							className="btn btn-outline btn-primary"
 							onClick={this.handleDownload}>
 							Download
 						</div>
@@ -319,35 +320,35 @@ export class BusinessExpenseReportFinance extends Component {
 
 				<Modal
 					show={showDisapprove}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
 					<Modal.Header closeButton>
-						<Modal.Title id='contained-modal-title-vcenter'>
+						<Modal.Title id="contained-modal-title-vcenter">
 							{specificBAR.requester_name}'s Request
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p className='lead'>
+						<p className="lead">
 							Please give a reason for disapproving this request...
 						</p>
 						<textarea
-							name='finance_comments'
+							name="finance_comments"
 							rows={4}
 							onChange={this.handleChange}></textarea>
-						<div className='flex-wrapper'>
-							<span style={{ flex: 2, color: 'transparent' }}>
+						<div className="flex-wrapper">
+							<span style={{ flex: 2, color: "transparent" }}>
 								This is to separate buttons
 							</span>
 							<button
-								className='btn-block btn-success btn-sm'
+								className="btn-block btn-success btn-sm"
 								style={{ flex: 1 }}
 								onClick={this.handleClose}>
 								Cancel
 							</button>
-							<span style={{ color: 'transparent' }}>is</span>
+							<span style={{ color: "transparent" }}>is</span>
 							<button
-								className='btn-block btn-danger sm'
+								className="btn-block btn-danger sm"
 								onClick={() => this.handleDisApprove(specificBAR.id)}
 								style={{ flex: 1 }}>
 								Disapprove
@@ -357,13 +358,13 @@ export class BusinessExpenseReportFinance extends Component {
 				</Modal>
 				{isAuthenticated ? (
 					<form>
-						<div className='banner'>
-							<h1 className='ml-2 mr-2'>
+						<div className="banner">
+							<h1 className="ml-2 mr-2">
 								Business advance requests pending finance approval
 							</h1>
 						</div>
-						<div className='table-responsive'>
-							<table className='table table-striped'>
+						<div className="table-responsive">
+							<table className="table table-striped">
 								<thead>
 									<tr>
 										<th>Requester</th>
@@ -382,21 +383,21 @@ export class BusinessExpenseReportFinance extends Component {
 												<td>{request.total_reimbursed}</td>
 												<td>
 													<div
-														className='btn btn-info btn-sm'
+														className="btn btn-info btn-sm"
 														onClick={() => this.handleView(request.id)}>
 														View
 													</div>
 
 													{request.approved ? (
 														<div
-															className='btn btn-secondary btn-sm'
+															className="btn btn-secondary btn-sm"
 															style={{ flex: 1 }}
 															disabled>
 															Approved
 														</div>
 													) : (
 														<div
-															className='btn btn-success btn-sm'
+															className="btn btn-success btn-sm"
 															style={{ flex: 1 }}
 															onClick={() => self.handleApprove(request.id)}>
 															Approve
@@ -404,13 +405,13 @@ export class BusinessExpenseReportFinance extends Component {
 													)}
 													{request.finance_comments ? (
 														<div
-															className='btn btn-danger btn-sm disabled'
+															className="btn btn-danger btn-sm disabled"
 															style={{ flex: 1 }}>
 															Disapproved
 														</div>
 													) : (
 														<div
-															className='btn btn-danger btn-sm'
+															className="btn btn-danger btn-sm"
 															onClick={() =>
 																self.handleDisApproveView(request.id)
 															}>
@@ -426,7 +427,7 @@ export class BusinessExpenseReportFinance extends Component {
 						</div>
 					</form>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

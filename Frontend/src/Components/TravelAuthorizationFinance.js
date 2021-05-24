@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import moment from "moment";
+import axios from "axios";
 import {
 	requestApprovedTravelAuthorizations,
 	requestSpecificTravelAuthorization,
-} from '../Redux/TravelAuthorization/actions';
-import { requestLogo } from '../Redux/mHealthImages/actions';
+} from "../Redux/TravelAuthorization/actions";
+import { requestLogo } from "../Redux/mHealthImages/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class TravelAuthorizationFinance extends Component {
 	state = {
@@ -21,7 +22,7 @@ export class TravelAuthorizationFinance extends Component {
 	componentDidMount = () => {
 		this.props.requestApprovedTravelAuthorizations();
 		this.props.requestLogo();
-		const url = 'lodgingmie/';
+		const url = "lodgingmie/";
 		axios.get(url).then((res) => {
 			const { data } = res;
 			const { mie, lodging } = data[0];
@@ -60,7 +61,7 @@ export class TravelAuthorizationFinance extends Component {
 	};
 
 	handleDownload = () => {
-		this.printDiv('report');
+		this.printDiv("report");
 		this.setState({
 			...this.state,
 			show: false,
@@ -79,20 +80,20 @@ export class TravelAuthorizationFinance extends Component {
 			times.push(i);
 		}
 		return (
-			<div className='container mb-3 mt-3'>
+			<div className="container mb-3 mt-3">
 				{isAuthenticated ? (
 					<div>
 						<Modal
 							show={show}
-							size='lg'
-							aria-labelledby='contained-modal-title-vcenter'
+							size="lg"
+							aria-labelledby="contained-modal-title-vcenter"
 							centered>
-							<div id='report'>
+							<div id="report">
 								{/* <Modal.Header closeButton onClick={this.handleClose}>
                   <Modal.Title id="contained-modal-title-vcenter"> */}
 								<br />
-								<div style={{ textAlign: 'center' }}>
-									<img src={logo} width={500} height={100} alt='logo' />
+								<div style={{ textAlign: "center" }}>
+									<img src={logo} width={500} height={100} alt="logo" />
 									<br />
 									<h2>Travel Authorization Form</h2>
 								</div>
@@ -100,13 +101,13 @@ export class TravelAuthorizationFinance extends Component {
 								{/* </Modal.Title>
                 </Modal.Header> */}
 								<Modal.Body>
-									<div className='table-responsive'>
-										<table className='table table-striped'>
+									<div className="table-responsive">
+										<table className="table table-striped">
 											<thead>
 												<th>Date Submitted</th>
 												<td>
 													{moment(travelAuthorization.date).format(
-														'YYYY - MM - DD'
+														"YYYY - MM - DD"
 													)}
 												</td>
 												<th>Traveller Mobile No.</th>
@@ -120,7 +121,7 @@ export class TravelAuthorizationFinance extends Component {
 												<td>
 													<img
 														src={travelAuthorization.staff_signature}
-														alt='signature is here'
+														alt="signature is here"
 														width={50}
 														height={50}
 													/>
@@ -154,17 +155,17 @@ export class TravelAuthorizationFinance extends Component {
 												<th>Approved by</th>
 												<td>{travelAuthorization.supervisor_name}</td>
 												<td>
-													{' '}
+													{" "}
 													<img
 														src={travelAuthorization.supervisor_signature}
-														alt='supervisor signature'
+														alt="supervisor signature"
 														width={50}
 														height={50}
 													/>
 												</td>
 												<td>
 													{moment(travelAuthorization.date_approved).format(
-														'YYYY - MM - DD'
+														"YYYY - MM - DD"
 													)}
 												</td>
 											</thead>
@@ -224,30 +225,30 @@ export class TravelAuthorizationFinance extends Component {
 												<br />
 
 												<tr>
-													<td colSpan='5'>
+													<td colSpan="5">
 														<b>Total Expenses: Ksh. {total}</b>
 													</td>
 												</tr>
 												{other.length > 0 ? (
 													<tr>
-														<td colSpan='5'>
+														<td colSpan="5">
 															<b>Other Expenses: Ksh. {other[0].amount}</b>
 														</td>
 													</tr>
 												) : (
-													<td colSpan='5'>
+													<td colSpan="5">
 														<b>Other Expenses: Ksh. 0</b>
 													</td>
 												)}
 												{other.length > 0 ? (
 													<tr>
-														<td colSpan='5'>
+														<td colSpan="5">
 															<b>Grand Total: Ksh. {other[0].amount + total}</b>
 														</td>
 													</tr>
 												) : (
 													<tr>
-														<td colSpan='5'>
+														<td colSpan="5">
 															<b>Grand Total: Ksh. {total}</b>
 														</td>
 													</tr>
@@ -259,24 +260,24 @@ export class TravelAuthorizationFinance extends Component {
 							</div>
 							<Modal.Footer>
 								<div
-									className='btn btn-outline btn-secondary'
+									className="btn btn-outline btn-secondary"
 									onClick={this.handleClose}>
 									Close
 								</div>
 
 								<div
-									className='btn btn-outline btn-success'
+									className="btn btn-outline btn-success"
 									onClick={this.handleDownload}>
 									Download
 								</div>
 							</Modal.Footer>
 						</Modal>
 						<form>
-							<div className='banner'>
-								<h1 className='ml-2 mr-2'>View Travel Authorizations</h1>
+							<div className="banner">
+								<h1 className="ml-2 mr-2">View Travel Authorizations</h1>
 							</div>
-							<div className='table-responsive'>
-								<table className='table table-striped'>
+							<div className="table-responsive">
+								<table className="table table-striped">
 									<thead>
 										<tr>
 											<th>Staff</th>
@@ -298,19 +299,19 @@ export class TravelAuthorizationFinance extends Component {
 															src={request.supervisor_signature}
 															width={50}
 															height={50}
-															alt='/'
+															alt="/"
 														/>
 													</td>
 													{request.ceo_comments ? (
-														<td style={{ color: 'red' }}>Rejected</td>
+														<td style={{ color: "red" }}>Rejected</td>
 													) : request.ceo_approved ? (
-														<td style={{ color: 'green' }}>Approved</td>
+														<td style={{ color: "green" }}>Approved</td>
 													) : (
-														<td style={{ color: '#ffbb00' }}>Under review</td>
+														<td style={{ color: "#ffbb00" }}>Under review</td>
 													)}
 													<td>
 														<div
-															className='btn btn-info btn-sm'
+															className="btn btn-info btn-sm"
 															onClick={() => this.handleView(request.id)}>
 															View
 														</div>
@@ -324,7 +325,7 @@ export class TravelAuthorizationFinance extends Component {
 						</form>
 					</div>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

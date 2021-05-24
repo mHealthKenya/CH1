@@ -5,8 +5,9 @@ import { requestProjects } from "../Redux/Projects/actions";
 import { requestSupervisors } from "../Redux/General/actions";
 import axios from "axios";
 import { Modal } from "antd";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class TravelAuthorization extends Component {
 	state = {

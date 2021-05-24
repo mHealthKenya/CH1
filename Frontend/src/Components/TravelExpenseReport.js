@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { requestSpecificTravelAuthorization } from '../Redux/TravelAuthorization/actions';
-import axios from 'axios';
-import { Modal } from 'antd';
+import React, { Component } from "react";
+import moment from "moment";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { requestSpecificTravelAuthorization } from "../Redux/TravelAuthorization/actions";
+import axios from "axios";
+import { Modal } from "antd";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class TravelExpenseReport extends Component {
 	state = {
-		receipt: '',
-		receipt_other: '',
-		receipt_no_other: '',
-		description: '',
-		receipt_no: '',
+		receipt: "",
+		receipt_other: "",
+		receipt_no_other: "",
+		description: "",
+		receipt_no: "",
 		show: false,
 		error: null,
 		redirect: false,
@@ -76,24 +77,24 @@ export class TravelExpenseReport extends Component {
 		const url = `travelauthorizationsupervisor/?request=${id}`;
 		axios.get(url).then((res) => {
 			const { id } = res.data[0];
-			const url = 'travelexpensereport/';
+			const url = "travelexpensereport/";
 			try {
 				const otherID = other[0].id;
 
 				const fd = new FormData();
-				fd.append('description', description);
-				fd.append('receipt_no', receipt_no_other);
-				fd.append('receipt', receipt_other);
+				fd.append("description", description);
+				fd.append("receipt_no", receipt_no_other);
+				fd.append("receipt", receipt_other);
 				const otherUrl = `other/${otherID}/`;
 				axios.patch(otherUrl, fd).then((res) => {
 					const request = id;
 					const other = otherID;
 					const fd = new FormData();
-					fd.append('request', request);
-					fd.append('other', other);
-					fd.append('receipt', receipt);
-					fd.append('receipt_no', receipt_no);
-					fd.append('receipt_other', receipt_other);
+					fd.append("request", request);
+					fd.append("other", other);
+					fd.append("receipt", receipt);
+					fd.append("receipt_no", receipt_no);
+					fd.append("receipt_other", receipt_other);
 					axios
 						.post(url, fd)
 						.then((res) => {
@@ -112,12 +113,12 @@ export class TravelExpenseReport extends Component {
 						});
 				});
 			} catch (err) {
-				const url = 'travelexpensereport/';
+				const url = "travelexpensereport/";
 				const request = id;
 				const fd = new FormData();
-				fd.append('request', request);
-				fd.append('receipt', receipt);
-				fd.append('receipt_no', receipt_no);
+				fd.append("request", request);
+				fd.append("receipt", receipt);
+				fd.append("receipt_no", receipt_no);
 				axios
 					.post(url, fd)
 					.then((res) => {
@@ -147,7 +148,7 @@ export class TravelExpenseReport extends Component {
 		const { isAuthenticated } = auth;
 		const { show, error, redirect } = this.state;
 		return (
-			<div className='testbox container mt-3 mb-3' id='test'>
+			<div className="testbox container mt-3 mb-3" id="test">
 				{isAuthenticated ? (
 					<>
 						{!redirect ? (
@@ -155,18 +156,18 @@ export class TravelExpenseReport extends Component {
 								<div>
 									{error ? (
 										<Modal
-											title={<h2 style={{ color: 'red' }}>Oops!</h2>}
+											title={<h2 style={{ color: "red" }}>Oops!</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead' style={{ color: 'red' }}>
+											<p className="lead" style={{ color: "red" }}>
 												We encountered a problem. Please try again.
 												<br />
 												If the problem persists please contact support.
@@ -176,123 +177,123 @@ export class TravelExpenseReport extends Component {
 										</Modal>
 									) : show && !error ? (
 										<Modal
-											title={<h2 style={{ color: 'blue' }}>Success</h2>}
+											title={<h2 style={{ color: "blue" }}>Success</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead'>
+											<p className="lead">
 												Travel Expense successfully submitted
 											</p>
 										</Modal>
 									) : null}
 									<div>
-										<div className='banner'>
+										<div className="banner">
 											<h1>Travel Expense Report</h1>
 										</div>
 										<div>
-											<div className='colums'>
-												<div className='item'>
-													<label htmlFor='project'> Date requested</label>
+											<div className="colums">
+												<div className="item">
+													<label htmlFor="project"> Date requested</label>
 													<input
-														id='date_approved'
-														type='text'
-														name='date_approved'
+														id="date_approved"
+														type="text"
+														name="date_approved"
 														value={moment(travelAuthorization.date).format(
-															'YYYY - MM - DD'
+															"YYYY - MM - DD"
 														)}
 														readOnly
 													/>
 												</div>
 											</div>
 											<hr />
-											<div className='colums'>
-												<div className='item'>
-													<label htmlFor='project'> Supervisor</label>
+											<div className="colums">
+												<div className="item">
+													<label htmlFor="project"> Supervisor</label>
 													<input
-														id='supervisor_name'
-														type='text'
-														name='supervisor_name'
+														id="supervisor_name"
+														type="text"
+														name="supervisor_name"
 														value={travelAuthorization.supervisor_name}
 														readOnly
 													/>
 												</div>
-												<div className='item'>
-													<label htmlFor='project'> Supervisor Sign</label>
+												<div className="item">
+													<label htmlFor="project"> Supervisor Sign</label>
 													<br />
 													<img
 														src={travelAuthorization.supervisor_signature}
-														alt='sign goes here'
+														alt="sign goes here"
 														width={50}
 														height={50}
 													/>
 												</div>
-												<div className='item'>
-													<label htmlFor='project'> Date signed</label>
+												<div className="item">
+													<label htmlFor="project"> Date signed</label>
 													<input
-														id='project'
-														type='text'
-														name='project'
+														id="project"
+														type="text"
+														name="project"
 														value={moment(
 															travelAuthorization.date_approved
-														).format('YYYY - MM - DD')}
+														).format("YYYY - MM - DD")}
 														readOnly
 													/>
 												</div>
 											</div>
 											<hr />
 
-											<div className='item'>
-												<label htmlFor='description'> Purpose of travel</label>
+											<div className="item">
+												<label htmlFor="description"> Purpose of travel</label>
 												<textarea
-													id='description'
-													type='text'
-													name='description'
+													id="description"
+													type="text"
+													name="description"
 													value={travelAuthorization.purpose}
 													readOnly
 												/>
 											</div>
-											<div className='item'>
-												<label htmlFor='period'> Period</label>
+											<div className="item">
+												<label htmlFor="period"> Period</label>
 												<input
-													id='dateto'
-													type='text'
-													name='dateto'
+													id="dateto"
+													type="text"
+													name="dateto"
 													value={`${travelAuthorization.period} days`}
 													readOnly
 												/>
 											</div>
-											<div className='item'>
-												<label htmlFor='project'> Project to charge</label>
+											<div className="item">
+												<label htmlFor="project"> Project to charge</label>
 												<input
-													id='project'
-													type='text'
-													name='project'
+													id="project"
+													type="text"
+													name="project"
 													value={travelAuthorization.project_name}
 													readOnly
 												/>
 											</div>
-											<div className='item'>
-												<label htmlFor='receipt_no'>Receipt No.</label>
+											<div className="item">
+												<label htmlFor="receipt_no">Receipt No.</label>
 												<input
-													id='recceipt_no'
-													type='text'
-													name='receipt_no'
+													id="recceipt_no"
+													type="text"
+													name="receipt_no"
 													onChange={this.handleChange}
 												/>
 											</div>
-											<div className='item'>
-												<label htmlFor='receipt'> Upload receipt</label>
+											<div className="item">
+												<label htmlFor="receipt"> Upload receipt</label>
 												<input
-													id='recceipt'
-													type='file'
-													name='receipt'
+													id="recceipt"
+													type="file"
+													name="receipt"
 													onChange={this.handleReceipt}
 												/>
 											</div>
@@ -300,46 +301,46 @@ export class TravelExpenseReport extends Component {
 											{other.length > 0 ? (
 												<div>
 													<h1>Other Expenses</h1>
-													<div className='item'>
-														<label htmlFor='receipt_no_other'>
-															{' '}
+													<div className="item">
+														<label htmlFor="receipt_no_other">
+															{" "}
 															Receipt Number
 														</label>
 														<input
-															id='receipt_no_other'
-															type='text'
-															name='receipt_no_other'
+															id="receipt_no_other"
+															type="text"
+															name="receipt_no_other"
 															onChange={this.handleChange}
 														/>
 													</div>
-													<div className='item'>
-														<label htmlFor='amount'>Amount</label>
+													<div className="item">
+														<label htmlFor="amount">Amount</label>
 														<input
-															id='amount'
-															type='number'
-															name='amount'
+															id="amount"
+															type="number"
+															name="amount"
 															value={other[0].amount}
 															disabled
 														/>
 													</div>
 
-													<div className='item'>
-														<label htmlFor='amount'>Description</label>
+													<div className="item">
+														<label htmlFor="amount">Description</label>
 														<textarea
-															id='description'
-															type='text'
-															name='description'
+															id="description"
+															type="text"
+															name="description"
 															rows={3}
 															onChange={this.handleChange}
 														/>
 													</div>
 
-													<div className='item'>
-														<label htmlFor='project'> Upload receipt</label>
+													<div className="item">
+														<label htmlFor="project"> Upload receipt</label>
 														<input
-															id='receipt_other'
-															type='file'
-															name='receipt_other'
+															id="receipt_other"
+															type="file"
+															name="receipt_other"
 															onChange={this.handleReceipt}
 														/>
 													</div>
@@ -390,18 +391,18 @@ export class TravelExpenseReport extends Component {
                 </table>
               </div>
             </div> */}
-										<div className='btn-block'>
+										<div className="btn-block">
 											<button onClick={this.handleSubmit}>Submit</button>
 										</div>
 									</div>
 								</div>
 							</form>
 						) : (
-							<Redirect to='/' />
+							<Redirect to="/" />
 						)}
 					</>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

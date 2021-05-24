@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { userLogout } from "../Redux/Auth/actions";
 import axios from "axios";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class Holder extends Component {
 	state = {
@@ -12,7 +13,7 @@ export class Holder extends Component {
 	componentDidMount = () => {
 		const { auth } = this.props;
 		const { activeTime } = auth;
-		const url = "mhealthimages/?imagename=mhealthhomelogo";
+		const url = `mhealthimages/?imagename=mhealthhomelogo`;
 		axios.get(url).then((res) => {
 			try {
 				const { image } = res.data[0];
@@ -44,11 +45,6 @@ export class Holder extends Component {
 					<header id="header" className="header">
 						<div className="container">
 							<div id="logo" className="pull-left">
-								{/* <h1>
-                  <a href="/">
-                    <span>m</span>Health
-                  </a>
-                </h1> */}
 								<a href="/">
 									<img src={image} alt="" title="" width={200} height={100} />
 								</a>
@@ -88,21 +84,6 @@ export class Holder extends Component {
 													Business Advance Request
 												</a>
 											</li>
-											{/* <li>
-                        <a href="/docs/businessexpensereport">
-                          Business Expense Report
-                        </a>
-                      </li> */}
-											<li>
-												<a href="/docs/travelauthorization">
-													Travel Authorization Form
-												</a>
-											</li>
-											{/* <li>
-                        <a href="/docs/travelexpensereport">
-                          Travel Expenses Report
-                        </a>
-                      </li> */}
 											<li>
 												<a href="/docs/taxilogistics">Taxi Logistics</a>
 											</li>
@@ -210,121 +191,6 @@ export class Holder extends Component {
 						</div>
 					</header>
 					{this.props.children}
-					{/* <footer className='footer'>
-						<div className='container'>
-							<div className='row'>
-								<div className='col-md-12 col-lg-4'>
-									<div className='footer-logo'>
-										<a
-											className='navbar-brand'
-											href='/'
-											style={{ color: 'blue' }}>
-											mHealthKenya
-										</a>
-										<p>
-											Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the.
-										</p>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>Support</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>faq</a>
-											</li>
-											<li>
-												<a href='/'>Editor help</a>
-											</li>
-											<li>
-												<a href='/'>Contact us</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className='copyrights'>
-							<div className='container'>
-								<p>&copy; Copyrights mHealthKenya. All rights reserved.</p>
-								<div className='credits'>
-									Brain Child of <a href='/'>Joel, Bruno, and Dennis</a>
-								</div>
-							</div>
-						</div>
-					</footer> */}
-
 					<a href="/" className="back-to-top">
 						<i className="fa fa-chevron-up"></i>
 					</a>
@@ -358,123 +224,6 @@ export class Holder extends Component {
 						</div>
 					</header>
 					{this.props.children}
-					{/* <footer className='footer'>
-						<div className='container'>
-							<div className='row'>
-								<div className='col-md-12 col-lg-4'>
-									<div className='footer-logo'>
-										<a
-											className='navbar-brand'
-											href='/'
-											style={{ color: 'blue' }}>
-											mHealthKenya
-										</a>
-										<p>
-											Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry. Lorem Ipsum has been the industry's
-											standard dummy text ever since the.
-										</p>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>Support</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>faq</a>
-											</li>
-											<li>
-												<a href='/'>Editor help</a>
-											</li>
-											<li>
-												<a href='/'>Contact us</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className='col-sm-6 col-md-3 col-lg-2'>
-									<div className='list-menu'>
-										<h4>About us</h4>
-
-										<ul className='list-unstyled'>
-											<li>
-												<a href='/'>About us</a>
-											</li>
-											<li>
-												<a href='/'>Features item</a>
-											</li>
-											<li>
-												<a href='/'>Live streaming</a>
-											</li>
-											<li>
-												<a href='/'>Privacy Policy</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className='copyright'>
-							<div className='container'>
-								<p className='lead'>
-									Copyrights mHealthKenya. All rights reserved.
-								</p>
-								<div>
-									Brain Child of <a href='/'>Joel, Bruno and Dennis</a>
-								</div>
-							</div>
-						</div>
-					</footer> */}
-
 					<a href="/" className="back-to-top">
 						<i className="fa fa-chevron-up"></i>
 					</a>

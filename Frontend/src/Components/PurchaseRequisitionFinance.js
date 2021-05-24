@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import moment from "moment";
+import axios from "axios";
 import {
 	financeApprove,
 	getSpecificPurchaseData,
-} from '../Redux/Purchase/actions';
-import { requestFinanceStaff } from '../Redux/General/actions';
-import { requestLogo } from '../Redux/mHealthImages/actions';
+} from "../Redux/Purchase/actions";
+import { requestFinanceStaff } from "../Redux/General/actions";
+import { requestLogo } from "../Redux/mHealthImages/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class PurchaseRequisitionFinance extends Component {
 	state = {
 		show: false,
 		showDisapprove: false,
 		approved: true,
-		finance_comments: '',
+		finance_comments: "",
 	};
 	componentDidMount = () => {
 		const { auth } = this.props;
@@ -44,7 +45,7 @@ export class PurchaseRequisitionFinance extends Component {
 	};
 
 	handleDownload = () => {
-		this.printDiv('report');
+		this.printDiv("report");
 		this.setState({
 			...this.state,
 			show: false,
@@ -125,7 +126,7 @@ export class PurchaseRequisitionFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'FAPR/';
+								const url = "FAPR/";
 								const body = {
 									finance_approved: true,
 									finance_disapproved: false,
@@ -205,7 +206,7 @@ export class PurchaseRequisitionFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'FAPR/';
+								const url = "FAPR/";
 								const body = {
 									finance_approved: false,
 									finance_disapproved: true,
@@ -248,23 +249,23 @@ export class PurchaseRequisitionFinance extends Component {
 		const { purchaseRequest } = purchase;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				<Modal
 					show={show}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
-					<div id='report'>
+					<div id="report">
 						<br />
-						<div style={{ textAlign: 'center' }}>
-							<img src={logo} width={500} height={100} alt='logo' />
+						<div style={{ textAlign: "center" }}>
+							<img src={logo} width={500} height={100} alt="logo" />
 							<br />
 							<h2>Purchase Requisition Form</h2>
 						</div>
 
 						<Modal.Body>
-							<div className='table-responsive'>
-								<table className='table table-striped'>
+							<div className="table-responsive">
+								<table className="table table-striped">
 									<thead>
 										<tr>
 											<th>Date Requested</th>
@@ -284,7 +285,7 @@ export class PurchaseRequisitionFinance extends Component {
 										<tr>
 											<td>
 												{moment(purchaseRequest.date_requested).format(
-													'YYYY - MM - DD'
+													"YYYY - MM - DD"
 												)}
 											</td>
 											<td>{purchaseRequest.activity}</td>
@@ -294,20 +295,20 @@ export class PurchaseRequisitionFinance extends Component {
 											<td>
 												<img
 													src={purchaseRequest.supervisor_signature}
-													alt='signature'
+													alt="signature"
 													width={50}
 													height={50}
 												/>
 											</td>
 											{purchaseRequest.ceo_comments ? (
-												<td style={{ color: 'red' }}>
+												<td style={{ color: "red" }}>
 													{purchaseRequest.ceo_comments}
 												</td>
 											) : purchaseRequest.ceo_approved ? (
 												<td>
 													<img
 														src={purchaseRequest.CEO_signature}
-														alt='signature'
+														alt="signature"
 														width={50}
 														height={50}
 													/>
@@ -323,12 +324,12 @@ export class PurchaseRequisitionFinance extends Component {
 					</div>
 					<Modal.Footer>
 						<div
-							className='btn btn-outline btn-secondary'
+							className="btn btn-outline btn-secondary"
 							onClick={this.handleClose}>
 							Close
 						</div>
 						<div
-							className='btn btn-outline btn-success'
+							className="btn btn-outline btn-success"
 							onClick={this.handleDownload}>
 							Download
 						</div>
@@ -336,35 +337,35 @@ export class PurchaseRequisitionFinance extends Component {
 				</Modal>
 				<Modal
 					show={showDisapprove}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
 					<Modal.Header closeButton>
-						<Modal.Title id='contained-modal-title-vcenter'>
+						<Modal.Title id="contained-modal-title-vcenter">
 							{purchaseRequest.requester_name}'s Request
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p className='lead'>
+						<p className="lead">
 							Please give a reason for disapproving this request...
 						</p>
 						<textarea
-							name='finance_comments'
+							name="finance_comments"
 							rows={4}
 							onChange={this.handleChange}></textarea>
-						<div className='flex-wrapper'>
-							<span style={{ flex: 2, color: 'transparent' }}>
+						<div className="flex-wrapper">
+							<span style={{ flex: 2, color: "transparent" }}>
 								This is to separate buttons
 							</span>
 							<button
-								className='btn-block btn-success btn-sm'
+								className="btn-block btn-success btn-sm"
 								style={{ flex: 1 }}
 								onClick={this.handleClose}>
 								Cancel
 							</button>
-							<span style={{ color: 'transparent' }}>is</span>
+							<span style={{ color: "transparent" }}>is</span>
 							<button
-								className='btn-block btn-danger sm'
+								className="btn-block btn-danger sm"
 								onClick={() => this.handleDisApprove(purchaseRequest.id)}
 								style={{ flex: 1 }}>
 								Disapprove
@@ -374,13 +375,13 @@ export class PurchaseRequisitionFinance extends Component {
 				</Modal>
 				{isAuthenticated ? (
 					<form>
-						<div className='banner'>
-							<h1 className='ml-2 mr-2'>
+						<div className="banner">
+							<h1 className="ml-2 mr-2">
 								Purchase requests pending finance approval
 							</h1>
 						</div>
-						<div className='table-responsive'>
-							<table className='table table-striped'>
+						<div className="table-responsive">
+							<table className="table table-striped">
 								<thead>
 									<tr>
 										<th>Staff</th>
@@ -401,26 +402,26 @@ export class PurchaseRequisitionFinance extends Component {
 														src={request.supervisor_signature}
 														width={50}
 														height={50}
-														alt='/'
+														alt="/"
 													/>
 												</td>
 												{request.ceo_comments ? (
-													<td style={{ color: 'red' }}>Rejected</td>
+													<td style={{ color: "red" }}>Rejected</td>
 												) : request.ceo_approved ? (
-													<td style={{ color: 'green' }}>Approved</td>
+													<td style={{ color: "green" }}>Approved</td>
 												) : (
-													<td style={{ color: '#ffbb00' }}>Under review</td>
+													<td style={{ color: "#ffbb00" }}>Under review</td>
 												)}
 												<td>
 													<div
-														className='btn btn-info btn-sm'
+														className="btn btn-info btn-sm"
 														onClick={() => this.handleView(request.id)}>
 														View
 													</div>
 
 													{request.finance_approved && request.ceo_approved ? (
 														<div
-															className='btn btn-success btn-sm disabled'
+															className="btn btn-success btn-sm disabled"
 															style={{ flex: 1 }}
 															onClick={() => self.handleApprove(request.id)}>
 															Approved
@@ -428,7 +429,7 @@ export class PurchaseRequisitionFinance extends Component {
 													) : !request.finance_approved &&
 													  !request.ceo_approved ? (
 														<div
-															className='btn btn-success btn-sm'
+															className="btn btn-success btn-sm"
 															style={{ flex: 1 }}
 															onClick={() => self.handleApprove(request.id)}>
 															Approve
@@ -443,13 +444,13 @@ export class PurchaseRequisitionFinance extends Component {
 													</div> */}
 													{request.finance_comments ? (
 														<div
-															className='btn btn-danger btn-sm disabled'
+															className="btn btn-danger btn-sm disabled"
 															style={{ flex: 1 }}>
 															Disapproved
 														</div>
 													) : request.ceo_approved ? null : (
 														<div
-															className='btn btn-danger btn-sm'
+															className="btn btn-danger btn-sm"
 															onClick={() =>
 																self.handleDisApproveView(request.id)
 															}>
@@ -465,7 +466,7 @@ export class PurchaseRequisitionFinance extends Component {
 						</div>
 					</form>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

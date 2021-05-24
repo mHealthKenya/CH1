@@ -1,29 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import moment from "moment";
+import axios from "axios";
 import {
 	requestTravelExpense,
 	getSpecificTravelExpenseData,
-} from '../Redux/TravelExpense/actions';
-import { financeApprove } from '../Redux/Purchase/actions';
-import { requestFinanceStaff } from '../Redux/General/actions';
-import { requestLogo } from '../Redux/mHealthImages/actions';
+} from "../Redux/TravelExpense/actions";
+import { financeApprove } from "../Redux/Purchase/actions";
+import { requestFinanceStaff } from "../Redux/General/actions";
+import { requestLogo } from "../Redux/mHealthImages/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class TravelExpenseReportFinance extends Component {
 	state = {
 		show: false,
 		showDisapprove: false,
 		approved: true,
-		finance_comments: '',
+		finance_comments: "",
 		mie: 0,
 		lodging: 0,
 		times: [],
-		amount: '',
+		amount: "",
 		showAmount: false,
 		showDownload: false,
 	};
@@ -35,7 +36,7 @@ export class TravelExpenseReportFinance extends Component {
 			this.props.requestFinanceStaff(id);
 			this.props.requestTravelExpense();
 			this.props.requestLogo();
-			const url = 'lodgingmie/';
+			const url = "lodgingmie/";
 			axios.get(url).then((res) => {
 				const { data } = res;
 				const { mie, lodging } = data[0];
@@ -166,7 +167,7 @@ export class TravelExpenseReportFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'FAPR/';
+								const url = "FAPR/";
 								const body = {
 									finance_approved: true,
 									finance_disapproved: false,
@@ -246,7 +247,7 @@ export class TravelExpenseReportFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'FAPR/';
+								const url = "FAPR/";
 								const body = {
 									finance_approved: false,
 									finance_disapproved: true,
@@ -294,7 +295,7 @@ export class TravelExpenseReportFinance extends Component {
 	};
 
 	handleDownload = () => {
-		this.printDiv('report');
+		this.printDiv("report");
 		this.setState({
 			...this.state,
 			show: false,
@@ -322,82 +323,82 @@ export class TravelExpenseReportFinance extends Component {
 		const { purchaseRequest } = purchase;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				<Modal
 					show={show}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
-					<div id='report'>
+					<div id="report">
 						<br />
-						<div style={{ textAlign: 'center' }}>
-							<img src={logo} width={500} height={100} alt='logo' />
+						<div style={{ textAlign: "center" }}>
+							<img src={logo} width={500} height={100} alt="logo" />
 							<br />
 							<h2>Travel Expense Report</h2>
 						</div>
 						<Modal.Body>
 							{TES.purpose ? (
-								<div className='row ml-3 mr-3'>
-									<div className='column'>
-										<p className='lead'>
+								<div className="row ml-3 mr-3">
+									<div className="column">
+										<p className="lead">
 											<b>Purpose : </b>
 											{TES.purpose ? TES.purpose[0] : null}
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Department : </b>
 											{TES.department_name}
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Traveller : </b>
 											{TES.staff_name}
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Signature : </b>
 											<img
 												src={TES.staff_signature}
-												alt='signature is here'
+												alt="signature is here"
 												width={50}
 												height={50}
 											/>
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Date : </b>
-											{moment(TES.date[0]).format('YYYY - MM - DD')}
+											{moment(TES.date[0]).format("YYYY - MM - DD")}
 										</p>
 									</div>
-									<div className='column'>
-										<p className='lead'>
+									<div className="column">
+										<p className="lead">
 											<b>Travel Period : </b>
 											{TES.period} days
 										</p>
-										<p className='lead'>
+										<p className="lead">
 											<b>Supervisor: </b>
 											{TES.supervisor_name}
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Supervisor Signature : </b>
 											<img
 												src={TES.supervisor_signature}
-												alt='signature is here'
+												alt="signature is here"
 												width={50}
 												height={50}
 											/>
 										</p>
 
-										<p className='lead'>
+										<p className="lead">
 											<b>Date Approved : </b>
-											{moment(TES.date_approved[0]).format('YYYY - MM - DD')}
+											{moment(TES.date_approved[0]).format("YYYY - MM - DD")}
 										</p>
 									</div>
 								</div>
 							) : null}
-							<div className='table-responsive'>
-								<table className='table table-striped'>
+							<div className="table-responsive">
+								<table className="table table-striped">
 									<thead>
 										<tr>
 											<th>Receipt No.</th>
@@ -458,17 +459,17 @@ export class TravelExpenseReportFinance extends Component {
 											<td></td>
 											<td></td>
 
-											<td colSpan='3'>
+											<td colSpan="3">
 												<b> Total Expenses: {total}</b>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 								{otherTES.length > 0 ? (
-									<table className='table table-striped'>
+									<table className="table table-striped">
 										<thead>
 											<tr>
-												<td colSpan='3'>
+												<td colSpan="3">
 													<h3>Other Expenses</h3>
 												</td>
 											</tr>
@@ -492,7 +493,7 @@ export class TravelExpenseReportFinance extends Component {
 										<thead>
 											<tr>
 												<th>
-													Grand Total:{' '}
+													Grand Total:{" "}
 													{parseInt(total) + parseInt(otherTES[0].amount)}
 												</th>
 											</tr>
@@ -510,26 +511,26 @@ export class TravelExpenseReportFinance extends Component {
 							</div>
 							<hr />
 							<div>
-								<img src={TES.receipt} alt='Ensure a receipt is attaced' />
+								<img src={TES.receipt} alt="Ensure a receipt is attaced" />
 							</div>
 							{otherTES.length > 0 ? (
 								<div>
 									<img
 										src={otherTES[0].receipt}
-										alt='Ensure a receipt is attaced'
+										alt="Ensure a receipt is attaced"
 									/>
 								</div>
 							) : null}
-						</Modal.Body>{' '}
+						</Modal.Body>{" "}
 					</div>
 					<Modal.Footer>
 						<div
-							className='btn btn-outline btn-secondary'
+							className="btn btn-outline btn-secondary"
 							onClick={this.handleClose}>
 							Close
 						</div>
 						<div
-							className='btn btn-outline btn-success'
+							className="btn btn-outline btn-success"
 							onClick={this.handleDownload}>
 							Download
 						</div>
@@ -537,35 +538,35 @@ export class TravelExpenseReportFinance extends Component {
 				</Modal>
 				<Modal
 					show={showDisapprove}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
 					<Modal.Header closeButton>
-						<Modal.Title id='contained-modal-title-vcenter'>
+						<Modal.Title id="contained-modal-title-vcenter">
 							{purchaseRequest.requester_name}'s Request
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p className='lead'>
+						<p className="lead">
 							Please give a reason for disapproving this request...
 						</p>
 						<textarea
-							name='finance_comments'
+							name="finance_comments"
 							rows={4}
 							onChange={this.handleChange}></textarea>
-						<div className='flex-wrapper'>
-							<span style={{ flex: 2, color: 'transparent' }}>
+						<div className="flex-wrapper">
+							<span style={{ flex: 2, color: "transparent" }}>
 								This is to separate buttons
 							</span>
 							<button
-								className='btn-block btn-success btn-sm'
+								className="btn-block btn-success btn-sm"
 								style={{ flex: 1 }}
 								onClick={this.handleClose}>
 								Cancel
 							</button>
-							<span style={{ color: 'transparent' }}>is</span>
+							<span style={{ color: "transparent" }}>is</span>
 							<button
-								className='btn-block btn-danger sm'
+								className="btn-block btn-danger sm"
 								onClick={() => this.handleDisApprove(purchaseRequest.id)}
 								style={{ flex: 1 }}>
 								Disapprove
@@ -575,13 +576,13 @@ export class TravelExpenseReportFinance extends Component {
 				</Modal>
 				{isAuthenticated ? (
 					<form>
-						<div className='banner'>
-							<h1 className='ml-2 mr-2'>
+						<div className="banner">
+							<h1 className="ml-2 mr-2">
 								Travel Expense Report Pending Finance Approval
 							</h1>
 						</div>
-						<div className='table-responsive'>
-							<table className='table table-striped'>
+						<div className="table-responsive">
+							<table className="table table-striped">
 								<thead>
 									<tr>
 										<th>Staff</th>
@@ -613,12 +614,12 @@ export class TravelExpenseReportFinance extends Component {
 														src={request.supervisor_signature}
 														width={50}
 														height={50}
-														alt='/'
+														alt="/"
 													/>
 												</td>
 												<td>
 													<div
-														className='btn btn-info btn-sm'
+														className="btn btn-info btn-sm"
 														onClick={() => this.handleView(request.id)}>
 														View
 													</div>
@@ -631,7 +632,7 @@ export class TravelExpenseReportFinance extends Component {
 						</div>
 					</form>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

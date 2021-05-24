@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import moment from "moment";
+import axios from "axios";
 import {
 	financeApprove,
 	getSpecificPurchaseData,
-} from '../Redux/Purchase/actions';
-import { requestFinanceStaff } from '../Redux/General/actions';
+} from "../Redux/Purchase/actions";
+import { requestFinanceStaff } from "../Redux/General/actions";
 import {
 	BARFinanceApprove,
 	getSpecificBARData,
-} from '../Redux/BusinessAdvanceRequest/actions';
-import { requestLogo } from '../Redux/mHealthImages/actions';
+} from "../Redux/BusinessAdvanceRequest/actions";
+import { requestLogo } from "../Redux/mHealthImages/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class BusinessAdvanceRequestFinance extends Component {
 	state = {
 		show: false,
 		showDisapprove: false,
 		approved: true,
-		finance_comment: '',
+		finance_comment: "",
 	};
 	componentDidMount = () => {
 		const { auth } = this.props;
@@ -105,7 +106,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'businessadvancerequestfinance/';
+								const url = "businessadvancerequestfinance/";
 								const body = {
 									approved: true,
 									owner: UID,
@@ -178,7 +179,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 								});
 							} catch (err) {
 								console.log(err.message);
-								const url = 'businessadvancerequestfinance/';
+								const url = "businessadvancerequestfinance/";
 								const body = {
 									approved: false,
 									owner: UID,
@@ -224,7 +225,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 	};
 
 	handleDownload = () => {
-		this.printDiv('report');
+		this.printDiv("report");
 		this.setState({
 			...this.state,
 			show: false,
@@ -237,27 +238,27 @@ export class BusinessAdvanceRequestFinance extends Component {
 		const { auth, sBAR, specificBAR, logo } = this.props;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container'>
+			<div className="testbox container">
 				<Modal
 					show={show}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
-					<div id='report'>
+					<div id="report">
 						<br />
-						<div style={{ textAlign: 'center' }}>
-							<img src={logo} width={500} height={100} alt='logo' />
+						<div style={{ textAlign: "center" }}>
+							<img src={logo} width={500} height={100} alt="logo" />
 							<br />
 							<h2>Business Advance Report</h2>
 						</div>
 						<Modal.Body>
-							<div className='table-responsive'>
-								<table className='table table-striped'>
+							<div className="table-responsive">
+								<table className="table table-striped">
 									<thead>
 										<th>Department</th>
 										<td>{specificBAR.department_name}</td>
 										<th>Date Submitted</th>
-										<td>{moment(specificBAR.date).format('YYYY - MM - DD')}</td>
+										<td>{moment(specificBAR.date).format("YYYY - MM - DD")}</td>
 									</thead>
 									<thead>
 										<th>Amount Requested</th>
@@ -268,10 +269,10 @@ export class BusinessAdvanceRequestFinance extends Component {
 									<thead>
 										<th>Requested by</th>
 										<td>
-											{specificBAR.requester_name}{' '}
+											{specificBAR.requester_name}{" "}
 											<img
 												src={specificBAR.staff_signature}
-												alt='signature is here'
+												alt="signature is here"
 												width={50}
 												height={50}
 											/>
@@ -289,10 +290,10 @@ export class BusinessAdvanceRequestFinance extends Component {
 										<td>{specificBAR.supervisor_name}</td>
 										<th>Signature</th>
 										<td>
-											{' '}
+											{" "}
 											<img
 												src={specificBAR.supervisor_signature}
-												alt='supervisor signature'
+												alt="supervisor signature"
 												width={50}
 												height={50}
 											/>
@@ -305,7 +306,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 										<td>
 											<img
 												src={specificBAR.finance_signature}
-												alt='finance signature'
+												alt="finance signature"
 												width={50}
 												height={50}
 											/>
@@ -317,12 +318,12 @@ export class BusinessAdvanceRequestFinance extends Component {
 					</div>
 					<Modal.Footer>
 						<div
-							className='btn btn-outline btn-secondary'
+							className="btn btn-outline btn-secondary"
 							onClick={this.handleClose}>
 							Close
 						</div>
 						<div
-							className='btn btn-outline btn-success'
+							className="btn btn-outline btn-success"
 							onClick={this.handleDownload}>
 							Download
 						</div>
@@ -330,35 +331,35 @@ export class BusinessAdvanceRequestFinance extends Component {
 				</Modal>
 				<Modal
 					show={showDisapprove}
-					size='lg'
-					aria-labelledby='contained-modal-title-vcenter'
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered>
 					<Modal.Header closeButton>
-						<Modal.Title id='contained-modal-title-vcenter'>
+						<Modal.Title id="contained-modal-title-vcenter">
 							{specificBAR.requester_name}'s Request
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p className='lead'>
+						<p className="lead">
 							Please give a reason for disapproving this request...
 						</p>
 						<textarea
-							name='finance_comment'
+							name="finance_comment"
 							rows={4}
 							onChange={this.handleChange}></textarea>
-						<div className='flex-wrapper'>
-							<span style={{ flex: 2, color: 'transparent' }}>
+						<div className="flex-wrapper">
+							<span style={{ flex: 2, color: "transparent" }}>
 								This is to separate buttons
 							</span>
 							<button
-								className='btn-block btn-success btn-sm'
+								className="btn-block btn-success btn-sm"
 								style={{ flex: 1 }}
 								onClick={this.handleClose}>
 								Cancel
 							</button>
-							<span style={{ color: 'transparent' }}>is</span>
+							<span style={{ color: "transparent" }}>is</span>
 							<button
-								className='btn-block btn-danger sm'
+								className="btn-block btn-danger sm"
 								onClick={() => this.handleDisApprove(specificBAR.id)}
 								style={{ flex: 1 }}>
 								Disapprove
@@ -368,13 +369,13 @@ export class BusinessAdvanceRequestFinance extends Component {
 				</Modal>
 				{isAuthenticated ? (
 					<form>
-						<div className='banner'>
-							<h1 className='ml-2 mr-2'>
+						<div className="banner">
+							<h1 className="ml-2 mr-2">
 								Business advance requests pending finance approval
 							</h1>
 						</div>
-						<div className='table-responsive'>
-							<table className='table table-striped'>
+						<div className="table-responsive">
+							<table className="table table-striped">
 								<thead>
 									<tr>
 										<th>Staff</th>
@@ -394,27 +395,27 @@ export class BusinessAdvanceRequestFinance extends Component {
 														src={request.supervisor_signature}
 														width={50}
 														height={50}
-														alt='/'
+														alt="/"
 													/>
 												</td>
 
 												<td>
 													<div
-														className='btn btn-info btn-sm'
+														className="btn btn-info btn-sm"
 														onClick={() => this.handleView(request.id)}>
 														View
 													</div>
 
 													{request.finance_reviewed ? (
 														<div
-															className='btn btn-secondary btn-sm'
+															className="btn btn-secondary btn-sm"
 															style={{ flex: 1 }}
 															disabled>
 															Approved
 														</div>
 													) : (
 														<div
-															className='btn btn-success btn-sm'
+															className="btn btn-success btn-sm"
 															style={{ flex: 1 }}
 															onClick={() => self.handleApprove(request.id)}>
 															Approve
@@ -423,13 +424,13 @@ export class BusinessAdvanceRequestFinance extends Component {
 
 													{request.finance_comment ? (
 														<div
-															className='btn btn-danger btn-sm disabled'
+															className="btn btn-danger btn-sm disabled"
 															style={{ flex: 1 }}>
 															Disapproved
 														</div>
 													) : (
 														<div
-															className='btn btn-danger btn-sm'
+															className="btn btn-danger btn-sm"
 															onClick={() =>
 																self.handleDisApproveView(request.id)
 															}>
@@ -445,7 +446,7 @@ export class BusinessAdvanceRequestFinance extends Component {
 						</div>
 					</form>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

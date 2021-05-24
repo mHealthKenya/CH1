@@ -1,7 +1,7 @@
-import * as Types from './types';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+import * as Types from "./types";
+import axios from "axios";
+import basePath from "../../utils/basePath";
+axios.defaults.baseURL = `${basePath}api/`;
 
 const getTravelAuthorizationSupervisor = (data) => {
 	return {
@@ -61,7 +61,7 @@ const getApprovedTravelAuthorizationsFail = (message) => {
 
 export const requestApprovedTravelAuthorizations = () => {
 	return (dispatch) => {
-		const url = 'travelauthorization/?approved=true';
+		const url = "travelauthorization/?approved=true";
 		axios
 			.get(url)
 			.then((res) => {

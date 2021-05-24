@@ -1,6 +1,7 @@
-import axios from 'axios';
-import * as Types from './types';
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+import axios from "axios";
+import * as Types from "./types";
+import basePath from "../../utils/basePath";
+axios.defaults.baseURL = `${basePath}api/`;
 
 const getLogo = (data) => {
 	return {
@@ -18,7 +19,7 @@ const getLogoFail = (mesage) => {
 
 export const requestLogo = () => {
 	return (dispatch) => {
-		const url = 'mhealthimages/?imagename=mhealthlogo';
+		const url = "mhealthimages/?imagename=mhealthlogo";
 		axios
 			.get(url)
 			.then((res) => {

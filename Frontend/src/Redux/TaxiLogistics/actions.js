@@ -1,7 +1,7 @@
-import * as Types from './types';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+import * as Types from "./types";
+import axios from "axios";
+import basePath from "../../utils/basePath";
+axios.defaults.baseURL = `${basePath}api/`;
 
 const startTaxiLogistics = () => {
 	return {
@@ -84,7 +84,7 @@ export const taxiLogistics = (
 			supervisor,
 			staff_booking_taxi,
 		};
-		const url = 'taxilogistics/';
+		const url = "taxilogistics/";
 
 		axios
 			.post(url, body)

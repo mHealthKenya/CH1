@@ -27,6 +27,7 @@ import TravelAuthorizationFinance from "./Components/TravelAuthorizationFinance"
 import RequestPasswordReset from "./Components/RequestPasswordReset";
 import CheckMail from "./Components/CheckMail";
 import ResetPassword from "./Components/ResetPassword";
+import Leave from "./Components/Leave";
 
 const BaseRouter = () => {
 	return (
@@ -145,6 +146,7 @@ const BaseRouter = () => {
 
 			<Route exact path="/auth/checkmail" component={CheckMail} />
 			<Route exact path="/auth/reset/password" component={ResetPassword} />
+			<Route exact path="/docs/leaveform" component={Leave} />
 		</Switch>
 	);
 };

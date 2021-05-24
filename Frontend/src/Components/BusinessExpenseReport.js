@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-import { Modal } from 'antd';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
+import { Modal } from "antd";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class BusinessExpenseReport extends Component {
 	state = {
 		amount: 0,
 		total: 0,
 		request: null,
-		purpose: '',
+		purpose: "",
 		total_reimbursed: 0,
-		receipt: '',
-		receipt_no: '',
+		receipt: "",
+		receipt_no: "",
 		show: false,
 		error: null,
 		redirect: false,
@@ -63,12 +64,12 @@ export class BusinessExpenseReport extends Component {
 		const { amount, total, request, purpose, receipt, receipt_no } = this.state;
 		const total_reimbursed = total - amount;
 		const fd = new FormData();
-		fd.append('total', total);
-		fd.append('request', request);
-		fd.append('receipt', receipt);
-		fd.append('total_reimbursed', total_reimbursed);
-		fd.append('receipt_no', receipt_no);
-		fd.append('purpose', purpose);
+		fd.append("total", total);
+		fd.append("request", request);
+		fd.append("receipt", receipt);
+		fd.append("total_reimbursed", total_reimbursed);
+		fd.append("receipt_no", receipt_no);
+		fd.append("purpose", purpose);
 		const url = `businessexpensereport/`;
 		axios
 			.post(url, fd)
@@ -93,7 +94,7 @@ export class BusinessExpenseReport extends Component {
 		const { auth } = this.props;
 		const { isAuthenticated } = auth;
 		return (
-			<div className='testbox container mt-3 mb-3'>
+			<div className="testbox container mt-3 mb-3">
 				{isAuthenticated ? (
 					<>
 						{!redirect ? (
@@ -101,18 +102,18 @@ export class BusinessExpenseReport extends Component {
 								<div>
 									{error ? (
 										<Modal
-											title={<h2 style={{ color: 'red' }}>Oops!</h2>}
+											title={<h2 style={{ color: "red" }}>Oops!</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead' style={{ color: 'red' }}>
+											<p className="lead" style={{ color: "red" }}>
 												We encountered a problem. Please try again.
 												<br />
 												If the problem persists please contact support.
@@ -122,116 +123,116 @@ export class BusinessExpenseReport extends Component {
 										</Modal>
 									) : show && !error ? (
 										<Modal
-											title={<h2 style={{ color: 'blue' }}>Success</h2>}
+											title={<h2 style={{ color: "blue" }}>Success</h2>}
 											visible={show}
 											// onOk={handleOk}
 											// onCancel={handleCancel}
 											footer={[
 												<div
-													className='btn btn-success btn-sm'
+													className="btn btn-success btn-sm"
 													onClick={this.handleClose}>
 													Close
 												</div>,
 											]}>
-											<p className='lead'>
+											<p className="lead">
 												Business Expense successfully submitted
 											</p>
 										</Modal>
 									) : null}
 
-									<div className='banner'>
+									<div className="banner">
 										<h1>Business Expense Report</h1>
 									</div>
 									<div>
 										{/* You can set className='colums' to put the forms in rows... */}
-										<div className='item'>
-											<label htmlFor='purpose'>
-												{' '}
+										<div className="item">
+											<label htmlFor="purpose">
+												{" "}
 												Purpose<span>*</span>
 											</label>
 											<input
-												id='purpose'
-												type='text'
-												name='purpose'
+												id="purpose"
+												type="text"
+												name="purpose"
 												onChange={this.handleChange}
 												required
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='receipt_no'>
-												{' '}
+										<div className="item">
+											<label htmlFor="receipt_no">
+												{" "}
 												Receipt Number<span>*</span>
 											</label>
 											<input
-												id='receipt_no'
-												type='text'
-												name='receipt_no'
+												id="receipt_no"
+												type="text"
+												name="receipt_no"
 												onChange={this.handleChange}
 												required
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='amount'>
-												{' '}
+										<div className="item">
+											<label htmlFor="amount">
+												{" "}
 												Amount in Ksh<span>*</span>
 											</label>
 											<input
-												id='total'
-												type='number'
-												name='total'
+												id="total"
+												type="number"
+												name="total"
 												onChange={this.handleChange}
 												required
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='advance'> Advance issued</label>
+										<div className="item">
+											<label htmlFor="advance"> Advance issued</label>
 											<input
-												id='amount'
-												type='number'
-												name='amount'
+												id="amount"
+												type="number"
+												name="amount"
 												value={amount}
 												onChange={this.handleChange}
 												disabled
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='reimbursement'>
-												{' '}
+										<div className="item">
+											<label htmlFor="reimbursement">
+												{" "}
 												Total reimbursement
 											</label>
 											<input
-												id='total_reimbursed'
-												type='number'
-												name='total_reimbursed'
+												id="total_reimbursed"
+												type="number"
+												name="total_reimbursed"
 												value={total - amount}
 												disabled
 											/>
 										</div>
-										<div className='item'>
-											<label htmlFor='receipt'>
-												{' '}
+										<div className="item">
+											<label htmlFor="receipt">
+												{" "}
 												Upload receipt<span>*</span>
 											</label>
 											<input
-												id='receipt'
-												type='file'
-												name='receipt'
+												id="receipt"
+												type="file"
+												name="receipt"
 												onChange={this.handleReceipts}
 												required
 											/>
 										</div>
 									</div>
-									<div className='btn-block'>
+									<div className="btn-block">
 										<button onClick={this.handleSubmit}>Submit</button>
 									</div>
 								</div>
 							</form>
 						) : (
-							<Redirect to='/' />
+							<Redirect to="/" />
 						)}
 					</>
 				) : (
-					<Redirect to='/auth/login' />
+					<Redirect to="/auth/login" />
 				)}
 			</div>
 		);

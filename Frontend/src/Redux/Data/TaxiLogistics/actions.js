@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as Types from "./types";
+import basePath from "../../../utils/basePath";
 
 export const getApprovedTaxiLogistics = (data) => {
 	return {
@@ -24,7 +25,7 @@ export const getRejectedTaxiLogistics = (data) => {
 
 export const getTaxiLogisticsData = (id) => {
 	return (dispatch) => {
-		const url = `http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/?staff_booking_taxi=${id}`;
+		const url = `${basePath}api/taxilogistics/?staff_booking_taxi=${id}`;
 		let rejected = 0;
 		let approved = 0;
 		let pending = 0;
@@ -37,9 +38,7 @@ export const getTaxiLogisticsData = (id) => {
 					data.forEach((info) => {
 						if (info.supervisor_approved && !info.supervisor_comment) {
 							axios
-								.get(
-									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
-								)
+								.get(`${basePath}api/taxilogistics/${info.id}/`)
 								.then((res) => {
 									approved += 1;
 									// const { data } = res;
@@ -50,21 +49,15 @@ export const getTaxiLogisticsData = (id) => {
 									dispatch(getRejectedTaxiLogistics(rejected));
 								});
 						} else if (!info.supervisor_approved && !info.supervisor_comment) {
-							axios
-								.get(
-									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
-								)
-								.then(() => {
-									pending += 1;
-									dispatch(getPendingTaxiLogistics(pending));
-									dispatch(getApprovedTaxiLogistics(approved));
-									dispatch(getRejectedTaxiLogistics(rejected));
-								});
+							axios.get(`${basePath}api/taxilogistics/${info.id}/`).then(() => {
+								pending += 1;
+								dispatch(getPendingTaxiLogistics(pending));
+								dispatch(getApprovedTaxiLogistics(approved));
+								dispatch(getRejectedTaxiLogistics(rejected));
+							});
 						} else if (!info.supervisor_approved && info.supervisor_comment) {
 							axios
-								.get(
-									`http://api-finance-docs.mhealthkenya.co.ke/api/taxilogistics/${info.id}/`
-								)
+								.get(`${basePath}api/taxilogistics/${info.id}/`)
 								.then((res) => {
 									rejected += 1;
 									dispatch(getPendingTaxiLogistics(pending));

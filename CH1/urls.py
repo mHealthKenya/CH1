@@ -20,7 +20,6 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
 urlpatterns = [
-    re_path(r'^.*', include('Frontend.urls')),
     path('admin/', admin.site.urls),
     path('auth/api/', include('Users.urls')),
     path('api/', include('Forms.urls')),
@@ -32,6 +31,6 @@ if settings.DEBUG:
                           document_root=settings.MEDIA_ROOT)
 
 
-# urlpatterns += [
-#     re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
-# ]
+urlpatterns += [
+    re_path(r'^.*', include('Frontend.urls')),
+]

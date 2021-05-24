@@ -13,7 +13,9 @@ import {
 	getSpecificPurchaseData,
 } from "../Redux/Purchase/actions";
 
-axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
+import basePath from "../utils/basePath";
+
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class MyBusinessAdvance extends Component {
 	state = {

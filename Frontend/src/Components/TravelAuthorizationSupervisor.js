@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 // import moment from "moment";
-import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
-import moment from 'moment';
+import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import moment from "moment";
 import {
 	requestSupervisorTravelAuthorization,
 	requestSpecificTravelAuthorization,
-} from '../Redux/TravelAuthorization/actions';
+} from "../Redux/TravelAuthorization/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = 'http://api-finance-docs.mhealthkenya.co.ke/api/';
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class TravelAuthorizationSupervisor extends Component {
 	state = {
-		supervisor_comment: '',
+		supervisor_comment: "",
 		showDisapprove: false,
 		show: false,
 	};
@@ -60,7 +61,7 @@ export class TravelAuthorizationSupervisor extends Component {
 								console.log(err.message);
 							});
 					} catch (err) {
-						const url = 'travelauthorizationsupervisor/';
+						const url = "travelauthorizationsupervisor/";
 						const body = {
 							approved: true,
 							owner: UID,
@@ -149,7 +150,7 @@ export class TravelAuthorizationSupervisor extends Component {
 								console.log(err.message);
 							});
 					} catch (err) {
-						const url = 'travelauthorizationsupervisor/';
+						const url = "travelauthorizationsupervisor/";
 						const body = {
 							approved: false,
 							owner: UID,
@@ -197,46 +198,46 @@ export class TravelAuthorizationSupervisor extends Component {
 		const { isAuthenticated } = auth;
 		return (
 			<div>
-				<div className='testbox container'>
+				<div className="testbox container">
 					<Modal
 						show={show}
-						size='lg'
-						aria-labelledby='contained-modal-title-vcenter'
+						size="lg"
+						aria-labelledby="contained-modal-title-vcenter"
 						centered>
 						<Modal.Header closeButton>
-							<Modal.Title id='contained-modal-title-vcenter'>
+							<Modal.Title id="contained-modal-title-vcenter">
 								{travelAuthorization.staff_name}'s Request
 							</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<p className='lead'>
-								<b>Date Requested: </b>{' '}
-								{moment(travelAuthorization.date).format('YYYY - MM - DD')}
+							<p className="lead">
+								<b>Date Requested: </b>{" "}
+								{moment(travelAuthorization.date).format("YYYY - MM - DD")}
 							</p>
-							<p className='lead'>
-								<b>Staff's Department: </b>{' '}
+							<p className="lead">
+								<b>Staff's Department: </b>{" "}
 								{travelAuthorization.staff_department}
 							</p>
-							<p className='lead'>
+							<p className="lead">
 								<b>Destination: </b> {travelAuthorization.destination}
 							</p>
-							<p className='lead'>
+							<p className="lead">
 								<b>Duration: </b> {travelAuthorization.period} days
 							</p>
-							<p className='lead'>
+							<p className="lead">
 								<b>Project to Charge: </b> {travelAuthorization.project_name}
 							</p>
-							<p className='lead'>
+							<p className="lead">
 								<b>Purpose of travel: </b> {travelAuthorization.purpose}
 							</p>
-							<p className='lead'>
-								<b>Amount Requested: </b>{' '}
+							<p className="lead">
+								<b>Amount Requested: </b>{" "}
 								{travelAuthorization.total + otherAmount}
 							</p>
 						</Modal.Body>
 						<Modal.Footer>
 							<div
-								className='btn btn-outline btn-success'
+								className="btn btn-outline btn-success"
 								onClick={this.handleClose}>
 								Close
 							</div>
@@ -244,36 +245,36 @@ export class TravelAuthorizationSupervisor extends Component {
 					</Modal>
 					<Modal
 						show={showDisapprove}
-						size='lg'
-						aria-labelledby='contained-modal-title-vcenter'
+						size="lg"
+						aria-labelledby="contained-modal-title-vcenter"
 						centered>
 						<Modal.Header closeButton>
-							<Modal.Title id='contained-modal-title-vcenter'>
+							<Modal.Title id="contained-modal-title-vcenter">
 								{travelAuthorization.staff_name}'s Request
 							</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<p className='lead'>
+							<p className="lead">
 								Please give a reason for disapproving this request...
 							</p>
 							<textarea
-								name='supervisor_comment'
+								name="supervisor_comment"
 								rows={4}
 								onChange={this.handleChange}></textarea>
-							<div className='flex-wrapper'>
-								<span style={{ flex: 2, color: 'transparent' }}>
+							<div className="flex-wrapper">
+								<span style={{ flex: 2, color: "transparent" }}>
 									This is to separate buttons
 								</span>
 								<button
-									className='btn-block btn-success btn-sm'
+									className="btn-block btn-success btn-sm"
 									style={{ flex: 1 }}
 									onClick={this.handleClose}>
 									Cancel
 								</button>
-								<span style={{ color: 'transparent' }}>is</span>
+								<span style={{ color: "transparent" }}>is</span>
 								{travelAuthorization.supervisor_comment ? (
 									<button
-										className='btn-block btn-danger sm disabled'
+										className="btn-block btn-danger sm disabled"
 										style={{ flex: 1 }}
 										onClick={() =>
 											this.handleDisApprove(travelAuthorization.id)
@@ -282,7 +283,7 @@ export class TravelAuthorizationSupervisor extends Component {
 									</button>
 								) : (
 									<button
-										className='btn-block btn-danger sm'
+										className="btn-block btn-danger sm"
 										style={{ flex: 1 }}
 										onClick={() =>
 											this.handleDisApprove(travelAuthorization.id)
@@ -295,13 +296,13 @@ export class TravelAuthorizationSupervisor extends Component {
 					</Modal>
 					{isAuthenticated ? (
 						<form>
-							<div className='banner'>
-								<h1 className='ml-2 mr-2'>
+							<div className="banner">
+								<h1 className="ml-2 mr-2">
 									Pending/approved Travel Authorization
 								</h1>
 							</div>
-							<div className='table-responsive'>
-								<table className='table table-striped'>
+							<div className="table-responsive">
+								<table className="table table-striped">
 									<thead>
 										<tr>
 											<th>Staff</th>
@@ -319,28 +320,28 @@ export class TravelAuthorizationSupervisor extends Component {
 													<td>{request.destination}</td>
 													<td>{request.project_name}</td>
 													<td>{request.period} days</td>
-													<td className='flex-wrapper'>
+													<td className="flex-wrapper">
 														<div
-															className='btn btn-info'
+															className="btn btn-info"
 															onClick={() => this.handleView(request.id)}>
 															View
 														</div>
 														{request.approved ? (
 															<div
-																className='btn btn-secondary disabled'
+																className="btn btn-secondary disabled"
 																style={{ flex: 2 }}>
 																Approved
 															</div>
 														) : (
 															<div
-																className='btn btn-success'
+																className="btn btn-success"
 																onClick={() => this.handleApprove(request.id)}>
 																Approve
 															</div>
-														)}{' '}
+														)}{" "}
 														{request.supervisor_approved ? null : request.supervisor_comment ? (
 															<div
-																className='btn btn-secondary'
+																className="btn btn-secondary"
 																style={{ flex: 1 }}
 																onClick={() =>
 																	this.handleDisApproveView(request.id)
@@ -349,7 +350,7 @@ export class TravelAuthorizationSupervisor extends Component {
 															</div>
 														) : (
 															<div
-																className='btn btn-danger'
+																className="btn btn-danger"
 																style={{ flex: 1 }}
 																onClick={() =>
 																	this.handleDisApproveView(request.id)
@@ -366,7 +367,7 @@ export class TravelAuthorizationSupervisor extends Component {
 							</div>
 						</form>
 					) : (
-						<Redirect to='/auth/login' />
+						<Redirect to="/auth/login" />
 					)}
 				</div>
 			</div>

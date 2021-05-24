@@ -9,8 +9,9 @@ import {
 	requestEmployeeTravelAuthorization,
 	requestSpecificTravelAuthorization,
 } from "../Redux/TravelAuthorization/actions";
+import basePath from "../utils/basePath";
 
-axios.defaults.baseURL = "http://api-finance-docs.mhealthkenya.co.ke/api/";
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class MyTravelAuthorizations extends Component {
 	state = {
