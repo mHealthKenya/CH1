@@ -10,6 +10,7 @@ from knox.models import AuthToken
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import filters
+from .permissions import *
 
 
 class TravelAuthorizationViewSet(viewsets.ModelViewSet):
@@ -51,5 +52,16 @@ class mHealthImagesViewSet(viewsets.ModelViewSet):
     queryset = mHealthImages.objects.all()
     serializer_class = mHealthImagesSerializers
     filter_fields = ["imagename"]
+
+class LeaveDefinitionViewSet(viewsets.ModelViewSet):
+    permission_classes = [ReadOnly]
+    queryset = LeaveDefinition.objects.all()
+    serializer_class = LeaveDefinitionSerializer
+    filter_fields = ["leave"]
+
+class LeaveApplicationViewSet(viewsets.ModelViewSet):
+    queryset = LeaveApplication.objects.all()
+    serializer_class = LeaveApplicationSerializer
+    filter_fields = ["staff", "year", "leave"]
 
 # Create your views here.

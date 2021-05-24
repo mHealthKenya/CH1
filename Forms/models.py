@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from Users.models import *
+from utils import *
 
 User = get_user_model()
-api_url = "http://api-finance-docs.mhealthkenya.co.ke/"
+api_url = api_url
 
 class LodgingMIE(models.Model):
     lodging = models.PositiveIntegerField()
@@ -214,3 +215,22 @@ class mHealthImages(models.Model):
 
     def __str__(self):
         return self.imagename
+
+class LeaveDefinition(models.Model):
+    leave = models.CharField(max_length=50)
+    duration = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.leave
+
+class LeaveApplication(models.Model):
+    staff = models.ForeignKey(User, on_delete = models.CASCADE)
+    position = models.CharField(max_length=50)
+    duration = models.PositiveIntegerField()
+    supervisor = models.ForeignKey(Supervisors, on_delete = models.CASCADE)
+    leave = models.ForeignKey(LeaveDefinition, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    year = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.staff.first_name} {self.staff.first_name} - {self.leave.leave}'

@@ -3,6 +3,11 @@ import { connect } from "react-redux";
 import { requestSupervisors } from "../Redux/General/actions";
 import { workingDays } from "../utils/dates";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
+import basePath from "../utils/basePath";
+import { getAnnualLeave, sum } from "../utils/leaveDetails";
+
+axios.defaults.baseURL = `${basePath}api/`;
 
 export class Leave extends Component {
 	state = {
@@ -12,13 +17,27 @@ export class Leave extends Component {
 		days: 0,
 		dateto: "",
 		backDate: "",
+		annual: 0,
 	};
 
 	componentDidMount = () => {
 		this.props.requestSupervisors();
+		const { auth } = this.props;
+		const { isAuthenticated } = auth;
+		if (isAuthenticated) {
+			const { id } = auth.user.user;
+			this.setState({
+				...this.state,
+				annual: getAnnualLeave(id, new Date().getFullYear()),
+			});
+		}
 	};
 
 	handleChange = (e) => {
+		const { annual, period } = this.state;
+		if (sum(annual) > 21) {
+			alert("You have exhausted your leave days.");
+		}
 		const { name, value } = e.target;
 		this.setState({
 			...this.state,

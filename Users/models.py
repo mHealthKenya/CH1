@@ -6,8 +6,9 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import *
+from utils import *
 
-api_url = "http://api-finance-docs.mhealthkenya.co.ke/"
+api_url = api_url
 
 class Departments(models.Model):
     department = models.CharField(max_length=200)

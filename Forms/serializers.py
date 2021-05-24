@@ -154,6 +154,15 @@ class mHealthImagesSerializers(serializers.ModelSerializer):
         model = mHealthImages
         fields = "__all__"
 
+class LeaveDefinitionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveDefinition
+        fields = '__all__'
+
+class LeaveApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveApplication
+        fields = '__all__'
 
     
         
