@@ -4,6 +4,8 @@ import { requestSupervisors } from "../Redux/General/actions";
 import { workingDays } from "../utils/dates";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import basePath from "../utils/basePath";
 import { getAnnualLeave, sum } from "../utils/leaveDetails";
 
@@ -11,13 +13,18 @@ axios.defaults.baseURL = `${basePath}api/`;
 
 export class Leave extends Component {
 	state = {
-		title: "",
-		type: "",
+		position: "",
+		types: [],
 		datefrom: "",
-		days: 0,
+		duration: 0,
 		dateto: "",
 		backDate: "",
 		annual: 0,
+		leave: "",
+		show: false,
+		loading: false,
+		error: null,
+		supervisor: null,
 	};
 
 	componentDidMount = () => {
@@ -30,35 +37,108 @@ export class Leave extends Component {
 				...this.state,
 				annual: getAnnualLeave(id, new Date().getFullYear()),
 			});
+			axios.get(`leavedefinitions/`).then((res) => {
+				const { data } = res;
+				this.setState({
+					...this.state,
+					types: data,
+				});
+			});
 		}
 	};
 
 	handleChange = (e) => {
-		const { annual, period } = this.state;
-		if (sum(annual) > 21) {
-			alert("You have exhausted your leave days.");
-		}
 		const { name, value } = e.target;
 		this.setState({
 			...this.state,
 			[name]: value,
 		});
+	};
+
+	handleHome = () => {
+		this.props.history.push("/");
+	};
+
+	handleClose = () => {
+		this.setState({
+			...this.state,
+			show: false,
+			position: "",
+			datefrom: "",
+			dateto: "",
+			leave: "",
+			supervisor: null,
+		});
+
 		console.log(this.state);
 	};
 
-	handleLeaveDays = () => {
-		const { datefrom, dateto } = this.state;
+	handleSubmit = (e) => {
+		e.preventDefault();
 		this.setState({
 			...this.state,
-			days: workingDays(datefrom, dateto).length,
-			backDate: workingDays(datefrom, dateto)[
-				workingDays(datefrom, dateto).length - 1
-			],
+			loading: true,
 		});
+		const { position, supervisor, leave, datefrom, dateto } = this.state;
+		const duration = workingDays(datefrom, dateto).length;
+		const backDate = workingDays(datefrom, dateto)[
+			workingDays(datefrom, dateto).length - 1
+		];
+		const { auth } = this.props;
+		const { id } = auth.user.user;
+		const staff = id;
+		const year = new Date().getFullYear();
+		const body = {
+			position,
+			duration,
+			supervisor,
+			leave,
+			year,
+			staff,
+		};
+
+		console.log(body);
+
+		axios
+			.post(`leaveapplications/`, body)
+			.then(() => {
+				this.setState({
+					...this.state,
+					duration: duration,
+					backDate: backDate,
+					show: true,
+					loading: false,
+				});
+			})
+			.catch((err) => {
+				const { message } = err;
+				this.setState({
+					...this.state,
+					error: message,
+					loading: false,
+				});
+				setTimeout(() => {
+					this.setState({
+						...this.state,
+						error: null,
+					});
+				}, 5000);
+			});
 	};
+
 	render() {
 		const { auth, supervisors, supervisor } = this.props;
-		const { datefrom, backDate, title, dateto } = this.state;
+		const {
+			datefrom,
+			backDate,
+			position,
+			dateto,
+			types,
+			show,
+			duration,
+			loading,
+			error,
+		} = this.state;
 		const { isAuthenticated } = auth;
 
 		let eligibleSupervisors = [];
@@ -72,22 +152,58 @@ export class Leave extends Component {
 		}
 		return (
 			<div className="testbox container">
+				<Modal
+					show={show}
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
+					centered>
+					<Modal.Header closeButton onClick={this.handleClose}>
+						<Modal.Title id="contained-modal-title-vcenter">
+							Success!
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<p className="Lead">
+							You have applied for a leave for a duration of <b>{duration}</b>{" "}
+							days.
+						</p>
+						<p className="Lead">
+							Should this be approved, your leave will end on{" "}
+							{new Date(backDate).toDateString()}
+						</p>
+					</Modal.Body>
+					<Modal.Footer>
+						<button className="btn btn-secondary" onClick={this.handleClose}>
+							Close
+						</button>
+						<button className="btn btn-success" onClick={this.handleHome}>
+							Go Home
+						</button>
+					</Modal.Footer>
+				</Modal>
 				{isAuthenticated ? (
 					<form>
 						<div className="banner">
 							<h1>Leave Application </h1>
 						</div>
 						<div>
+							{error ? (
+								<div className="alert alert-danger mt-3">
+									{" "}
+									Your request was not successful. Please check your connection
+									and try again.
+								</div>
+							) : null}
 							{/* You can set className='colums' to put the forms in rows... */}
 							<div className="item">
 								<label htmlFor="address2">
 									Position/Title <span>*</span>
 								</label>
 								<input
-									id="title"
+									id="position"
 									type="text"
-									name="title"
-									value={title}
+									name="position"
+									value={position}
 									required
 									onChange={this.handleChange}
 								/>
@@ -96,14 +212,15 @@ export class Leave extends Component {
 								<label htmlFor="department">
 									Leave Type<span>*</span>
 								</label>
-								<select name="type" onChange={this.handleChange}>
+								<select name="leave" onChange={this.handleChange}>
 									<option>Select Leave</option>
-									<option>Annual</option>
-									<option>Maternity</option>
-									<option>Paternity</option>
-									<option>Exam</option>
-									<option>Sick</option>
-									<option>Compassionate</option>
+									{types.map((hol) => {
+										return (
+											<option key={hol.id} value={hol.id}>
+												{hol.leave}
+											</option>
+										);
+									})}
 								</select>
 							</div>
 							<div className="item">
@@ -151,7 +268,11 @@ export class Leave extends Component {
 								</select>
 							</div>
 							<div className="btn-block">
-								<button onClick={this.handleLeaveDays}>Submit</button>
+								{loading ? (
+									<CircularProgress />
+								) : (
+									<button onClick={this.handleSubmit}>Submit</button>
+								)}
 							</div>
 						</div>
 					</form>

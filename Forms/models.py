@@ -232,5 +232,8 @@ class LeaveApplication(models.Model):
     approved = models.BooleanField(default=False)
     year = models.PositiveIntegerField()
 
+    class Meta:
+        ordering = ["-id"]
+
     def __str__(self):
         return f'{self.staff.first_name} {self.staff.first_name} - {self.leave.leave}'

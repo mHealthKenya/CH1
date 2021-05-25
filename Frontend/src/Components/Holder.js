@@ -101,7 +101,7 @@ export class Holder extends Component {
 												<a href="/">Monthly time sheet</a>
 											</li>
 											<li>
-												<a href="/">Leave application</a>
+												<a href="/docs/leaveform">Leave application</a>
 											</li>
 										</ul>
 									</li>
