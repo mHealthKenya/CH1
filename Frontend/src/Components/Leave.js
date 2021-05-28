@@ -88,6 +88,9 @@ export class Leave extends Component {
 		const { id } = auth.user.user;
 		const staff = id;
 		const year = new Date().getFullYear();
+		const start_date = new Date(datefrom);
+		const last_date = new Date(backDate);
+		console.log(start_date, last_date);
 		const body = {
 			position,
 			duration,
@@ -95,9 +98,9 @@ export class Leave extends Component {
 			leave,
 			year,
 			staff,
+			start_date,
+			last_date,
 		};
-
-		console.log(body);
 
 		axios
 			.post(`leaveapplications/`, body)

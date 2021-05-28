@@ -28,6 +28,10 @@ import RequestPasswordReset from "./Components/RequestPasswordReset";
 import CheckMail from "./Components/CheckMail";
 import ResetPassword from "./Components/ResetPassword";
 import Leave from "./Components/Leave";
+import LeaveSupervisors from "./Components/LeaveSupervisors";
+import LeaveCOO from "./Components/LeaveCOO";
+import HRLeaveView from "./Components/HRLeaveView";
+import MyLeaveApplications from "./Components/MyLeaveApplications";
 
 const BaseRouter = () => {
 	return (
@@ -147,6 +151,14 @@ const BaseRouter = () => {
 			<Route exact path="/auth/checkmail" component={CheckMail} />
 			<Route exact path="/auth/reset/password" component={ResetPassword} />
 			<Route exact path="/docs/leaveform" component={Leave} />
+			<Route exact path="/docs/supervisorleave" component={LeaveSupervisors} />
+			<Route exact path="/docs/cooleave" component={LeaveCOO} />
+			<Route exact path="/docs/hrleaveview" component={HRLeaveView} />
+			<Route
+				exact
+				path="/docs/myleaveapplications"
+				component={MyLeaveApplications}
+			/>
 		</Switch>
 	);
 };

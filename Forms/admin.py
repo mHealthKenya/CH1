@@ -9,4 +9,6 @@ admin.site.register(TravelExpenseReportFinance)
 admin.site.register(mHealthImages)
 admin.site.register(LeaveDefinition)
 admin.site.register(LeaveApplication)
+admin.site.register(LeaveApplicationSupervisor)
+admin.site.register(LeaveApplicationCOO)
 

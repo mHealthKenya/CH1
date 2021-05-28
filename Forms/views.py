@@ -62,6 +62,17 @@ class LeaveDefinitionViewSet(viewsets.ModelViewSet):
 class LeaveApplicationViewSet(viewsets.ModelViewSet):
     queryset = LeaveApplication.objects.all()
     serializer_class = LeaveApplicationSerializer
-    filter_fields = ["staff", "year", "leave"]
+    filter_fields = ["staff", "year", "leave", "supervisor", "approved"]
+   
+class LeaveApplicationSupervisorViewSet(viewsets.ModelViewSet):
+    queryset = LeaveApplicationSupervisor.objects.all()
+    serializer_class = LeaveApplicationSupervisorSerializer
+    filter_fields = ["application__staff", "application", "approved", "coo_approved"]
 
-# Create your views here.
+class LeaveApplicationCOOViewSet(viewsets.ModelViewSet):
+    queryset = LeaveApplicationCOO.objects.all()
+    serializer_class = LeaveApplicationCOOSerializer
+    filter_fields = ["application__application__staff", "application", "approved"]
+   
+
+

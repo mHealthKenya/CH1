@@ -4,7 +4,7 @@ from Users.models import *
 from utils import *
 
 User = get_user_model()
-api_url = api_url
+api_url = api_url()
 
 class LodgingMIE(models.Model):
     lodging = models.PositiveIntegerField()
@@ -227,13 +227,137 @@ class LeaveApplication(models.Model):
     staff = models.ForeignKey(User, on_delete = models.CASCADE)
     position = models.CharField(max_length=50)
     duration = models.PositiveIntegerField()
+    start_date = models.DateTimeField()
+    last_date = models.DateTimeField()
     supervisor = models.ForeignKey(Supervisors, on_delete = models.CASCADE)
     leave = models.ForeignKey(LeaveDefinition, on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)
+    comments = models.TextField(blank=True, null=True)
     year = models.PositiveIntegerField()
+    
 
     class Meta:
-        ordering = ["-id"]
+        ordering = ["-approved", "-id"]
+
+    @property
+    def staff_name(self):
+        return f'{self.staff.first_name} {self.staff.last_name}'
+
+    @property
+    def staff_signature(self):
+        return f'{api_url}media/{self.staff.signature}'
 
     def __str__(self):
-        return f'{self.staff.first_name} {self.staff.first_name} - {self.leave.leave}'
+        return f'{self.staff.first_name} {self.staff.first_name} - {self.leave.leave} -{self.id}'
+
+class LeaveApplicationSupervisor(models.Model):
+    application = models.OneToOneField(LeaveApplication, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    comments = models.TextField(blank=True, null=True)
+    coo_approved = models.BooleanField(default=False)
+    coo_comments = models.TextField(blank=True, null=True)
+    date_approved = models.DateTimeField(blank=True, null=True)
+
+    @property
+    def staff(self):
+        return f'{self.application.staff.id}'
+
+    @property
+    def staff_name(self):
+        return f'{self.application.staff.first_name} {self.application.staff.last_name}'
+
+    @property
+    def staff_signature(self):
+        return f'{api_url}media/{self.application.staff.signature}'
+
+    @property
+    def supervisor_name(self):
+        return f'{self.application.supervisor.name.first_name} {self.application.supervisor.name.last_name}'
+
+    @property
+    def supervisor_signature(self):
+        return f'{api_url}media/{self.application.supervisor.name.signature}'
+
+    @property
+    def leave(self):
+        return f'{self.application.leave.leave}'
+
+    @property
+    def duration(self):
+        return f'{self.application.duration}'
+
+    class Meta:
+        ordering = ["approved", "-id"]
+
+    def __str__(self):
+        return self.application.staff.first_name
+
+
+class LeaveApplicationCOO(models.Model):
+    coo = models.ForeignKey(User, on_delete=models.CASCADE)
+    application = models.OneToOneField(LeaveApplicationSupervisor, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    approval_date = models.DateTimeField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "LeaveApplicationCOO"
+
+    @property
+    def coo_name(self):
+        return f'{self.coo.first_name} {self.coo.last_name}'
+
+    @property
+    def coo_signature(self):
+        return f'{api_url}media/{self.coo.signature}'
+
+    @property
+    def staff(self):
+        return f'{self.application.application.staff.id}'
+
+    @property
+    def staff_id(self):
+        return f'{self.application.application.staff.staff_id}'
+
+    @property
+    def staff_name(self):
+        return f'{self.application.application.staff.first_name} {self.application.application.staff.last_name}'
+
+    @property
+    def staff_signature(self):
+        return f'{api_url}media/{self.application.application.staff.signature}'
+
+    @property
+    def supervisor_name(self):
+        return f'{self.application.application.supervisor.name.first_name} {self.application.application.supervisor.name.last_name}'
+
+    @property
+    def supervisor_signature(self):
+        return f'{api_url}media/{self.application.application.supervisor.name.signature}'
+
+    @property
+    def leave(self):
+        return f'{self.application.application.leave.leave}'
+
+    @property
+    def duration(self):
+        return f'{self.application.application.duration}'
+
+    @property
+    def position(self):
+        return f'{self.application.application.position}'
+
+    @property
+    def date_approved(self):
+        return self.application.date_approved
+
+    @property
+    def start_date(self):
+        return f'{self.application.application.start_date}'
+
+    @property
+    def last_date(self):
+        return f'{self.application.application.last_date}'
+
+    def __str__(self):
+        return self.application.application.staff.first_name

@@ -17,6 +17,7 @@ import "../../static/assets/vendor/owl.carousel/assets/owl.theme.default.css";
 import "../../static/assets/vendor/owl.carousel/assets/owl.theme.default.min.css";
 import "../../static/assets/vendor/owl.carousel/assets/owl.theme.green.css";
 import "../../static/assets/vendor/owl.carousel/assets/owl.theme.green.min.css";
+import "../../static/assets/vendor/split/split.css";
 
 export class App extends Component {
 	render() {

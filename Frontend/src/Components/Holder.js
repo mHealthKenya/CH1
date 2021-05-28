@@ -74,6 +74,11 @@ export class Holder extends Component {
 													Travel Authorization
 												</a>
 											</li>
+											<li>
+												<a href="/docs/myleaveapplications">
+													Approved Leave Applications
+												</a>
+											</li>
 										</ul>
 									</li>
 									<li className="menu-has-children">
@@ -86,6 +91,11 @@ export class Holder extends Component {
 											</li>
 											<li>
 												<a href="/docs/taxilogistics">Taxi Logistics</a>
+											</li>
+											<li>
+												<a href="/docs/travelauthorization">
+													Travel Authorization
+												</a>
 											</li>
 											<li>
 												<a href="/docs/purchaserequisition">
@@ -105,7 +115,7 @@ export class Holder extends Component {
 											</li>
 										</ul>
 									</li>
-									{groups.includes(2) ? (
+									{groups.includes(1) ? (
 										<li className="menu-has-children">
 											<a href="/">Approve</a>
 											<ul>
@@ -129,10 +139,13 @@ export class Holder extends Component {
 														Travel Authorization
 													</a>
 												</li>
+												<li>
+													<a href="/docs/supervisorleave">Leave Applications</a>
+												</li>
 											</ul>
 										</li>
 									) : null}
-									{groups.includes(1) ? (
+									{groups.includes(2) ? (
 										<li className="menu-has-children">
 											<a href="/">Finance Aprrovals</a>
 											<ul>
@@ -171,11 +184,16 @@ export class Holder extends Component {
 									) : null}
 									{groups.includes(3) ? (
 										<li className="menu-has-children">
-											<a href="/">CEO</a>
+											<a href="/">CEO/COO</a>
 											<ul>
 												<li>
 													<a href="/docs/purchaserequisitionceo">
 														Purchase Requisitions
+													</a>
+												</li>
+												<li>
+													<a href="/docs/cooleave">
+														Approve Leave Applications
 													</a>
 												</li>
 											</ul>

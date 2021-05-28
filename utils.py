@@ -1,2 +1,2 @@
 def api_url():
-    return "http://api-finance-docs.mhealthkenya.co.ke/"
+    return "http://127.0.0.1:8000/"
