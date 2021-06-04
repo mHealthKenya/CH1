@@ -16,6 +16,7 @@ router.register(r'CAPR', views.CEOApprovedPurchaseRequisitionsViewSet) #CAPR is 
 router.register(r'departments', views.DepartmentsViewSet)
 router.register(r'financestaff', views.FinanceStaffViewSet)
 router.register(r'FAPR', views.FinanceApprovedPurchaseRequisitionsViewSet) #FAPR is an abbreviation for Finance Approved Purchase Requisitions
+router.register(r'grant', Views.GrantViewSet)
 router.register(r'groups', views.GroupsViewSet)
 router.register(r'leavedefinitions', Views.LeaveDefinitionViewSet)
 router.register(r'leaveapplications', Views.LeaveApplicationViewSet)
@@ -23,6 +24,11 @@ router.register(r'leaveapplicationssupervisor', Views.LeaveApplicationSupervisor
 router.register(r'leaveapplicationscoo', Views.LeaveApplicationCOOViewSet)
 router.register(r'lodgingmie', Views.LodgingMIEViewSet)
 router.register(r'mhealthimages', Views.mHealthImagesViewSet)
+router.register(r'monthlytimesheet', Views.MonthlyTimeSheetViewSet)
+router.register(r'nonproject', Views.NonProjectViewSet)
+router.register(r'nonprojecttimesheet', Views.NonProjectTimeSheetViewSet)
+router.register(r'offduty', Views.OffDutyViewSet)
+router.register(r'offdutytimesheet', Views.OffDutyTimeSheetViewSet)
 router.register(r'other', Views.OtherViewSet)
 router.register(r'projects', views.ProjectsViewSet)
 router.register(r'purchaserequisition', views.PurchaseRequisitionViewSet)
@@ -35,6 +41,7 @@ router.register(r'travelexpensereport', Views.TravelExpenseReportViewSet)
 router.register(r'travelexpensereportfinance', Views.TravelExpenseReportFinanceViewSet)
 router.register(r'travelauthorizationsupervisor', Views.TravelAuthorizationSupervisorViewSet)
 router.register(r'travelauthorizationfinance', Views.TravelAuthorizationFinanceViewSet)
+
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [

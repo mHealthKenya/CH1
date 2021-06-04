@@ -361,3 +361,88 @@ class LeaveApplicationCOO(models.Model):
 
     def __str__(self):
         return self.application.application.staff.first_name
+
+
+class Grant(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class NonProject(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class OffDuty(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class OffDutyTimeSheet(models.Model):
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    description = models.ForeignKey(OffDuty, on_delete=models.CASCADE)
+    activity = models.CharField(max_length=50)
+    hours = models.PositiveIntegerField(default=8, editable=False)
+
+    @property
+    def month(self):
+        return self.date.strftime('%B')
+
+    @property
+    def year(self):
+        return self.date.strftime('%Y')
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.description.name
+
+class NonProjectTimeSheet(models.Model):
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    hours = models.PositiveIntegerField()
+    activities = models.TextField()
+    description = models.ForeignKey(NonProject, on_delete = models.CASCADE)
+
+    @property
+    def month(self):
+        return self.date.strftime('%B')
+
+    @property
+    def year(self):
+        return self.date.strftime('%Y')
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.description.name
+
+class MonthlyTimeSheet(models.Model):
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    grant = models.ForeignKey(Grant, on_delete=models.CASCADE)
+    project = models.ForeignKey(Projects, on_delete=models.CASCADE, blank=True, null=True)
+    activities = models.TextField()
+    hours = models.PositiveIntegerField()
+    date = models.DateTimeField()
+
+    @property
+    def month(self):
+        return self.date.strftime('%B')
+
+    @property
+    def year(self):
+        return self.date.strftime('%Y')
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.description.name
+
+    

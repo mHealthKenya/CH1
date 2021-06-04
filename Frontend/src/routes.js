@@ -32,6 +32,9 @@ import LeaveSupervisors from "./Components/LeaveSupervisors";
 import LeaveCOO from "./Components/LeaveCOO";
 import HRLeaveView from "./Components/HRLeaveView";
 import MyLeaveApplications from "./Components/MyLeaveApplications";
+import TimeSheet from "./Components/TimeSheet";
+import OffDuty from "./Components/OffDuty";
+import NonProjectTimeSheet from "./Components/NonProjectTimeSheet";
 
 const BaseRouter = () => {
 	return (
@@ -159,6 +162,10 @@ const BaseRouter = () => {
 				path="/docs/myleaveapplications"
 				component={MyLeaveApplications}
 			/>
+
+			<Route exact path="/docs/timesheet" component={TimeSheet} />
+			<Route exact path="/docs/offduty" component={OffDuty} />
+			<Route exact path="/docs/nonproject" component={NonProjectTimeSheet} />
 		</Switch>
 	);
 };

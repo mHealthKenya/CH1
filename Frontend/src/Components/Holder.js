@@ -108,7 +108,16 @@ export class Holder extends Component {
 										<a href="/">HR Documents</a>
 										<ul>
 											<li>
-												<a href="/">Monthly time sheet</a>
+												<a href="/">My TimeSheets</a>
+											</li>
+											<li>
+												<a href="/docs/offduty">OffDutyTime sheet</a>
+											</li>
+											<li>
+												<a href="/">Non Project Work Time Sheet</a>
+											</li>
+											<li>
+												<a href="/docs/timesheet">Regular Time Sheet</a>
 											</li>
 											<li>
 												<a href="/docs/leaveform">Leave application</a>

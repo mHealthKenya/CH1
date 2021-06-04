@@ -291,6 +291,69 @@ class LeaveApplicationCOOSerializer(serializers.ModelSerializer):
         last_date = LeaveApplicationCOO.last_date
         return last_date
 
+class GrantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Grant
+        fields = "__all__"
+
+class NonProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NonProject
+        fields = "__all__"
+
+
+class OffDutySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OffDuty
+        fields = "__all__"
+
+class OffDutyTimeSheetSerializer(serializers.ModelSerializer):
+    month = serializers.SerializerMethodField("get_month")
+    year = serializers.SerializerMethodField("get_year")
+    class Meta:
+        model = OffDutyTimeSheet
+        fields = "__all__"
+
+    def get_month(self, OffDutyTimeSheet):
+        month = OffDutyTimeSheet.month
+        return month
+
+    def get_year(self, OffDutyTimeSheet):
+        year = OffDutyTimeSheet.year
+        return year
+
+
+class NonProjectTimeSheetSerializer(serializers.ModelSerializer):
+    month = serializers.SerializerMethodField("get_month")
+    year = serializers.SerializerMethodField("get_year")
+    class Meta:
+        model = NonProjectTimeSheet
+        fields = "__all__"
+
+    def get_month(self, NonProjectTimeSheet):
+        month = NonProjectTimeSheet.month
+        return month
+
+    def get_year(self, NonProjectTimeSheet):
+        year = NonProjectTimeSheet.year
+        return year
+
+
+class MonthlyTimeSheetSerializer(serializers.ModelSerializer):
+    month = serializers.SerializerMethodField("get_month")
+    year = serializers.SerializerMethodField("get_year")
+    class Meta:
+        model = MonthlyTimeSheet
+        fields = "__all__"
+
+    def get_month(self, MonthlyTimeSheet):
+        month = MonthlyTimeSheet.month
+        return month
+
+    def get_year(self, MonthlyTimeSheet):
+        year = MonthlyTimeSheet.year
+        return year
+
 
     
         

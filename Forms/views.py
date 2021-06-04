@@ -13,6 +13,7 @@ from rest_framework import filters
 from .permissions import *
 
 
+
 class TravelAuthorizationViewSet(viewsets.ModelViewSet):
     queryset = TravelAuthorization.objects.all()
     serializer_class = TravelAuthorizationSerializer
@@ -73,6 +74,37 @@ class LeaveApplicationCOOViewSet(viewsets.ModelViewSet):
     queryset = LeaveApplicationCOO.objects.all()
     serializer_class = LeaveApplicationCOOSerializer
     filter_fields = ["application__application__staff", "application", "approved"]
+
+class GrantViewSet(viewsets.ModelViewSet):
+    permission_classes = [ReadOnly]
+    queryset = Grant.objects.all()
+    serializer_class = GrantSerializer
+
+class NonProjectViewSet(viewsets.ModelViewSet):
+    permission_classes = [ReadOnly]
+    queryset = NonProject.objects.all()
+    serializer_class = NonProjectSerializer
+    
+class OffDutyViewSet(viewsets.ModelViewSet):
+    permission_classes = [ReadOnly]
+    queryset = OffDuty.objects.all()
+    serializer_class = OffDutySerializer
+
+class OffDutyTimeSheetViewSet(viewsets.ModelViewSet):
+    queryset = OffDutyTimeSheet.objects.all()
+    serializer_class = OffDutyTimeSheetSerializer
+    filter_fields =['staff']
+
+class NonProjectTimeSheetViewSet(viewsets.ModelViewSet):
+    queryset = NonProjectTimeSheet.objects.all()
+    serializer_class = NonProjectTimeSheetSerializer
+    filter_fields =['staff']
+    
+
+class MonthlyTimeSheetViewSet(viewsets.ModelViewSet):
+    queryset = MonthlyTimeSheet.objects.all()
+    serializer_class = MonthlyTimeSheetSerializer
+    filter_fields =['staff']
    
 
 

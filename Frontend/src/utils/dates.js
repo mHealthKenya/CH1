@@ -14,3 +14,26 @@ export const workingDays = (dateFrom, dateTo) => {
 	}
 	return weekdays;
 };
+
+export const firstDate = (date) => {
+	let firstDay = new Date(
+		new Date(date).getFullYear(),
+		new Date(date).getMonth(),
+		1
+	);
+	return firstDay;
+};
+
+export const lastDate = (date) => {
+	let lastDay = new Date(
+		new Date(date).getFullYear(),
+		new Date(date).getMonth() + 1,
+		0
+	);
+	return lastDay;
+};
+
+export const workingHours = (dayOne, dayN) => {
+	let days = workingDays(firstDate(dayOne), lastDate(dayN));
+	return days.length * 8;
+};
